@@ -1,0 +1,61 @@
+<div class="row">
+	<div class="col-md-offset-2 col-md-5">
+		<h1>Dish</h1>
+		<div class="container-fluid dish-container">
+			<div class="row dish-title">
+				<div class="col-md-10">{{dish.name}}</div>
+				<div class="col-md-2">${{dish.price}}</div>
+			</div>
+			<div class="row" ng-repeat="dishIngredients in dish.ingredients">
+				<div class="col-md-12 ingredient-row">
+					<span class="pull-left" ng-repeat="ingredient in dishIngredients">
+						<span class="ingredient-title">
+							{{ingredient.name}} 
+							<span ng-show="ingredient.priceChange > 0">(+ ${{ingredient.priceChange}})</span>
+							<span class="icon-close"></span>					
+						</span><span class="ingredient-or" ng-hide="$last">or</span>
+					</span>
+					<span class="ingredient-add pull-right" ng-click="expandRow($index)" ng-class="{visible: $index == expandedRow}">
+						<span class="icon-plus"></span>
+						<span class="ingredient-inline or-ingredient" ng-show="$index == expandedRow">
+							<input type="text" class="form-control name" ng-model="newIngredientNames[$index]" 
+								placeholder="Name">
+							<span class="money-sign">$</span>
+							<input type="text" class="form-control price-change" 
+								ng-model="newIngredientPriceChanges[$index]">
+							<span class="controls">
+								<span class="icon-checkmark ok" ng-click="orIngredientToDish($index)"></span>
+								<span class="icon-cancel-circle" ng-click="orIngredientToDishCancel()"></span>	
+							</span>
+						</span>
+					</span>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-12 ingredient-row" style="position: relative;">
+					<span class="ingredient-inline pull-left">
+						<input type="text" class="form-control name" ng-model="newIngredientName" 
+							placeholder="Name">
+						<span class="money-sign">$</span>
+						<input type="text" class="form-control price-change" 
+							ng-model="newIngredientPriceChange">
+						<span class="controls">
+							<span class="icon-checkmark ok" ng-click="addIngredientToDish()"></span>
+						</span>
+					</span>
+				</div>					
+			</div>
+		</div>
+	</div>
+	<div class="col-md-1">
+	</div>
+	<div class="col-md-4">
+		<h2>Ingredients</h2>
+	</div>	
+</div>
+<div class="row">
+	<div class="col-md-offset-10 col-md-2">
+		<button type="button" class="btn btn-primary btn-lg">Save</button>
+  		<button type="button" class="btn btn-default btn-lg">Large button</button>
+	</div>	
+</div>

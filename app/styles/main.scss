@@ -1,0 +1,96 @@
+.dish-container {
+	border: 0.3em dashed #D8D8D8;
+	border-radius: 0.3em;
+	background: #F5F5F5;
+	padding-bottom: 1em;
+
+	.dish-title {
+		font-size: 3em;
+	}
+	
+	.ingredient-row {
+		font-size: 1.5em;
+	}
+	
+	.ingredient-title {
+		display: inline-block;
+		padding: 0.3em;
+		line-height: 1;
+		
+		.icon-close {
+			font-size: 0.7em;
+			margin-left: 0.3em;
+			margin-right: 0.3em;
+			cursor: pointer;
+			display: none;
+		}
+		
+		&:hover .icon-close {
+			display: inline-block;
+		}
+	}
+
+	.ingredient-or {
+		display: inline-block;
+		margin-right: 0.4em;
+		margin-left: 0.4em;		
+	}
+	
+	.ingredient-add {
+		position: relative;
+		cursor: pointer;
+		opacity: 0;
+		.icon-plus {
+			display: inline-block;
+			margin: 0.3em;
+		}
+	}
+
+	.ingredient-inline {
+		
+		&.or-ingredient {
+			position: absolute;
+			top: 0;
+			right: 0;
+			width: 1000%;		
+		}
+		
+		input {
+			display: inline-block;
+			border: 0.2em #888 solid;
+			&.name {
+				width: 58%;
+			}
+			&.price-change {
+				width: 15%;
+			}
+		}
+		.money-sign {
+			display: inline-block;
+			width: 5%;
+			text-align: right;
+		}
+		.controls {
+			float: right;
+			padding-right: 0.3em;
+			
+			span {
+				vertical-align: middle;
+				cursor: pointer;			
+			}
+			.ok {
+				color: #2BD672;
+			}
+		}
+	}
+	
+	.ingredient-row:hover .ingredient-add, .ingredient-add.visible {
+		opacity: 1;
+	}
+	
+	.ingredient-title:hover, .ingredient-inline, .ingredient-add {
+		border-radius: 0.2em;
+		background: #D8D8D8;
+	}
+}
+
