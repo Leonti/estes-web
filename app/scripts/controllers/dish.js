@@ -5,8 +5,10 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	$scope.expandedRow = null;
 	$scope.newIngredientNames = [];
 	$scope.newIngredientPriceChanges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-	$scope.newIngredientName = null;
-	$scope.newIngredientPriceChange = 0;
+	$scope.newIngredient = {
+		name: null,
+		priceChange: 0
+	}
 	
 	var rowJustClosed = false;
 	
@@ -22,6 +24,13 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 		    [{ id: 6, name: 'Lettuce', priceChange: 0 }],
 		]
 	}
+	
+	$scope.typeaheadItems = [
+	   { id: 4, name: 'Regular fries', priceChange: 0 },
+	   { id: 5, name: 'Curly fries', priceChange: 0.5 }, 
+	   { id: 2, name: 'Onions', priceChange: 0 }, 
+	   { id: 1, name: 'Beef', priceChange: 0 }
+	];
 	
 	$scope.expandRow = function(row) {
 		
@@ -54,13 +63,25 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	
 	$scope.addIngredientToDish = function() {
 		
-		if ($scope.newIngredientName) {
+		if ($scope.newIngredient.name) {
 			
 			console.log('Adding new ingredient ' 
-					+ $scope.newIngredientName + ' ' + $scope.newIngredientPriceChange);
+					+ $scope.newIngredient.name + ' ' + $scope.newIngredient.priceChange);
 		}
 		
-		$scope.newIngredientName = null;
-		$scope.newIngredientPriceChange = 0;
-	}	
+		$scope.newIngredient = {
+			name: null,
+			priceChange: 0
+		};
+	}
+	
+	$scope.onTypeaheadSelect = function(ingredient) {
+		$scope.newIngredient = angular.copy(ingredient);
+	}
+	$scope.typeaheadFilter = function(ingredients, term) {
+		if (!term) return ingredients;
+		return _.filter(ingredients, function(ingredient) { 
+			return ingredient.name.toUpperCase().indexOf(term.toUpperCase()) == 0
+		});
+	}
 });
