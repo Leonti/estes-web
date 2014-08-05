@@ -33,18 +33,18 @@
 			</div>
 			<div class="row">
 				<div class="col-md-12 ingredient-row" style="position: relative;">
-					<div typeahead on-select="onTypeaheadSelect(item)" class="ingredient-inline pull-left">
+					<div typeahead on-select="onTypeaheadSelect(item)" items="filteredIngredients" class="ingredient-inline pull-left">
 						<input typeahead-control type="text" class="form-control name" ng-model="newIngredient.name" 
-							placeholder="Name">
+							ng-change="filterIngredients(typeaheadItems, newIngredient.name)" placeholder="Name">
 						<span class="money-sign">$</span>
 						<input type="text" class="form-control price-change" 
 							ng-model="newIngredient.priceChange">
 						<span class="controls">
 							<span class="icon-checkmark ok" ng-click="addIngredientToDish()"></span>
 						</span>
-						<div class="typeahead">
+						<div class="typeahead" ng-show="isVisible()">
 							<ul class="typeahead-items">
-								<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in typeaheadFilter(typeaheadItems, newIngredient.name)">
+								<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
 									{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+ ${{ingredient.priceChange}})</span>
 								</li>
 							</ul>

@@ -6,18 +6,12 @@ angular.module('estesWebApp').directive('typeahead', function () {
       restrict: 'A',
       transclude: true,
       scope: {
-    	  onSelect: "&"
+    	  onSelect: "&",
+    	  items: "="
       },
-      link: function postLink(scope, element, attrs) {
-        // element.text('this is the typeahead directive');
-    	
-		  scope.$watch('term', function(term) {
-			  console.log(term);
-		  });  
-      
+      link: function postLink(scope, element, attrs) {		  
       },
       controller: ["$scope", function($scope) {
-    	  $scope.items = [];
     	  $scope.hide = false;
     	   
     	  this.activate = function(item) {
@@ -25,16 +19,13 @@ angular.module('estesWebApp').directive('typeahead', function () {
     	  };
     	   
     	  this.activateNextItem = function() {
-    		  console.log('activating next item');
-    		  console.log($scope.items);
-    		  //var index = $scope.items.indexOf($scope.active);
-    		  //this.activate($scope.items[(index + 1) % $scope.items.length]);
+    		  var index = $scope.items.indexOf($scope.active);
+    		  this.activate($scope.items[(index + 1) % $scope.items.length]);
     	  };
     	   
     	  this.activatePreviousItem = function() {
-    		  console.log('activating previous item');
-    		 // var index = $scope.items.indexOf($scope.active);
-    		 // this.activate($scope.items[index === 0 ? $scope.items.length - 1 : index - 1]);
+    		  var index = $scope.items.indexOf($scope.active);
+    		  this.activate($scope.items[index === 0 ? $scope.items.length - 1 : index - 1]);
     	  };
     	   
     	  this.isActive = function(item) {
@@ -42,24 +33,31 @@ angular.module('estesWebApp').directive('typeahead', function () {
     	  };
     	   
     	  this.selectActive = function() {
-    		  this.onSelect($scope.active);
+    		  this.select($scope.active);
     	  };
     	   
     	  this.select = function(item) {
 	    	  $scope.hide = true;
 	    	  $scope.focused = true;
-	    	  console.log($scope.onSelect);
 	    	  $scope.onSelect({item:item});
     	  };
-    	   
-    	  $scope.isVisible = function() {
+    	  
+    	  this.hide = function(hide) {
+    		  $scope.hide = hide;
+    	  }
+    	  
+    	  this.focused = function(focused) {
+    		  $scope.focused = focused;
+    	  }
+    	  
+    	  this.mousedOver = function(mousedOver) {
+    		  $scope.mousedOver = mousedOver;
+    	  }
+    	  
+    	  $scope.$parent.isVisible = function() {
     		  return !$scope.hide && ($scope.focused || $scope.mousedOver);
     	  };
-    	   
-    	  $scope.query = function() {
-    		  $scope.hide = false;
-    		  $scope.search({term:$scope.term});
-    	  }
+    	  
       }]      
     };
   });

@@ -8,20 +8,12 @@ angular.module('estesWebApp').directive('typeaheadControl', function () {
     	  var $input = element;
     	   
     	  $input.bind('focus', function() {
-    		  scope.$apply(function() { scope.focused = true; });
+    		  scope.$apply(function() { controller.focused(true); controller.hide(false);});
     	  });
     	   
     	  $input.bind('blur', function() {
-    		  scope.$apply(function() { scope.focused = false; });
+    		  scope.$apply(function() { controller.focused(false); });
     	  });
-    	   
-//    	  $list.bind('mouseover', function() {
-//    		  scope.$apply(function() { scope.mousedOver = true; });
-//    	  });
-//    	   
-//    	  $list.bind('mouseleave', function() {
-//    		  scope.$apply(function() { scope.mousedOver = false; });
-//    	  });
     	   
     	  $input.bind('keyup', function(e) {
     		  if (e.keyCode === 9 || e.keyCode === 13) {
@@ -29,7 +21,7 @@ angular.module('estesWebApp').directive('typeaheadControl', function () {
     		  }
     	   
     		  if (e.keyCode === 27) {
-    			  scope.$apply(function() { scope.hide = true; });
+    			  scope.$apply(function() { controller.hide(true) });
     		  }
     	  });
     	   

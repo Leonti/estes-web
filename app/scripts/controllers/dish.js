@@ -32,6 +32,8 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	   { id: 1, name: 'Beef', priceChange: 0 }
 	];
 	
+	$scope.filteredIngredients = angular.copy($scope.typeaheadItems);
+	
 	$scope.expandRow = function(row) {
 		
 		if (rowJustClosed) {
@@ -75,10 +77,14 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 		};
 	}
 	
+	$scope.filterIngredients = function(ingredients, term) {
+		$scope.filteredIngredients = filter(ingredients, term);
+	}
+	
 	$scope.onTypeaheadSelect = function(ingredient) {
 		$scope.newIngredient = angular.copy(ingredient);
 	}
-	$scope.typeaheadFilter = function(ingredients, term) {
+	function filter(ingredients, term) {
 		if (!term) return ingredients;
 		return _.filter(ingredients, function(ingredient) { 
 			return ingredient.name.toUpperCase().indexOf(term.toUpperCase()) == 0
