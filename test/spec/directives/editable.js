@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Directive: clickAnywhereButHere', function () {
+describe('Directive: editable', function () {
 
   // load the directive's module
   beforeEach(module('estesWebApp'));
@@ -13,8 +13,8 @@ describe('Directive: clickAnywhereButHere', function () {
   }));
 
   it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<click-anywhere-but-here></click-anywhere-but-here>');
+    element = angular.element('<editable></editable>');
     element = $compile(element)(scope);
-    expect(element.text()).toBe('this is the clickAnywhereButHere directive');
+    expect(element.text()).toBe('this is the editable directive');
   }));
 });

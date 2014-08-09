@@ -1,11 +1,21 @@
 .dish-container {
-	border: 0.3em dashed #D8D8D8;
+	border: 0.3em solid #D8D8D8;
 	border-radius: 0.3em;
 	background: #F5F5F5;
 	padding-bottom: 1em;
 
 	.dish-title {
 		font-size: 3em;
+		
+		editable input {
+			border: 0.2em solid #888;
+			margin: 0.9em 0;
+		}
+		
+		.dollar {
+			padding: 0;
+			text-align: right;
+		}
 	}
 	
 	.ingredient-row {
@@ -97,6 +107,7 @@
 .typeahead {
 	position: relative;
 	display: block;
+	z-index: 100;
 	
 	ul.typeahead-items {
 		position: absolute;
@@ -118,5 +129,9 @@
 			}
 		}
 	}
+}
+
+.dish-buttons {
+	margin-top: 1em;
 }
 

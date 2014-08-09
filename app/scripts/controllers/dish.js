@@ -10,8 +10,6 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 		priceChange: 0
 	}
 	
-	var rowJustClosed = false;
-	
 	$scope.dish = {
 		id: 1,
 		name: 'Meat Burger',
@@ -34,8 +32,8 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	
 	$scope.filteredIngredients = angular.copy($scope.typeaheadItems);
 	
+	var rowJustClosed = false;
 	$scope.expandRow = function(row) {
-		
 		if (rowJustClosed) {
 			rowJustClosed = false;
 		} else {
@@ -46,9 +44,10 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	$scope.orIngredientToDish = function(row) {
 		
 		if ($scope.newIngredientNames[row]) {
-			
-			console.log('Adding new ingredient to position ' + row + ' ' 
-					+ $scope.newIngredientNames[row] + ' ' + $scope.newIngredientPriceChanges[row]);
+			$scope.dish.ingredients[row].push({
+				name: $scope.newIngredientNames[row],
+				priceChange: $scope.newIngredientPriceChanges[row]
+			});
 		}
 		
 		resetNewIngredient();
@@ -66,15 +65,24 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	$scope.addIngredientToDish = function() {
 		
 		if ($scope.newIngredient.name) {
-			
-			console.log('Adding new ingredient ' 
-					+ $scope.newIngredient.name + ' ' + $scope.newIngredient.priceChange);
+			$scope.dish.ingredients.push([{
+				name: $scope.newIngredient.name,
+				priceChange: $scope.newIngredient.priceChange
+			}]);
 		}
 		
 		$scope.newIngredient = {
 			name: null,
 			priceChange: 0
 		};
+	}
+	
+	$scope.removeIngredient = function(ingredientRow, ingredientCol) {
+		if ($scope.dish.ingredients[ingredientRow].length == 1) {
+			$scope.dish.ingredients.splice(ingredientRow, 1);
+		} else {
+			$scope.dish.ingredients[ingredientRow].splice(ingredientCol, 1);			
+		}
 	}
 	
 	$scope.filterIngredients = function(ingredients, term) {
@@ -84,10 +92,17 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 	$scope.onTypeaheadSelect = function(ingredient) {
 		$scope.newIngredient = angular.copy(ingredient);
 	}
+	
+	$scope.onTypeaheadSelectOr = function(ingredient, row) {
+		$scope.newIngredientNames[row] = ingredient.name;
+		$scope.newIngredientPriceChanges[row] = ingredient.priceChange;
+	}
+	
 	function filter(ingredients, term) {
 		if (!term) return ingredients;
 		return _.filter(ingredients, function(ingredient) { 
 			return ingredient.name.toUpperCase().indexOf(term.toUpperCase()) == 0
 		});
 	}
+	
 });
