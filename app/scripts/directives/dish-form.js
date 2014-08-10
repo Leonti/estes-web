@@ -18,8 +18,14 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 			priceChange: 0
 		}
 		
-		$scope.typeaheadItems = Dish.readAllIngredients();
-		$scope.menus = Dish.readAllMenus();
+		Dish.readAllIngredients().then(function(ingredients) {
+			$scope.typeaheadItems = ingredients; 
+			$scope.filteredIngredients = angular.copy($scope.typeaheadItems);
+		});
+		
+		Dish.readAllMenus().then(function(menus) {
+			$scope.menus = menus;
+		});
 		$scope.selectedMenus = [];
 		
 		if (!$scope.dish) {
@@ -32,7 +38,6 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		}		
 		
 		
-		$scope.filteredIngredients = angular.copy($scope.typeaheadItems);
 		
 		var rowJustClosed = false;
 		$scope.expandRow = function(row) {

@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').service('Dish', function Dish() {
-
+angular.module('estesWebApp').service('Dish', function Dish($q) {
 	
 	var fakeMenus = ['Breakfast', 'Lunch', 'Dinner'];
 	
@@ -43,13 +42,23 @@ angular.module('estesWebApp').service('Dish', function Dish() {
 	
 	return {
 		readAll: function() {
-			return generateFakeDishes();
+			var deferred = $q.defer();
+			deferred.resolve(generateFakeDishes());
+			return deferred.promise;			
 		},
 		readAllMenus: function() {
-			return fakeMenus;
+			var deferred = $q.defer();
+			deferred.resolve(fakeMenus);
+			return deferred.promise;
 		},
 		readAllIngredients: function() {
-			return fakeIngredients;
+			var deferred = $q.defer();
+			deferred.resolve(fakeIngredients);
+			return deferred.promise;			
+		},
+		save: function(dish) {
+			console.log('saving dish');
+			console.log(dish);
 		}
 	}
 });

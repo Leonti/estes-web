@@ -11,7 +11,8 @@
 		</div>	
 		
 		<span class="add-dish" ng-hide="newDishEditing" ng-click="openNewDishForm()"><span class="icon-plus"></span> Add dish ...</span>
-		<div dish-form class="menu-section new-dish-section" ng-show="newDishEditing" on-close="closeNewDishForm()"></div>
+		<div dish-form class="menu-section new-dish-section" ng-show="newDishEditing" 
+			on-close="closeNewDishForm()" on-save="saveNewDish(dish)"></div>
 		
 		<div class="menu-section dish-list">	
 			<div ng-repeat="dish in dishes">
@@ -33,7 +34,8 @@
 						</div>
 					</div>					
 				</div>
-				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish" on-close="closeDishForm()"></div>
+				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish" 
+					on-close="closeDishForm()" on-save="saveDish(dish, $index)"></div>
 			</div>
 		</div>
 	</div>
