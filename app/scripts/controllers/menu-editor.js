@@ -6,6 +6,8 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	$scope.selectedMenus = angular.copy($scope.menus);	
 	$scope.dishes = Dish.readAll();
 	$scope.searchTerm = '';
+	$scope.newDishEditing = false;
+	$scope.editedDishIndex = null;
 	
 	$scope.isMenuSelected = function(menu) {
 		return $scope.selectedMenus.indexOf(menu) != -1;
@@ -23,6 +25,25 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
     	return menuFilter && isInSearch(dish);
 	}
 	
+	$scope.openNewDishForm = function() {
+		$scope.newDishEditing = true;		
+	}
+	
+	$scope.closeNewDishForm = function() {
+		$scope.newDishEditing = false;
+	}
+	
+	$scope.startDishEdit = function(index) {
+		$scope.editedDishIndex = index;
+	}
+
+	$scope.closeDishForm = function() {
+		$scope.editedDishIndex = null;
+	}	
+	
+	$scope.isDishEdited = function(index) {
+		return $scope.editedDishIndex == index;
+	}
 	
 	
 });

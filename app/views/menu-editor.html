@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-md-offset-3 col-md-6">
-		<div class="menu-section">
+		<div class="menu-section header-section">
 			<div class="menu-header">
 				<pills-filter class="menu-pills" items="menus" selected-items="selectedMenus"></pills-filter>
 				<div class="search-field">
@@ -9,17 +9,19 @@
 				</div>
 			</div>		
 		</div>	
-<!-- 		<span class="add-dish"><span class="icon-plus"></span> Add dish ...</span> -->
-		<div class="menu-section new-dish-section" ng-include="'views/dish-form.html'"></div>
-		<div class="menu-section">	
-			<div class="menu-dishes">
-				<div class="menu-dish" ng-repeat="dish in dishes" ng-show="filterDish(dish)">
+		
+		<span class="add-dish" ng-hide="newDishEditing" ng-click="openNewDishForm()"><span class="icon-plus"></span> Add dish ...</span>
+		<div dish-form class="menu-section new-dish-section" ng-show="newDishEditing" on-close="closeNewDishForm()"></div>
+		
+		<div class="menu-section dish-list">	
+			<div ng-repeat="dish in dishes">
+				<div class="menu-dish" ng-show="filterDish(dish) && !isDishEdited($index)">
 					<div class="title">
 						<div class="dish-name">{{dish.name}}</div>
 						<div class="dish-price">$ {{dish.price}}</div>
 						<div class="dish-actions">
 							<div class="pull-right">
-								<span class="icon-pencil"></span>
+								<span class="icon-pencil" ng-click="startDishEdit($index)"></span>
 								<span class="icon-remove"></span>
 							</div>
 						</div>
@@ -31,6 +33,7 @@
 						</div>
 					</div>					
 				</div>
+				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish" on-close="closeDishForm()"></div>
 			</div>
 		</div>
 	</div>
