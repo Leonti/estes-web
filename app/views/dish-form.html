@@ -1,0 +1,62 @@
+<div class="dish-form" ng-controller="DishCtrl">			
+	<div class="dish-name">			
+		<input type="text" ng-model="dish.name" placeholder="Dish name">
+	</div>
+	<div class="dish-price">$ <input type="text" ng-model="dish.price"></div>
+	<tags class="menu-tags" available-tags="menus" selected-tags="selectedMenus" tag-name="menu"></tags>
+	
+	<div ui-sortable ng-model="dish.ingredients">
+		<div class="ingredient-row" ng-repeat="dishIngredients in dish.ingredients">
+			<div class="ingredient-ors">
+				<span ng-repeat="ingredient in dishIngredients">
+					<span class="ingredient-title">
+						{{ingredient.name}} 
+						<span ng-show="ingredient.priceChange > 0">(+ ${{ingredient.priceChange}})</span>
+						<span class="icon-close" ng-click="removeIngredient($parent.$index, $index)"></span>					
+					</span><span class="ingredient-or" ng-hide="$last">or</span>
+				</span>
+			</div>			
+			<div class="ingredient-add" ng-click="expandRow($index)" ng-class="{visible: $index == expandedRow}">
+				<span class="icon-plus"></span>
+				<div class="add-ingredient-form" typeahead on-select="onTypeaheadSelectOr(item, $index)" items="filteredIngredients" ng-show="$index == expandedRow">
+					<input class="name" typeahead-control type="text" ng-model="newIngredientNames[$index]" 
+						ng-change="filterIngredients(typeaheadItems, newIngredientNames[$index])"
+						ng-focus="filterIngredients(typeaheadItems, newIngredientNames[$index])" placeholder="Name">
+					<span class="money-sign">$</span>
+					<input class="price-change" type="text" ng-model="newIngredientPriceChanges[$index]">
+					<span class="controls">
+						<span class="icon-checkmark ok" ng-click="orIngredientToDish($index)"></span>
+						<span class="icon-cancel-circle" ng-click="orIngredientToDishCancel()"></span>	
+					</span>
+					<div class="typeahead" ng-show="isVisible()">
+						<ul class="typeahead-items">
+							<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
+								{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+ ${{ingredient.priceChange}})</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<div class="ingredient-row add-ingredient-row" style="position: relative;">
+		<div class="add-ingredient-form" typeahead on-select="onTypeaheadSelect(item)" items="filteredIngredients">
+			<input class="name" typeahead-control type="text" ng-model="newIngredient.name" 
+				ng-change="filterIngredients(typeaheadItems, newIngredient.name)"
+				ng-focus="filterIngredients(typeaheadItems, newIngredient.name)" placeholder="Name">
+			<span class="money-sign">$</span>
+			<input class="price-change" type="text" ng-model="newIngredient.priceChange">
+			<span class="controls">
+				<span class="icon-checkmark ok" ng-click="addIngredientToDish()"></span>
+			</span>
+			<div class="typeahead" ng-show="isVisible()">
+				<ul class="typeahead-items">
+					<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
+						{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+ ${{ingredient.priceChange}})</span>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>		
+</div>

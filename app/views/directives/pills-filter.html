@@ -1,0 +1,4 @@
+<ul>
+	<li ng-click="toggleAll()" ng-class="{selected: allSelected}">All</li>
+	<li ng-click="toggleItem(item)" ng-repeat="item in items" ng-class="{selected: isSelected(item)}">{{item}}</li>
+</ul>

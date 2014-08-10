@@ -1,0 +1,37 @@
+<div class="row">
+	<div class="col-md-offset-3 col-md-6">
+		<div class="menu-section">
+			<div class="menu-header">
+				<pills-filter class="menu-pills" items="menus" selected-items="selectedMenus"></pills-filter>
+				<div class="search-field">
+					<span class="icon-search"></span>
+					<input type="text" ng-model="searchTerm" placeholder="Search ..." />
+				</div>
+			</div>		
+		</div>	
+<!-- 		<span class="add-dish"><span class="icon-plus"></span> Add dish ...</span> -->
+		<div class="menu-section new-dish-section" ng-include="'views/dish-form.html'"></div>
+		<div class="menu-section">	
+			<div class="menu-dishes">
+				<div class="menu-dish" ng-repeat="dish in dishes" ng-show="filterDish(dish)">
+					<div class="title">
+						<div class="dish-name">{{dish.name}}</div>
+						<div class="dish-price">$ {{dish.price}}</div>
+						<div class="dish-actions">
+							<div class="pull-right">
+								<span class="icon-pencil"></span>
+								<span class="icon-remove"></span>
+							</div>
+						</div>
+						<div style="clear: both;"></div>
+					</div>							
+					<div class="details">
+						<div class="restricted-details" ng-show="dish.menus.length > 0">
+							<span ng-repeat="dishMenu in dish.menus" class="restricted-menu">{{dishMenu}}</span>
+						</div>
+					</div>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

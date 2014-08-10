@@ -1,0 +1,15 @@
+<div class="tags">
+	<div class="tag-list">
+		<span class="tag" ng-repeat="tag in selectedTags">{{tag}} <span class="icon-close"></span></span>
+		<span class="add-tag-link" ng-click="toggleSelecting()">+ Add {{tagName}}</span>
+	</div>
+	<div class="dropdown-anchor">
+		<div class="dropdown" ng-show="selecting">
+			<div class="tag-row" ng-repeat="tag in availableTags" ng-click="selectTag(tag)">{{tag}}</div>
+			<div class="add-tag">
+				<input type="text" ng-model="newTag"/>
+				<span class="icon-checkmark" ng-click="addTag(newTag)" ng-class="{active: isAddActive()}"></span>
+			</div>
+		</div>
+	</div>
+</div>

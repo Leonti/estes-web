@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
+angular.module('estesWebApp').controller('DishCtrl', function ($scope, Dish) {
     
 	$scope.expandedRow = null;
 	$scope.newIngredientNames = [];
@@ -9,6 +9,9 @@ angular.module('estesWebApp').controller('DishCtrl', function ($scope) {
 		name: null,
 		priceChange: 0
 	}
+	
+	$scope.menus = Dish.readAllMenus();
+	$scope.selectedMenus = [];
 	
 	$scope.dish = {
 		id: 1,

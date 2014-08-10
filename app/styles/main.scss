@@ -1,107 +1,5 @@
-.dish-container {
-	border: 0.3em solid #D8D8D8;
-	border-radius: 0.3em;
-	background: #F5F5F5;
-	padding-bottom: 1em;
-
-	.dish-title {
-		font-size: 3em;
-		
-		editable input {
-			border: 0.2em solid #888;
-			margin: 0.9em 0;
-		}
-		
-		.dollar {
-			padding: 0;
-			text-align: right;
-		}
-	}
-	
-	.ingredient-row {
-		font-size: 1.5em;
-	}
-	
-	.ingredient-title {
-		display: inline-block;
-		padding: 0.3em;
-		line-height: 1;
-		
-		.icon-close {
-			font-size: 0.7em;
-			margin-left: 0.3em;
-			margin-right: 0.3em;
-			cursor: pointer;
-			display: none;
-		}
-		
-		&:hover .icon-close {
-			display: inline-block;
-		}
-	}
-
-	.ingredient-or {
-		display: inline-block;
-		margin-right: 0.4em;
-		margin-left: 0.4em;		
-	}
-	
-	.ingredient-add {
-		position: relative;
-		cursor: pointer;
-		opacity: 0;
-		.icon-plus {
-			display: inline-block;
-			margin: 0.3em;
-		}
-	}
-
-	.ingredient-inline {
-		
-		&.or-ingredient {
-			position: absolute;
-			top: 0;
-			right: 0;
-			width: 1000%;		
-		}
-		
-		input {
-			display: inline-block;
-			border: 0.2em #888 solid;
-			&.name {
-				width: 58%;
-			}
-			&.price-change {
-				width: 15%;
-			}
-		}
-		.money-sign {
-			display: inline-block;
-			width: 5%;
-			text-align: right;
-		}
-		.controls {
-			float: right;
-			padding-right: 0.3em;
-			
-			span {
-				vertical-align: middle;
-				cursor: pointer;			
-			}
-			.ok {
-				color: #2BD672;
-			}
-		}
-	}
-	
-	.ingredient-row:hover .ingredient-add, .ingredient-add.visible {
-		opacity: 1;
-	}
-	
-	.ingredient-title:hover, .ingredient-inline, .ingredient-add {
-		border-radius: 0.2em;
-		background: #D8D8D8;
-	}
+body {
+	background-color: #e5e5e5;
 }
 
 .typeahead {
@@ -118,7 +16,7 @@
 		width: 100%;
 		font-size: 0.7em;
 		padding: 0;
-		border: 0.2em solid #888;
+		border: 1px solid #E4E4E4;
 		border-top: none;
 		
 		li.typeahead-item {
@@ -135,3 +33,281 @@
 	margin-top: 1em;
 }
 
+/* Menu Editor */
+.menu-section {
+	background: white;
+	border-width: 1px 1px 2px;
+	border-style: solid;
+	border-color: #D8D8D8;
+	margin-bottom: 1em;
+	padding: 1em;
+
+	&.new-dish-section {
+		background-color: #F5F5F5;	
+	}
+}
+
+
+.menu-dishes {
+	.add-dish {
+		cursor: pointer;
+		.icon-plus {
+			font-size: 0.7em;
+		}
+	}
+}
+
+.menu-pills {
+	list-style: none;
+	
+	padding-left: 0;
+
+	li {
+		display: inline-block;
+		background: yellow;
+		margin: 0 0.5em 0 0;
+		padding: 0 0.5em;
+		border-radius: 0.2em;
+		cursor: pointer;
+		background: #F5F5F5;
+			
+		&.selected {
+			background: #D8D8D8;
+		}
+	}
+}
+
+.menu-dish {
+	border-bottom: 0.2em solid #D8D8D8;
+	padding: 0.3em;
+	
+	.title {
+		font-size: 1.5em;
+		margin-bottom: 0.3em;
+		
+		.dish-name, .dish-price, .dish-actions {
+			display: inline-block;
+			padding: 0;
+			margin: 0;
+			float: left;
+		}
+		.dish-name {
+			width: 70%;
+		}
+		.dish-price {
+			width: 20%;
+			text-align: right;
+		}
+		.dish-actions {
+			width: 10%;
+		}
+	}
+	
+	.restricted-details {
+		.restricted-to-label {
+			font-style: italic;
+		}
+		.restricted-menu {
+			display: inline-block;
+			background: #D8D8D8;
+			padding: 0 0.4em;
+			border-radius: 0.3em;
+			margin-right: 0.3em;
+		}
+	}
+}
+
+.dish-form {
+	
+	.dish-name, .dish-price {
+		input {
+			border: 1px solid #E4E4E4;
+			color: #404040;
+			padding: 0.3em;
+		}	
+	}
+
+	.dish-name, .dish-price {
+		display:inline-block;
+	}
+	.dish-name {
+		width: 73%;
+		input {
+			width: 100%;
+		}
+	}
+	.dish-price {
+		width: 20%;
+		text-align: right;
+		input {
+			width: 40%;
+		}
+	}
+	.menu-tags {
+		margin: 0.5em 0;
+		width: 73%;
+	}
+	
+	.ingredient-row {
+		border-bottom: 0.2em solid #D8D8D8;
+		
+		.ingredient-ors {
+			float: left;
+			padding: 0.5em 0.3em;
+			
+			.ingredient-title {
+				.icon-close {
+					font-size: 0.7em;
+					cursor: pointer;
+				}
+			}
+		}
+		
+		.typeahead-items {
+			font-size: 1em;
+		}
+			
+		.ingredient-add {
+			position: relative;
+			cursor: pointer;
+			float: right;
+			.icon-plus {
+				display: inline-block;
+				margin: 0.7em;
+			}
+			.typeahead-items {
+				font-size: 1em;
+			}
+			.add-ingredient-form {
+				position: absolute;
+				top: 0.15em;
+				right: 0;
+				width: 1000%;	
+			}
+		}
+		
+		&.add-ingredient-row {
+			.add-ingredient-form {
+				width: 50%;			
+			}
+		}
+		
+		.add-ingredient-form {
+			background: white;
+			input {
+				display: inline-block;
+				border: 1px solid #E4E4E4;
+				color: #404040;
+				padding: 0.3em;
+				&.name {
+					width: 58%;
+				}
+				&.price-change {
+					width: 15%;
+				}
+			}
+			.money-sign {
+				display: inline-block;
+				width: 5%;
+				text-align: right;
+			}
+			.controls {
+				float: right;
+				padding-right: 0.3em;
+				font-size: 1.4em;
+			
+				span {
+					vertical-align: middle;
+					cursor: pointer;			
+				}
+				.ok {
+					color: #2BD672;
+				}
+			}		
+		}		
+	}
+}
+
+/* General */
+.search-field {
+	position: relative;
+	padding: 0.3em;
+	padding-left: 2em;
+	border: 1px solid #E4E4E4;
+	color: #404040;
+	
+	.icon-search {
+		position: absolute;
+		left: 0.2em;
+		top: 0.3em;
+		font-size: 1.3em;
+	}
+	input {
+		width: 100%;
+		border: none;
+	}
+}
+
+.tags {
+	border: 1px solid #E4E4E4;
+	color: #404040;
+	background: white;
+	width: 100%;
+	
+	.tag-list {
+		padding: 0.3em;
+		.tag {
+			display: inline-block;
+			background: #D8D8D8;
+			padding: 0 0.4em;
+			border-radius: 0.3em;
+			margin-right: 0.3em;	
+		
+			.icon-close {
+				font-size: 0.7em;
+				cursor: pointer; 
+			}	
+		}
+		
+		.add-tag-link {
+			color: #999;
+			cursor: pointer;
+		}	
+	}
+	
+	.dropdown-anchor {
+		position: relative;
+		width: 100%;
+		.dropdown {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			padding: 0.3em;
+			background: white;
+			border: 1px solid #E4E4E4;
+			z-index: 100;
+			
+			.tag-row {
+				padding: 0.3em;
+				
+				&:hover {
+					background-color: #F5F5F5;
+				}
+			}
+			
+			.add-tag { 
+				margin-top: 0.3em;
+				input {
+					border: 1px solid #E4E4E4;
+					color: #404040;
+					padding: 0.3em;
+				}
+				.icon-checkmark.active {
+					cursor: pointer;
+					color: #2BD672;
+				}
+			}
+		}
+	}
+}

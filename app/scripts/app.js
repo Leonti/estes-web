@@ -28,10 +28,10 @@ angular
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl'
       })
-      .when('/dish/new', {
-        templateUrl: 'views/dish.html',
-        controller: 'DishCtrl'
-      })
+      .when('/menu', {
+        templateUrl: 'views/menu-editor.html',
+        controller: 'MenuEditorCtrl'
+      })      
       .otherwise({
         redirectTo: '/'
       });
