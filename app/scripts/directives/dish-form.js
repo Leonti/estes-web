@@ -5,7 +5,7 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
       templateUrl: 'views/dish-form.html',
       restrict: 'EA',
       scope: {
-    	  dish: '=?',
+    	  inputDish: '=?dish',
     	  onClose: '&',
     	  onSave: '&'
       },
@@ -28,15 +28,16 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		});
 		$scope.selectedMenus = [];
 		
-		if (!$scope.dish) {
+		if (!$scope.inputDish) {
 			$scope.dish = {
 				name: '',
 				price: 0,
 				ingredients: [],
 				menus: []
 			}			
+		} else {
+			$scope.dish = angular.copy($scope.inputDish);
 		}		
-		
 		
 		
 		var rowJustClosed = false;
@@ -112,6 +113,15 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 			});
 		}
 		
+		$scope.save = function(dish) {
+			// use 2-way binding to update the ui
+			angular.extend($scope.inputDish, $scope.dish);				
+			$scope.onSave({dish: dish});
+		}
+		
+		$scope.cancel = function() {
+			$scope.onClose();
+		}
       }
     };
   });
