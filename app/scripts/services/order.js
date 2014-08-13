@@ -11,6 +11,10 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 	
 	var getStatus = function(i) {
 
+		if (i % 7 == 0) {
+			return 'PREPARED';
+		}		
+		
 		if (i % 6 == 0) {
 			return 'PAID';
 		}		
@@ -29,12 +33,14 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 		if (i % 2 == 0) {
 			return 'PREPARATION';
 		}
+		
+		return 'PREPARATION';
 	}
 	
 	var generateOrderDishes = function(i) {
 		var dishes = [];
 		var titleBase = 'Burger';
-		for (var i = 0; i < 5; i++) {
+		for (var i = 0; i < getRandomInt(0, 8); i++) {
 			dishes.push({
 				name: 'Dish ' + titleBase,
 				price: 10,
@@ -44,6 +50,10 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 		}
 		
 		return dishes;		
+	}
+	
+	function getRandomInt(min, max) {
+		  return Math.floor(Math.random() * (max - min)) + min;
 	}
 	
 	var generateFakeOrders = function() {
@@ -63,11 +73,24 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 		return orders;
 	}
 	
+	var statusPriorities = {
+		'SUBMITTED': 0,
+		'PREPARATION': 1,
+		'PREPARED': 2,
+		'SERVED': 3,
+		'COMPLETED': 4,
+		'PAID': 5
+	};
+	
 	return {
 		readAll: function() {
 			var deferred = $q.defer();
 			deferred.resolve(generateFakeOrders());
 			return deferred.promise;			
 		},
+		
+		getStatusPriority: function(status) {
+			return statusPriorities[status];
+		}
 	}
 });

@@ -1,3 +1,7 @@
-<div ng-repeat="order in orders">
-{{order}}
+<div class="row">
+	<div class="col-md-2" ng-repeat="col in partitionedOrders">
+		<div class="order" ng-repeat="order in col">
+			{{order.status}}
+		</div>
+	</div>
 </div>
