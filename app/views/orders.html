@@ -1,7 +1,12 @@
-<div class="row">
+<div class="row order-list">
 	<div class="col-md-2" ng-repeat="col in partitionedOrders">
 		<div class="order" ng-repeat="order in col">
-			{{order.status}}
+			<div class="order-status">{{order.status}}</div>
+			<div class="order-waiter">{{order.waiter.name}}</div>
+			<div class="order-submitted">{{order.submitted}}</div>
+			<div class="dish-list">
+				<div class="order-dish" ng-repeat="dish in order.dishes">{{dish.name}}</div>
+			</div>
 		</div>
 	</div>
 </div>
