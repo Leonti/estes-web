@@ -6,7 +6,9 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 		restrict: 'E',
 		replace: true,
 		scope: {
-			dish: '='
+			dish: '=',
+			onSave: '&',
+			onCancel: '&'
 		},
 		link : function postLink(scope, element, attrs) {
 			scope.selectedIngredients = [];
@@ -54,6 +56,12 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 				}
 				
 			}, true);
+			
+			scope.save = function(dish) {
+				scope.onSave({dish: dish});
+			}
+			
+			scope.cancel = scope.onCancel;
 		}
 	};
 });

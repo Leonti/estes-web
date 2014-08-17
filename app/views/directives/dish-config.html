@@ -1,6 +1,8 @@
 <div class="dish-config">
-	<span class="dish-name">{{dish.name}}</span>
-	<span class="dish-price">${{dish.price}}</span>
+	<div class="dish-header">
+		<span class="dish-name">{{dish.name}}</span>
+		<span class="dish-price">${{dish.price}}</span>
+	</div>
 	<ul class="dish-ingredients">
 		<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients">
 			<span class="dish-ingredient-or" ng-repeat="ingredient in ingredientOrs">
@@ -10,4 +12,8 @@
 			</span>
 		</li>
 	</ul>
+	<div class="form-action-buttons">
+		<button class="save-button" ng-click="save(dish)">Save</button>
+		<button class="cancel-button" ng-click="cancel()">Cancel</button>
+	</div>		
 </div>

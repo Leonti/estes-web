@@ -34,10 +34,10 @@
 				</div>
 			</div>
 			<div class="order-dish-config shadow-border" ng-show="orderFormDish">
-				<dish-config dish="orderFormDish"></dish-config>
+				<dish-config dish="orderFormDish" on-save="addDishToOrder(dish)" on-cancel="cancelAddingDish()"></dish-config>
 			</div>
 			
-			<div class="dish-list shadow-border">
+			<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
 				<div class="order-dish" ng-repeat="dish in order.dishes">
 					<list-dish dish="dish"></list-dish>
 				</div>

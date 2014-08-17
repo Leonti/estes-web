@@ -78,4 +78,13 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, Order, W
 	$scope.addDish = function(dish) {
 		$scope.orderFormDish = dish;
 	}
+	
+	$scope.addDishToOrder = function(dish) {
+		$scope.order.dishes.push(dish);
+		$scope.orderFormDish = null;
+	}
+	
+	$scope.cancelAddingDish = function() {
+		$scope.orderFormDish = null;
+	}
 });

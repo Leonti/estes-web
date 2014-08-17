@@ -1,12 +1,13 @@
 .dish-config {
-	.dish-name {
-		float: left;
-	}
-	.dish-price {
-		float: right;
+	.dish-header {
+		margin-bottom: 1em;
+		font-size: 1.5em;
+
+		.dish-price {
+			float: right;
+		}
 	}
 	.dish-ingredients {
-		clear: both;
 		list-style: none;
 		padding: 0;
 		
