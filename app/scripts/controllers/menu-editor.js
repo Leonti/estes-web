@@ -61,5 +61,4 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		return $scope.editedDishIndex == index;
 	}
 	
-	
 });

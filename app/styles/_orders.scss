@@ -1,9 +1,59 @@
 .order-list {
 	.order {
 		background: white;
-		border-width: 1px 1px 2px;
-		border-style: solid;
-		border-color: #D8D8D8;
 		margin-bottom: 1em;
+		padding: 1em;
+	}
+}
+
+.order-form {
+	background-color: #F5F5F5;
+	padding: 1em;
+	
+	.form-label {
+		display: block;
+	}
+	
+	.dish-selector {
+		background: white;
+		padding: 1em 1em 0 1em;
+		
+		.selector-dish-list {
+			position: relative;
+			max-height: 20em;
+			overflow: hidden;
+			padding-bottom: 1.5em;
+			margin-top: 1em;
+			
+			.list-expander {
+				position: absolute;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				cursor: pointer;
+				text-align: center;
+				background: white;
+				height: 1.5em;
+			}
+			
+			&.expanded {
+				max-height: none;
+			}
+			
+			.selector-dish {
+				cursor: pointer;
+			}
+		}
+	}
+	
+	.order-dish-config {
+		padding: 1em;
+		background: white;
+	}
+	
+	.dish-list {
+		margin-top: 1em;
+		padding: 1em;
+		background: white;
 	}
 }

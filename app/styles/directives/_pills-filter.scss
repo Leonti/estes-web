@@ -1,0 +1,20 @@
+.pills-filter {
+	list-style: none;
+	
+	ul {
+		padding-left: 0;
+		li {
+			display: inline-block;
+			background: yellow;
+			margin: 0 0.5em 0 0;
+			padding: 0 0.5em;
+			border-radius: 0.2em;
+			cursor: pointer;
+			background: #F5F5F5;
+				
+			&.selected {
+				background: #D8D8D8;
+			}
+		}
+	}
+}

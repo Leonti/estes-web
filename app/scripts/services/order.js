@@ -3,10 +3,10 @@
 angular.module('estesWebApp').service('Order', function Order($q) {
 	
 	var fakeIngredients = [
-	            		   { id: 4, name: 'Regular fries', priceChange: 0 },
-	            		   { id: 5, name: 'Curly fries', priceChange: 0.5 }, 
-	            		   { id: 2, name: 'Onions', priceChange: 0 }, 
-	            		   { id: 1, name: 'Beef', priceChange: 0 }
+	            		   [{ id: 4, name: 'Regular fries', priceChange: 0 }],
+	            		   [{ id: 5, name: 'Curly fries', priceChange: 0.5 }], 
+	            		   [{ id: 2, name: 'Onions', priceChange: 0 }], 
+	            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
 	            		];
 	
 	var getStatus = function(i) {
@@ -61,9 +61,7 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 		
 		for (var i = 0; i < 40; i++) {
 			orders.push({
-				waiter: {
-					name: 'Leonti'
-				},
+				waiter: {name: 'Krishti', id: 14},
 				submitted: Date.now(),
 				dishes: generateOrderDishes(i),
 				status: getStatus(i)
@@ -72,6 +70,8 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 		
 		return orders;
 	}
+	
+	var statuses = ['SUBMITTED', 'PREPARATION', 'PREPARED', 'SERVED', 'COMPLETED', 'PAID'];
 	
 	var statusPriorities = {
 		'SUBMITTED': 0,
@@ -87,6 +87,12 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 			var deferred = $q.defer();
 			deferred.resolve(generateFakeOrders());
 			return deferred.promise;			
+		},
+		
+		getStatusList: function() {
+			var deferred = $q.defer();
+			deferred.resolve(statuses);
+			return deferred.promise;				
 		},
 		
 		getStatusPriority: function(status) {

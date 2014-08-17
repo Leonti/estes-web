@@ -11,6 +11,12 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 	            		   { id: 1, name: 'Beef', priceChange: 0 }
 	            		];
 	
+	var dishIngredients =  [
+	            		   [{ id: 4, name: 'Regular fries', priceChange: 0 }, { id: 5, name: 'Curly fries', priceChange: 0.5 }],
+	            		   [{ id: 2, name: 'Onions', priceChange: 0 }], 
+	            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
+	            		];
+	
 	function generateDishesForMenus(menus) {
 		var dishes = [];
 		var titleBase = '';
@@ -22,7 +28,7 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 				name: 'Dish ' + titleBase + '_' + i,
 				price: 10,
 				menus: menus,
-				ingredients: []
+				ingredients: dishIngredients
 			});
 		}
 		
