@@ -59,17 +59,21 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 	var generateFakeOrders = function() {
 		var orders = [];
 		
-		for (var i = 0; i < 40; i++) {
+		for (var i = 0; i < 41; i++) {
 			orders.push({
+				id: i,
 				waiter: {name: 'Krishti', id: 14},
 				submitted: Date.now(),
 				dishes: generateOrderDishes(i),
-				status: getStatus(i)
+				status: getStatus(i),
+				note: 'Make it fast!'
 			});
 		}
 		
 		return orders;
 	}
+	
+	var fakeOrders = generateFakeOrders();
 	
 	var statuses = ['SUBMITTED', 'PREPARATION', 'PREPARED', 'SERVED', 'COMPLETED', 'PAID'];
 	
@@ -84,15 +88,17 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 	
 	return {
 		readAll: function() {
-			var deferred = $q.defer();
-			deferred.resolve(generateFakeOrders());
-			return deferred.promise;			
+			return $q.when(fakeOrders);			
+		},
+		
+		save: function(order) {
+			order.id = fakeOrders.length;
+			fakeOrders.push(order);
+			return $q.when(order);
 		},
 		
 		getStatusList: function() {
-			var deferred = $q.defer();
-			deferred.resolve(statuses);
-			return deferred.promise;				
+			return $q.when(statuses);				
 		},
 		
 		getStatusPriority: function(status) {

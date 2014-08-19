@@ -47,6 +47,8 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 				}
 				
 				function findChangedInRow(row, oldRow) {
+					if (!oldRow) return -1;
+					
 					for (var i = 0; i < row.length; i++) {
 						if (row[i] == true && oldRow[i] == false) {
 							return i;

@@ -1,6 +1,6 @@
 <div class="row order-list">
-	<div class="col-md-2" ng-repeat="col in partitionedOrders">
-		<div class="order shadow-border" ng-repeat="order in col">
+	<div class="col-md-8">
+		<div class="order shadow-border" ng-repeat="order in orders">
 			<div class="order-status">{{order.status}}</div>
 			<div class="order-waiter">{{order.waiter.name}}</div>
 			<div class="order-submitted">{{order.submitted}}</div>
@@ -13,28 +13,36 @@
 	</div>
 	<div class="col-md-4">
 		<div class="order-form shadow-border" >
-			<label class="form-label">Status:</label>
-			<dropdown items="statusList" selected-item="order.status"></dropdown>
-			<label class="form-label">Waiter:</label>
-			<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
+			<div class="status-block">
+				<label class="form-label">Status:</label>
+				<dropdown items="statusList" selected-item="order.status"></dropdown>
+			</div>
+			<div class="waiter-block">
+				<label class="form-label">Waiter:</label>
+				<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
+			</div>
 			
 			<label class="form-label">Dishes</label>
-			<div class="dish-selector shadow-border" ng-hide="orderFormDish">
-				<div class="dish-filter">
-					<dish-filter menus="menus" selected-menus="selectedMenus" search-term="searchTerm"></dish-filter>
-				</div>
-				<div class="selector-dish-list" ng-class="{expanded: dishListExpanded}">
-					<div class="selector-dish" ng-repeat="dish in dishList" ng-click="addDish(dish)" ng-show="filterDish(dish)">
-						<list-dish dish="dish"></list-dish>
+			<span class="add-new-dish" ng-hide="addingNewDish" ng-click="showAddDish()">+ Add dish</span>
+			<div ng-show="addingNewDish">		
+				<div class="dish-selector shadow-border" ng-hide="orderFormDish">
+					<span class="add-new-dish-close icon-close2" ng-click="hideAddDish()"></span>
+					<div class="dish-filter">
+						<dish-filter menus="menus" selected-menus="selectedMenus" search-term="searchTerm"></dish-filter>
 					</div>
-					<div class="list-expander" ng-click="toggleDishList()">
-						<span ng-hide="dishListExpanded">Show all</span>
-						<span ng-show="dishListExpanded">Collapse</span>
-					</div>					
+					<div class="selector-dish-list" ng-class="{expanded: dishListExpanded}">
+						<div class="selector-dish" ng-repeat="dish in dishList" ng-click="addDish(dish)" ng-show="filterDish(dish)">
+							<list-dish dish="dish"></list-dish>
+						</div>
+						<div class="list-expander" ng-click="toggleDishList()">
+							<span ng-hide="dishListExpanded">Show all</span>
+							<span ng-show="dishListExpanded">Collapse</span>
+						</div>					
+					</div>
 				</div>
-			</div>
-			<div class="order-dish-config shadow-border" ng-show="orderFormDish">
-				<dish-config dish="orderFormDish" on-save="addDishToOrder(dish)" on-cancel="cancelAddingDish()"></dish-config>
+				<div class="order-dish-config shadow-border" ng-show="orderFormDish">
+					<dish-config dish="orderFormDish" on-save="addDishToOrder(dish)" on-cancel="cancelAddingDish()"></dish-config>
+				</div>
 			</div>
 			
 			<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
@@ -43,8 +51,17 @@
 				</div>
 			</div>
 			
+			<label class="form-label">Note</label>
+			<div class="order-note shadow-border">
+				<textarea class="order-note-text" ng-model="order.note"></textarea>
+			</div>
+			
+			<div class="order-total">
+				<span class="total-label">Total: ${{calculateTotal(order)}}</span>
+			</div>
+			
 			<div class="form-action-buttons">
-				<button class="save-button" ng-click="save(dish)">Save</button>
+				<button class="save-button" ng-click="save(order)">Save</button>
 				<button class="cancel-button" ng-click="cancel()">Cancel</button>
 			</div>			
 		</div>

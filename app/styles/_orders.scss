@@ -1,8 +1,11 @@
 .order-list {
 	.order {
 		background: white;
-		margin-bottom: 1em;
+		margin: 0 1em 1em 0;
 		padding: 1em;
+		display: inline-block;
+		vertical-align: top;
+		width: 20em;
 	}
 }
 
@@ -10,8 +13,29 @@
 	background-color: #F5F5F5;
 	padding: 1em;
 	
+	.status-block, .waiter-block {
+		display: inline-block;
+	}
+	
+	.status-block {
+		margin-right: 3em;
+	}
+	
 	.form-label {
 		display: block;
+		margin-top: 1em;
+	}
+	
+	.add-new-dish {
+		cursor: pointer;
+	}
+	
+	.add-new-dish-close {
+		cursor: pointer;
+		float: right;
+		&:hover {
+			color: #E74C3C;
+		}
 	}
 	
 	.dish-selector {
@@ -56,4 +80,25 @@
 		padding: 1em;
 		background: white;
 	}
+	
+	.order-note {
+		padding: 1em;
+		background: white;
+		
+		.order-note-text {
+			border: 1px solid #E4E4E4;
+			color: #404040;
+			width: 100%;
+		}
+	}
+	
+	.order-total {
+		margin: 1em 0;
+		font-size: 1.5em;
+		height: 1em;
+		
+		.total-label {
+			float: right;
+		}
+	}	
 }

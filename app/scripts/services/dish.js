@@ -46,6 +46,15 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 		return allDishes;
 	}
 	
+	var getPrice = function(dish) {
+		var price = dish.price;
+		_.each(dish.ingredients, function(ingredientOrs) {
+			price += ingredientOrs[0].priceChange;
+		});
+		
+		return price;
+	}
+	
 	return {
 		readAll: function() {
 			var deferred = $q.defer();
@@ -65,6 +74,9 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 		save: function(dish) {
 			console.log('saving dish');
 			console.log(dish);
+		},
+		getPrice: function(dish) {
+			return getPrice(dish);
 		}
 	}
 });

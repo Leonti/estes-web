@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').controller('OrdersCtrl', function($scope, Order, Waiter, Dish) {
+angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Order, Waiter, Dish) {
 
 	var cols = 4;
 	$scope.statusList = null;
@@ -9,25 +9,32 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, Order, W
 	$scope.dishList = null;
 	$scope.dishListExpanded = false;
 	$scope.orderFormDish = null;
+	$scope.addingNewDish = false;
 	
-	Order.readAll().then(function(orders) {
-		orders.sort(function(order1, order2) {
-			return Order.getStatusPriority(order1.status) - Order.getStatusPriority(order2.status);
+	var OrderTemplate = function(status, waiter) {
+		return {
+			status: status,
+			waiter: waiter,
+			dishes: [],
+			note: null
+		}
+	}
+	
+	var refreshOrders = function() {
+		Order.readAll().then(function(orders) {
+			orders.sort(function(order1, order2) {
+				return Order.getStatusPriority(order1.status) - Order.getStatusPriority(order2.status);
+			});		
+			$scope.orders = orders;
 		});		
-		
-		$scope.orders = orders;
-		
-		$scope.order = orders[0];
-		
-		$scope.partitionedOrders = partition(orders, cols);
-	});
-
-	Order.getStatusList().then(function(statusList) {
-		$scope.statusList = statusList;
-	});
+	}
 	
-	Waiter.readAll().then(function(waiters) {
-		$scope.waiterList = waiters;
+	refreshOrders();
+
+	$q.all({ statuses: Order.getStatusList(), waiters: Waiter.readAll() }).then(function(results) {
+		$scope.statusList = results.statuses;
+		$scope.waiterList = results.waiters;
+		$scope.order = OrderTemplate(results.statuses[0], results.waiters[0]);
 	});
 
 	Dish.readAll().then(function(dishList) {
@@ -51,24 +58,16 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, Order, W
     	return menuFilter && isInSearch(dish);
 	}	
 	
-	var partition = function(orders, cols) {
-		var partitioned = [];
-		var itemsInCol = Math.ceil(orders.length / cols);
-
-		for (var col = 0; col < cols; col++) {
-			for (var row = 0; row < itemsInCol; row++) {
-				if (!partitioned[col]) {
-					partitioned[col] = [];
-				}
-				partitioned[col][row] = orders[cols * (row) + (col)];
-			}
-		}
-
-		return partitioned;
-	}
-	
 	$scope.waiterToLabel = function(waiter) {
 		return waiter.name + ' (' + waiter.id + ')';
+	}
+	
+	$scope.showAddDish = function() {
+		$scope.addingNewDish = true;
+	}
+	
+	$scope.hideAddDish = function() {
+		$scope.addingNewDish = false;
 	}
 	
 	$scope.toggleDishList = function() {
@@ -86,5 +85,30 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, Order, W
 	
 	$scope.cancelAddingDish = function() {
 		$scope.orderFormDish = null;
+	}
+	
+	$scope.calculateTotal = function(order) {
+		if (!order) return 0;
+		
+		var total = 0;
+		_.each(order.dishes, function(dish) {
+			total += Dish.getPrice(dish);
+		});
+		return total;
+	}
+	
+	$scope.save = function(order) {
+		resetOrder();
+		Order.save(order).then(function() {
+			refreshOrders();
+		});
+	}
+	
+	$scope.cancel = function() {
+		resetOrder();
+	}
+	
+	function resetOrder() {
+		$scope.order = OrderTemplate($scope.statusList[0], $scope.waiterList[0]);
 	}
 });
