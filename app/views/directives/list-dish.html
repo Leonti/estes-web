@@ -1,11 +1,17 @@
 <div class="list-dish">
 	<span class="dish-name">{{dish.name}}</span>
 	<span class="dish-price">${{dish.price}}</span>
-	<ul class="dish-ingredients">
+	<ul ng-if="!showSelected" class="dish-ingredients">
 		<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients">
 			<span ng-repeat="ingredient in ingredientOrs">
 				{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span><!-- 
 				 --><span ng-hide="$last"> or </span></span><span ng-hide="$last">, </span>
 		</li>
 	</ul>
+	<ul ng-if="showSelected" class="dish-ingredients">
+		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients">
+			{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span><!-- 
+				 --><span ng-hide="$last">, </span>
+		</li>
+	</ul>	
 </div>

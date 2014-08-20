@@ -5,7 +5,8 @@ angular.module('estesWebApp').directive('listDish', function() {
 		templateUrl: '/views/directives/list-dish.html',
 		restrict : 'E',
 		scope: {
-			dish: '='
+			dish: '=',
+			showSelected: '=?'
 		},
 		link : function postLink(scope, element, attrs) {
 		}

@@ -1,12 +1,12 @@
 <div class="row order-list">
 	<div class="col-md-8">
-		<div class="order shadow-border" ng-repeat="order in orders">
+		<div class="order shadow-border" ng-repeat="order in orders" ng-click="editOrder(order)">
 			<div class="order-status">{{order.status}}</div>
 			<div class="order-waiter">{{order.waiter.name}}</div>
 			<div class="order-submitted">{{order.submitted}}</div>
 			<div class="dish-list">
 				<div class="order-dish" ng-repeat="dish in order.dishes">
-					<list-dish dish="dish"></list-dish>
+					<list-dish dish="dish" show-selected="true"></list-dish>
 				</div>
 			</div>
 		</div>
@@ -47,7 +47,7 @@
 			
 			<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
 				<div class="order-dish" ng-repeat="dish in order.dishes">
-					<list-dish dish="dish"></list-dish>
+					<list-dish dish="dish" show-selected="true"></list-dish>
 				</div>
 			</div>
 			

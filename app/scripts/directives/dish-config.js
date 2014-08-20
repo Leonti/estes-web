@@ -6,16 +6,19 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 		restrict: 'E',
 		replace: true,
 		scope: {
-			dish: '=',
+			inputDish: '=dish',
 			onSave: '&',
 			onCancel: '&'
 		},
 		link : function postLink(scope, element, attrs) {
 			scope.selectedIngredients = [];
 			
-			scope.$watch('dish', function(dish) {
+			scope.$watch('inputDish', function(dish) {
 				if (!dish) return;
 
+				scope.dish = angular.copy(dish);
+				
+				scope.selectedIngredients = [];
 				_.each(dish.ingredients, function(ingredientsOr) {
 					var ingredientStates = [];
 					_.each(ingredientsOr, function(ingredient) {
@@ -60,6 +63,19 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 			}, true);
 			
 			scope.save = function(dish) {
+				
+				dish.selectedIngredients = [];
+				
+				for (var i = 0; i < scope.selectedIngredients.length; i++) {
+					for (var j = 0; j < scope.selectedIngredients[i].length; j++) {
+						if (scope.selectedIngredients[i][j]) {
+							dish.selectedIngredients.push(dish.ingredients[i][j]);
+						}
+					}
+				}
+				
+				// use 2-way binding to update the ui
+				angular.extend(scope.inputDish, dish);
 				scope.onSave({dish: dish});
 			}
 			

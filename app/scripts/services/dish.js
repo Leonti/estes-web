@@ -28,7 +28,8 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 				name: 'Dish ' + titleBase + '_' + i,
 				price: 10,
 				menus: menus,
-				ingredients: dishIngredients
+				ingredients: dishIngredients,
+				selectedIngredients: []
 			});
 		}
 		

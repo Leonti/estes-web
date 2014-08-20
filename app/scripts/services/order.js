@@ -3,11 +3,12 @@
 angular.module('estesWebApp').service('Order', function Order($q) {
 	
 	var fakeIngredients = [
-	            		   [{ id: 4, name: 'Regular fries', priceChange: 0 }],
-	            		   [{ id: 5, name: 'Curly fries', priceChange: 0.5 }], 
+	            		   [{ id: 4, name: 'Regular fries', priceChange: 0 }, { id: 5, name: 'Curly fries', priceChange: 0.5 }],
 	            		   [{ id: 2, name: 'Onions', priceChange: 0 }], 
 	            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
 	            		];
+	
+	var selectedIngredients = [{ id: 5, name: 'Curly fries', priceChange: 0.5 }, { id: 2, name: 'Onions', priceChange: 0 }, { id: 1, name: 'Beef', priceChange: 0 }];
 	
 	var getStatus = function(i) {
 
@@ -45,7 +46,8 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 				name: 'Dish ' + titleBase,
 				price: 10,
 				menus: ['Breakfast', 'Lunch'],
-				ingredients: fakeIngredients
+				ingredients: fakeIngredients,
+				selectedIngredients: selectedIngredients
 			});
 		}
 		
@@ -92,8 +94,18 @@ angular.module('estesWebApp').service('Order', function Order($q) {
 		},
 		
 		save: function(order) {
-			order.id = fakeOrders.length;
-			fakeOrders.push(order);
+			
+			if (!order.id) {
+				order.id = fakeOrders.length;
+				fakeOrders.push(order);				
+			} else {
+				for (var i = 0; i < fakeOrders.length; i++) {
+					if (fakeOrders[i].id == order.id) {
+						fakeOrders[i] = order;
+					}
+				}
+			}
+
 			return $q.when(order);
 		},
 		

@@ -97,6 +97,10 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Orde
 		return total;
 	}
 	
+	$scope.editOrder = function(order) {
+		$scope.order = angular.copy(order);
+	}
+	
 	$scope.save = function(order) {
 		resetOrder();
 		Order.save(order).then(function() {
