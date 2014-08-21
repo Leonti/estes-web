@@ -6,7 +6,7 @@
 			<div class="order-submitted">{{order.submitted}}</div>
 			<div class="dish-list">
 				<div class="order-dish" ng-repeat="dish in order.dishes">
-					<list-dish dish="dish" show-selected="true"></list-dish>
+					<order-dish-list-item dish="dish" show-selected="true"></order-dish-list-item>
 				</div>
 			</div>
 		</div>
@@ -32,7 +32,7 @@
 					</div>
 					<div class="selector-dish-list" ng-class="{expanded: dishListExpanded}">
 						<div class="selector-dish" ng-repeat="dish in dishList" ng-click="addDish(dish)" ng-show="filterDish(dish)">
-							<list-dish dish="dish"></list-dish>
+							<dish-list-item dish="dish"></dish-list-item>
 						</div>
 						<div class="list-expander" ng-click="toggleDishList()">
 							<span ng-hide="dishListExpanded">Show all</span>
@@ -47,7 +47,7 @@
 			
 			<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
 				<div class="order-dish" ng-repeat="dish in order.dishes">
-					<list-dish dish="dish" show-selected="true"></list-dish>
+					<order-dish-list-item dish="dish"></order-dish-list-item>
 				</div>
 			</div>
 			

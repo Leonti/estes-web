@@ -1,0 +1,10 @@
+<div class="dish-list-item">
+	<span class="dish-name">{{dish.name}}</span>
+	<span class="dish-price">${{dish.price}}</span>
+	<ul class="dish-ingredients">
+		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients">
+			{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span><!-- 
+				 --><span ng-hide="$last">, </span>
+		</li>
+	</ul>	
+</div>
