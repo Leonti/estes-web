@@ -31,7 +31,7 @@
 						<dish-filter menus="menus" selected-menus="selectedMenus" search-term="searchTerm"></dish-filter>
 					</div>
 					<div class="selector-dish-list" ng-class="{expanded: dishListExpanded}">
-						<div class="selector-dish" ng-repeat="dish in dishList" ng-click="addDish(dish)" ng-show="filterDish(dish)">
+						<div class="selector-dish" ng-repeat="dish in dishList" ng-click="configDish(dish)" ng-show="filterDish(dish)">
 							<dish-list-item dish="dish"></dish-list-item>
 						</div>
 						<div class="list-expander" ng-click="toggleDishList()">

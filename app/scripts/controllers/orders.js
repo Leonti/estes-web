@@ -74,8 +74,8 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Orde
 		$scope.dishListExpanded = !$scope.dishListExpanded;
 	}
 	
-	$scope.addDish = function(dish) {
-		$scope.orderFormDish = dish;
+	$scope.configDish = function(dish) {
+		$scope.orderFormDish = Dish.toOrderDish(dish);
 	}
 	
 	$scope.addDishToOrder = function(dish) {

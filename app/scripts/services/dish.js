@@ -28,8 +28,7 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 				name: 'Dish ' + titleBase + '_' + i,
 				price: 10,
 				menus: menus,
-				ingredients: dishIngredients,
-				selectedIngredients: []
+				ingredients: dishIngredients
 			});
 		}
 		
@@ -78,6 +77,15 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 		},
 		getPrice: function(dish) {
 			return getPrice(dish);
+		},
+		toOrderDish: function(dish) {
+			return {
+				name: dish.name,
+				price: dish.price,
+				ingredients: angular.copy(dish.ingredients),
+				selectedIngredients: [],
+				status: 'SUBMITTED'
+			}
 		}
 	}
 });
