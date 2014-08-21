@@ -81,6 +81,7 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Orde
 	$scope.addDishToOrder = function(dish) {
 		$scope.order.dishes.push(dish);
 		$scope.orderFormDish = null;
+		$scope.addingNewDish = false;
 	}
 	
 	$scope.cancelAddingDish = function() {

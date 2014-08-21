@@ -3,6 +3,7 @@
 		<div class="order shadow-border" ng-repeat="order in orders" ng-click="editOrder(order)">
 			<div class="order-status">{{order.status}}</div>
 			<div class="order-waiter">{{order.waiter.name}}</div>
+			<div class="order-submitted" am-time-ago="order.submitted"></div>
 			<div class="order-submitted">{{order.submitted}}</div>
 			<div class="dish-list">
 				<div class="order-dish" ng-repeat="dish in order.dishes">
