@@ -48,8 +48,8 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 	
 	var getPrice = function(dish) {
 		var price = dish.price;
-		_.each(dish.ingredients, function(ingredientOrs) {
-			price += ingredientOrs[0].priceChange;
+		_.each(dish.selectedIngredients, function(ingredient) {
+			price += ingredient.priceChange;
 		});
 		
 		return price;
