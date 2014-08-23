@@ -28,7 +28,11 @@ angular
       .when('/menu', {
         templateUrl: 'views/menu-editor.html',
         controller: 'MenuEditorCtrl'
-      })      
+      })
+      .when('/kitchen', {
+        templateUrl: 'views/kitchen.html',
+        controller: 'KitchenCtrl'
+      })       
       .otherwise({
         redirectTo: '/'
       });

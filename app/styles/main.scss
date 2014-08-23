@@ -338,8 +338,10 @@ body {
 }
 
 @import 'orders';
+@import 'kitchen';
 @import 'directives/dropdown';
 @import 'directives/dish-list-item';
 @import 'directives/pills-filter';
 @import 'directives/dish-filter';
 @import 'directives/dish-config';
+@import 'directives/kitchen-dish-list-item';

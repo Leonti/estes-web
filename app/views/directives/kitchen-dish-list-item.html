@@ -1,0 +1,9 @@
+<div class="kitchen-dish-list-item">
+	<span class="dish-name">{{dish.name}}</span>
+	<span class="icon-checkmark ok" ng-class="{'prepared': dish.status == 'PREPARED'}" ng-click="done(dish)"></span>
+	<ul class="dish-ingredients">
+		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients">
+			{{ingredient.name}}
+		</li>
+	</ul>	
+</div>

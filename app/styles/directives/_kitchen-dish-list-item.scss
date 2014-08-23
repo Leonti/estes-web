@@ -1,0 +1,19 @@
+.kitchen-dish-list-item {
+	.dish-name {
+		font-size: 1.5em;
+	}
+	.ok {
+		float: right;
+		font-size: 4em;
+		cursor: pointer;
+		
+		&.prepared {
+			color: #2BD672;
+		}
+	}
+	.dish-ingredients {
+		list-style: none;
+		.dish-ingredient {
+		}
+	}
+}

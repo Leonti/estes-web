@@ -1,0 +1,38 @@
+.kitchen {
+	.kitchen-orders {
+		text-align: center;
+	}
+	.kitchen-order {
+		background: white;
+		padding: 1em;
+		margin-bottom: 1em;
+		display: inline-block;
+		vertical-align: top;
+		text-align: left;
+		width: 40em;
+		margin-right: 1em;
+		
+		.kitchen-order-header {
+			font-size: 1.3em;
+			.kitchen-order-submitted {
+				float: left;
+			}
+			.kitchen-order-waiter {
+				float: right;
+			}
+			.kitchen-order-note {
+				clear: both;
+				font-style: italic;
+			}			
+		}
+		
+		.kitchen-order-dish-list {
+			margin-top: 1em;
+			
+			.kitchen-order-dish {
+				font-size: 1.3em;
+				border-bottom: 0.2em solid #D8D8D8;
+			}
+		}
+	}
+}
