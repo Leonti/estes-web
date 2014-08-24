@@ -26,19 +26,12 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		Dish.readAllMenus().then(function(menus) {
 			$scope.menus = menus;
 		});
-		$scope.selectedMenus = [];
 		
-		if (!$scope.inputDish) {
-			$scope.dish = {
-				name: '',
-				price: 0,
-				ingredients: [],
-				menus: []
-			}			
-		} else {
-			$scope.dish = angular.copy($scope.inputDish);
-		}		
-		
+		$scope.$watch('inputDish', function(dish) {
+			if (!dish) return;
+			
+			$scope.dish = angular.copy(dish);
+		});
 		
 		var rowJustClosed = false;
 		$scope.expandRow = function(row) {
@@ -114,8 +107,6 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		}
 		
 		$scope.save = function(dish) {
-			// use 2-way binding to update the ui
-			angular.extend($scope.inputDish, $scope.dish);				
 			$scope.onSave({dish: dish});
 		}
 		

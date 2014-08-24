@@ -7,7 +7,7 @@
 		</div>	
 		
 		<span class="add-dish" ng-hide="newDishEditing" ng-click="openNewDishForm()"><span class="icon-plus"></span> Add dish ...</span>
-		<div dish-form class="menu-section new-dish-section" ng-show="newDishEditing" 
+		<div dish-form class="menu-section new-dish-section" ng-show="newDish" dish="newDish" 
 			on-close="closeNewDishForm()" on-save="saveNewDish(dish)"></div>
 		
 		<div class="menu-section dish-list">	
@@ -19,7 +19,7 @@
 						<div class="dish-actions">
 							<div class="pull-right">
 								<span class="icon-pencil" ng-click="startDishEdit($index)"></span>
-								<span class="icon-remove"></span>
+								<span class="icon-remove" ng-click="removeDish(dish)"></span>
 							</div>
 						</div>
 						<div style="clear: both;"></div>
@@ -31,7 +31,7 @@
 					</div>					
 				</div>
 				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish" 
-					on-close="closeDishForm()" on-save="saveDish(dish, $index)"></div>
+					on-close="closeDishForm()" on-save="saveDish(dish)"></div>
 			</div>
 		</div>
 	</div>

@@ -2,16 +2,28 @@
 
 angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dish) {
 
+	var DishTemplate = function() {
+		return {
+			menus: [],
+			ingredients: []
+		}
+	}
+	
 	Dish.readAllMenus().then(function(menus) {
 		$scope.menus = menus;
 		$scope.selectedMenus = angular.copy($scope.menus);	
 	});
 	
-	Dish.readAll().then(function(dishes) {
-		$scope.dishes = dishes;
-	});
+	var refreshDishes = function() {
+		Dish.readAll().then(function(dishes) {
+			$scope.dishes = dishes;
+		});
+	}
+	
+	refreshDishes();
+	
 	$scope.searchTerm = '';
-	$scope.newDishEditing = false;
+	$scope.newDish = null;
 	$scope.editedDishIndex = null;
 	
 	$scope.isMenuSelected = function(menu) {
@@ -31,20 +43,24 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	}
 	
 	$scope.openNewDishForm = function() {
-		$scope.newDishEditing = true;		
+		$scope.newDish = DishTemplate();		
 	}
 	
 	$scope.closeNewDishForm = function() {
-		$scope.newDishEditing = false;
+		$scope.newDish = null;
 	}
 	
 	$scope.saveNewDish = function(dish) {
-		Dish.save(dish);
+		Dish.save(dish).then(refreshDishes);
 		$scope.closeNewDishForm();
 	}
 	
 	$scope.startDishEdit = function(index) {
 		$scope.editedDishIndex = index;
+	}
+	
+	$scope.removeDish = function(dish) {
+		Dish.remove(dish.id).then(refreshDishes);		
 	}
 
 	$scope.closeDishForm = function() {
@@ -52,8 +68,7 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	}
 	
 	$scope.saveDish = function(dish, index) {
-		console.log(index);
-		Dish.save(dish);
+		Dish.save(dish).then(refreshDishes);
 		$scope.closeDishForm();
 	}
 	

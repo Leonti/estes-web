@@ -8,7 +8,7 @@
 			</div>
 			<div class="kitchen-order-dish-list">
 				<div class="kitchen-order-dish" ng-repeat="dish in order.dishes">
-					<kitchen-dish-list-item dish="dish"></kitchen-dish-list-item>
+					<kitchen-dish-list-item dish="dish" done="dishDone(order, dish)"></kitchen-dish-list-item>
 				</div>
 			</div>
 		</div>

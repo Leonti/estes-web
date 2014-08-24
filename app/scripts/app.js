@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.sortable',
-    'angularMoment'
+    'angularMoment',
+    'angularLocalStorage'
   ])
   .config(function ($routeProvider) {
     $routeProvider

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').service('Dish', function Dish($q) {
+angular.module('estesWebApp').service('Dish', function Dish($q, storage) {
 	
 	var fakeMenus = ['Breakfast', 'Lunch', 'Dinner'];
 	
@@ -17,7 +17,7 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 	            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
 	            		];
 	
-	function generateDishesForMenus(menus) {
+	function generateDishesForMenus(menus, idBase) {
 		var dishes = [];
 		var titleBase = '';
 		for (var i = 0; i < menus.length; i++) {
@@ -25,6 +25,7 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 		}
 		for (var i = 0; i < 10; i++) {
 			dishes.push({
+				id: idBase + i,
 				name: 'Dish ' + titleBase + '_' + i,
 				price: 10,
 				menus: menus,
@@ -37,12 +38,12 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 	
 	var generateFakeDishes = function() {
 		var allDishes = [];
-		allDishes = allDishes.concat(generateDishesForMenus(['Breakfast']));
-		allDishes = allDishes.concat(generateDishesForMenus(['Lunch']));
-		allDishes = allDishes.concat(generateDishesForMenus(['Dinner']));
-		allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Breakfast']));
-		allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Lunch']));
-		allDishes = allDishes.concat(generateDishesForMenus(['Breakfast', 'Lunch', 'Dinner']));
+		allDishes = allDishes.concat(generateDishesForMenus(['Breakfast'], allDishes.length));
+		allDishes = allDishes.concat(generateDishesForMenus(['Lunch'], allDishes.length));
+		allDishes = allDishes.concat(generateDishesForMenus(['Dinner'], allDishes.length));
+		allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Breakfast'], allDishes.length));
+		allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Lunch'], allDishes.length));
+		allDishes = allDishes.concat(generateDishesForMenus(['Breakfast', 'Lunch', 'Dinner'], allDishes.length));
 		return allDishes;
 	}
 	
@@ -55,25 +56,51 @@ angular.module('estesWebApp').service('Dish', function Dish($q) {
 		return price;
 	}
 	
+	var saveDish = function(dish) {
+		var dishes = storage.get('fakeDishes');
+		if (dish.id !== undefined || dish.id !== null) {
+			for (var i = 0; i < dishes.length; i++) {
+				if (dishes[i].id === dish.id) {
+					dishes[i] = dish;
+				}
+			}
+		} else {
+			dish.id = dishes.length + 1;
+			dishes.push(dish);
+		}
+		storage.set('fakeDishes', dishes);
+		return dish;
+	}
+	
+	var removeDish = function(id) {
+		var dishes = storage.get('fakeDishes');
+		for (var i = 0; i < dishes.length; i++) {
+			if (dishes[i].id === id) {
+				dishes.splice(i, 1);
+			}
+		}
+		storage.set('fakeDishes', dishes);
+	}
+	
+	storage.set('fakeDishes', generateFakeDishes());
+	storage.set('fakeMenus', fakeMenus);
+	storage.set('fakeIngredients', fakeIngredients);
+	
 	return {
 		readAll: function() {
-			var deferred = $q.defer();
-			deferred.resolve(generateFakeDishes());
-			return deferred.promise;			
+			return $q.when(storage.get('fakeDishes'));
 		},
 		readAllMenus: function() {
-			var deferred = $q.defer();
-			deferred.resolve(fakeMenus);
-			return deferred.promise;
+			return $q.when(storage.get('fakeMenus'));
 		},
 		readAllIngredients: function() {
-			var deferred = $q.defer();
-			deferred.resolve(fakeIngredients);
-			return deferred.promise;			
+			return $q.when(storage.get('fakeIngredients'));			
 		},
 		save: function(dish) {
-			console.log('saving dish');
-			console.log(dish);
+			return $q.when(saveDish(dish));
+		},
+		remove: function(id) {
+			return $q.when(removeDish(id));
 		},
 		getPrice: function(dish) {
 			return getPrice(dish);

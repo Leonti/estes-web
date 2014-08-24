@@ -3,7 +3,7 @@
 		<input type="text" ng-model="dish.name" placeholder="Dish name">
 	</div>
 	<div class="dish-price">$ <input type="text" ng-model="dish.price"></div>
-	<tags class="menu-tags" available-tags="menus" selected-tags="selectedMenus" tag-name="menu"></tags>
+	<tags class="menu-tags" available-tags="menus" selected-tags="dish.menus" tag-name="menu"></tags>
 	
 	<div ui-sortable ng-model="dish.ingredients">
 		<div class="ingredient-row" ng-repeat="dishIngredients in dish.ingredients">
