@@ -1,9 +1,9 @@
 'use strict';
 
-angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Order, Waiter, Dish) {
+angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', 'Order', 'Waiter', 'Dish',
+                                                function($scope, Order, Waiter, Dish) {
 
 	var cols = 4;
-	$scope.statusList = null;
 	$scope.waiterList = null;
 	$scope.searchTerm = "";
 	$scope.dishList = null;
@@ -11,9 +11,9 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Orde
 	$scope.orderFormDish = null;
 	$scope.addingNewDish = false;
 	
-	var OrderTemplate = function(status, waiter) {
+	var OrderTemplate = function(waiter) {
 		return {
-			status: status,
+			status: 'PREPARATION',
 			waiter: waiter,
 			dishes: [],
 			note: null
@@ -31,10 +31,9 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Orde
 	
 	refreshOrders();
 
-	$q.all({ statuses: Order.getStatusList(), waiters: Waiter.readAll() }).then(function(results) {
-		$scope.statusList = results.statuses;
-		$scope.waiterList = results.waiters;
-		$scope.order = OrderTemplate(results.statuses[0], results.waiters[0]);
+	Waiter.readAll().then(function(waiters) {
+		$scope.waiterList = waiters;
+		$scope.order = OrderTemplate(waiters[0]);
 	});
 
 	Dish.readAll().then(function(dishList) {
@@ -116,4 +115,4 @@ angular.module('estesWebApp').controller('OrdersCtrl', function($scope, $q, Orde
 	function resetOrder() {
 		$scope.order = OrderTemplate($scope.statusList[0], $scope.waiterList[0]);
 	}
-});
+}]);

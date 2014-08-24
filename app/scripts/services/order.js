@@ -73,8 +73,6 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 		
 		var mockOrders = generateMockOrders();
 		
-		var statuses = ['SUBMITTED', 'PREPARATION', 'PREPARED', 'SERVED', 'COMPLETED', 'PAID'];
-		
 		var statusPriorities = {
 			'PREPARATION': 1,
 			'PREPARED': 2,
@@ -99,9 +97,6 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 					}
 				}
 				
-				console.log('saving order');
-				console.log(order);
-				
 				if (order.id == null || order.id == undefined) {
 					order.id = orders.length;
 					orders.push(order);				
@@ -115,10 +110,6 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 
 				storage.set('mockOrders', orders);
 				return $q.when(order);
-			},
-			
-			getStatusList: function() {
-				return $q.when(statuses);				
 			},
 			
 			getStatusPriority: function(status) {
