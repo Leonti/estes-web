@@ -1,14 +1,20 @@
 'use strict';
 
-angular.module('estesWebApp').service('Waiter', function Waiter($q) {
-
-	var fakeWaiters = [{name: 'Leonti', id: 12}, {name: 'Vitali', id: 13}, {name: 'Krishti', id: 14}];
+angular.module('estesWebApp').service('Waiter', ['$q', 'storage', function($q, storage) {
 	
-	return {
-		readAll: function() {
-			var deferred = $q.defer();
-			deferred.resolve(fakeWaiters);
-			return deferred.promise;			
+	return new WaiterMock($q, storage);
+	
+	function WaiterMock($q, storage) {
+
+		var mockWaiters = [{name: 'Leonti', id: 12}, {name: 'Vitali', id: 13}, {name: 'Krishti', id: 14}];
+		
+		storage.set('mockWaiters', mockWaiters);
+		
+		return {
+			readAll: function() {
+				return $q.when(storage.get('mockWaiters'));
+			}
 		}
 	}
-});
+	
+}]);
