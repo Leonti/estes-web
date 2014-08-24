@@ -6,9 +6,9 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 	
 	function DishMock($q, storage) {
 		
-		var fakeMenus = ['Breakfast', 'Lunch', 'Dinner'];
+		var mockMenus = ['Breakfast', 'Lunch', 'Dinner'];
 		
-		var fakeIngredients = [
+		var mockIngredients = [
 		            		   { id: 4, name: 'Regular fries', priceChange: 0 },
 		            		   { id: 5, name: 'Curly fries', priceChange: 0.5 }, 
 		            		   { id: 2, name: 'Onions', priceChange: 0 }, 
@@ -61,7 +61,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 		}
 		
 		var saveDish = function(dish) {
-			var dishes = storage.get('fakeDishes');
+			var dishes = storage.get('mockDishes');
 			if (dish.id !== undefined || dish.id !== null) {
 				for (var i = 0; i < dishes.length; i++) {
 					if (dishes[i].id === dish.id) {
@@ -72,33 +72,35 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 				dish.id = dishes.length + 1;
 				dishes.push(dish);
 			}
-			storage.set('fakeDishes', dishes);
+			storage.set('mockDishes', dishes);
 			return dish;
 		}
 		
 		var removeDish = function(id) {
-			var dishes = storage.get('fakeDishes');
+			var dishes = storage.get('mockDishes');
 			for (var i = 0; i < dishes.length; i++) {
 				if (dishes[i].id === id) {
 					dishes.splice(i, 1);
 				}
 			}
-			storage.set('fakeDishes', dishes);
+			storage.set('mockDishes', dishes);
 		}
 		
-		storage.set('fakeDishes', generateFakeDishes());
-		storage.set('fakeMenus', fakeMenus);
-		storage.set('fakeIngredients', fakeIngredients);
+		if (!storage.get('mockDishes')) {
+			storage.set('mockDishes', generateFakeDishes());
+			storage.set('mockMenus', mockMenus);
+			storage.set('mockIngredients', mockIngredients);			
+		}
 		
 		return {
 			readAll: function() {
-				return $q.when(storage.get('fakeDishes'));
+				return $q.when(storage.get('mockDishes'));
 			},
 			readAllMenus: function() {
-				return $q.when(storage.get('fakeMenus'));
+				return $q.when(storage.get('mockMenus'));
 			},
 			readAllIngredients: function() {
-				return $q.when(storage.get('fakeIngredients'));			
+				return $q.when(storage.get('mockIngredients'));			
 			},
 			save: function(dish) {
 				return $q.when(saveDish(dish));

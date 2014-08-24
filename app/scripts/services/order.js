@@ -92,7 +92,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 			'PAID': 5
 		};
 		
-		storage.set('mockOrders', mockOrders);
+		if (!storage.get('mockOrders')) {			
+			storage.set('mockOrders', mockOrders);
+		}
 		
 		return {
 			readAll: function() {

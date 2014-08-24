@@ -8,7 +8,9 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', function($q, s
 
 		var mockWaiters = [{name: 'Leonti', id: 12}, {name: 'Vitali', id: 13}, {name: 'Krishti', id: 14}];
 		
-		storage.set('mockWaiters', mockWaiters);
+		if (!storage.get('mockWaiters')) {
+			storage.set('mockWaiters', mockWaiters);
+		}
 		
 		return {
 			readAll: function() {
