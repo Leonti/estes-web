@@ -110,15 +110,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 			},
 			getPrice: function(dish) {
 				return getPrice(dish);
-			},
-			toOrderDish: function(dish) {
-				return {
-					name: dish.name,
-					price: dish.price,
-					ingredients: angular.copy(dish.ingredients),
-					selectedIngredients: [],
-					status: 'SUBMITTED'
-				}
 			}
 		}
 	}	

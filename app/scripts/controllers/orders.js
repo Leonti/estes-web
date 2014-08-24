@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', 'Order', 'Waiter', 'Dish',
-                                                function($scope, Order, Waiter, Dish) {
+angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order', 'Waiter', 'Dish',
+                                                function($scope, $interval, Order, Waiter, Dish) {
 
 	var cols = 4;
 	$scope.waiterList = null;
@@ -73,8 +73,8 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', 'Order', 'Wait
 		$scope.dishListExpanded = !$scope.dishListExpanded;
 	}
 	
-	$scope.configDish = function(dish) {
-		$scope.orderFormDish = Dish.toOrderDish(dish);
+	$scope.configDish = function(dish) {		
+		$scope.orderFormDish = Order.toOrderDish(dish);
 	}
 	
 	$scope.addDishToOrder = function(dish) {
@@ -113,6 +113,11 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', 'Order', 'Wait
 	}
 	
 	function resetOrder() {
-		$scope.order = OrderTemplate($scope.statusList[0], $scope.waiterList[0]);
+		$scope.order = OrderTemplate($scope.waiterList[0]);
 	}
+	
+	var ordersPoll = $interval(refreshOrders, 2000);
+	$scope.$on('$destroy', function() {
+		$interval.$cancel(ordersPoll);
+	});
 }]);

@@ -1,6 +1,7 @@
 'use strict';
 
-angular.module('estesWebApp').controller('KitchenCtrl', function($scope, Order, Dish) {
+angular.module('estesWebApp').controller('KitchenCtrl', ['$scope', '$interval', 'Order', 'Dish', 
+                                                 function($scope, $interval, Order, Dish) {
 	
 	var refreshOrders = function() {
 		Order.readAll().then(function(orders) {
@@ -26,4 +27,9 @@ angular.module('estesWebApp').controller('KitchenCtrl', function($scope, Order, 
 		return hasDishes && order.status == 'PREPARATION';
 	}
 	
-});
+	var ordersPoll = $interval(refreshOrders, 2000);
+	$scope.$on('$destroy', function() {
+		$interval.$cancel(ordersPoll);
+	});
+	
+}]);

@@ -32,6 +32,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 			var titleBase = 'Burger';
 			for (var i = 0; i < getRandomInt(0, 8); i++) {
 				var orderDish = {
+						id: i,
 						name: 'Dish ' + titleBase,
 						price: 10,
 						menus: ['Breakfast', 'Lunch'],
@@ -114,6 +115,15 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 			
 			getStatusPriority: function(status) {
 				return statusPriorities[status];
+			},
+			toOrderDish: function(dish) {
+				return {
+					name: dish.name,
+					price: dish.price,
+					ingredients: angular.copy(dish.ingredients),
+					selectedIngredients: [],
+					status: 'PREPARATION'
+				}
 			}
 		}
 	}

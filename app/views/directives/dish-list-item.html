@@ -2,8 +2,8 @@
 	<span class="dish-name">{{dish.name}}</span>
 	<span class="dish-price">${{dish.price}}</span>
 	<ul class="dish-ingredients">
-		<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients">
-			<span ng-repeat="ingredient in ingredientOrs">
+		<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients track by $index">
+			<span ng-repeat="ingredient in ingredientOrs track by $index">
 				{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span><!-- 
 				 --><span ng-hide="$last"> or </span></span><span ng-hide="$last">, </span>
 		</li>

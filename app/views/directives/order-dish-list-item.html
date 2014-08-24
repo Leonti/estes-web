@@ -1,8 +1,8 @@
-<div class="dish-list-item">
+<div class="order-dish-list-item">
 	<span class="dish-name">{{dish.name}}</span>
 	<span class="dish-price">${{dish.price}}</span>
 	<ul class="dish-ingredients">
-		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients">
+		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients track by $index">
 			{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+${{ingredient.priceChange}})</span><!-- 
 				 --><span ng-hide="$last">, </span>	 
 		</li>

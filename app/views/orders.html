@@ -1,13 +1,13 @@
 <div class="row order-list">
 	<div class="col-md-8">
-		<div class="order shadow-border" ng-repeat="order in orders">
+		<div class="order shadow-border" ng-repeat="order in orders track by order.id">
 			<div class="order-header" ng-click="editOrder(order)">
 				<div class="order-waiter">{{order.waiter.name}}</div>
 				<div class="order-status">{{order.status}}</div>
 				<div class="order-submitted" am-time-ago="order.submitted"></div>			
 			</div>
 			<div class="dish-list">
-				<div class="order-dish" ng-repeat="dish in order.dishes">
+				<div class="order-dish" ng-repeat="dish in order.dishes track by $index">
 					<order-dish-list-item dish="dish" show-selected="true"></order-dish-list-item>
 				</div>
 			</div>
