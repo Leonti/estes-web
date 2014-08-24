@@ -1,0 +1,31 @@
+.dish-list-item {
+	
+	.dish-name {
+		float: left;
+	}
+	.dish-price {
+		float: right;
+	}
+	
+	.dish-ingredients {
+		clear: both;
+		list-style: none;
+		padding: 0;
+		float: left;
+		.dish-ingredient {
+			display: inline;
+			font-size: 0.8em;
+			font-style: italic;
+		}
+	}
+	
+	.dish-status {
+		float: right;
+		opacity: 0;		
+
+		&.prepared {
+			color: #2BD672;
+			opacity: 1;
+		}
+	}
+} 

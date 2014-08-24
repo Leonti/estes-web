@@ -15,7 +15,15 @@ angular.module('estesWebApp').controller('KitchenCtrl', function($scope, Order, 
 	
 	$scope.dishDone = function(order, dish) {
 		dish.status = 'PREPARED';
-		Order.save(order);
+		Order.save(order).then(function() {
+			refreshOrders();
+		});
+	}
+	
+	$scope.filterOrder = function(order) {
+		var hasDishes = order.dishes.length > 0;
+		
+		return hasDishes && order.status == 'PREPARATION';
 	}
 	
 });

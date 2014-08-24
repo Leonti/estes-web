@@ -1,6 +1,6 @@
 <div class="row kitchen">
 	<div class="col-md-12 kitchen-orders">
-		<div class="kitchen-order shadow-border" ng-repeat="order in orders">
+		<div class="kitchen-order shadow-border" ng-repeat="order in orders | filter:filterOrder">
 			<div class="kitchen-order-header">
 				<div class="kitchen-order-submitted" am-time-ago="order.submitted"></div>
 				<div class="kitchen-order-waiter">{{order.waiter.name}}</div>

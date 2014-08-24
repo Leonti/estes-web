@@ -20,39 +20,30 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 				return 'PREPARED';
 			}		
 			
-			if (i % 6 == 0) {
-				return 'PAID';
-			}		
-			
 			if (i % 5 == 0) {
-				return 'SERVED';
-			}		
-			
-			if (i % 4 == 0) {
-				return 'COMPLETED';
-			}
-			
-			if (i % 3 == 0) {
-				return 'SUBMITTED';
-			}
-			if (i % 2 == 0) {
-				return 'PREPARATION';
+				return 'PAID';
 			}
 			
 			return 'PREPARATION';
 		}
 		
-		var generateOrderDishes = function(i) {
+		var generateOrderDishes = function(i, status) {
 			var dishes = [];
 			var titleBase = 'Burger';
 			for (var i = 0; i < getRandomInt(0, 8); i++) {
-				dishes.push({
-					name: 'Dish ' + titleBase,
-					price: 10,
-					menus: ['Breakfast', 'Lunch'],
-					ingredients: mockIngredients,
-					selectedIngredients: selectedIngredients
-				});
+				var orderDish = {
+						name: 'Dish ' + titleBase,
+						price: 10,
+						menus: ['Breakfast', 'Lunch'],
+						ingredients: mockIngredients,
+						selectedIngredients: selectedIngredients
+					};
+				
+				if (status == 'PREPARED' || status == 'PAID') {
+					orderDish.status = 'PREPARED';
+				}
+				
+				dishes.push(orderDish);
 			}
 			
 			return dishes;		
@@ -66,12 +57,13 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 			var orders = [];
 			
 			for (var i = 0; i < 41; i++) {
+				var status = getStatus(i);
 				orders.push({
 					id: i,
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
-					dishes: generateOrderDishes(i),
-					status: getStatus(i),
+					dishes: generateOrderDishes(i, status),
+					status: status,
 					note: 'Make it fast!'
 				});
 			}
@@ -84,12 +76,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 		var statuses = ['SUBMITTED', 'PREPARATION', 'PREPARED', 'SERVED', 'COMPLETED', 'PAID'];
 		
 		var statusPriorities = {
-			'SUBMITTED': 0,
 			'PREPARATION': 1,
 			'PREPARED': 2,
-			'SERVED': 3,
-			'COMPLETED': 4,
-			'PAID': 5
+			'PAID': 3
 		};
 		
 		if (!storage.get('mockOrders')) {			
@@ -98,13 +87,22 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 		
 		return {
 			readAll: function() {
-				return $q.when(storage.get('mockOrders'));			
+				return $q.when(angular.copy(storage.get('mockOrders')));			
 			},
 			
 			save: function(order) {
 				var orders = storage.get('mockOrders');
 				
-				if (!order.id) {
+				if (order.status == 'PREPARATION') {
+					if (_.every(order.dishes, function(dish) { return dish.status == 'PREPARED'; })) {
+						order.status = 'PREPARED';
+					}
+				}
+				
+				console.log('saving order');
+				console.log(order);
+				
+				if (order.id == null || order.id == undefined) {
 					order.id = orders.length;
 					orders.push(order);				
 				} else {

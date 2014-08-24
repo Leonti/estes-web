@@ -14,7 +14,7 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', function($q, s
 		
 		return {
 			readAll: function() {
-				return $q.when(storage.get('mockWaiters'));
+				return $q.when(angular.copy(storage.get('mockWaiters')));
 			}
 		}
 	}

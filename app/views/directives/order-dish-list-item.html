@@ -4,7 +4,9 @@
 	<ul class="dish-ingredients">
 		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients">
 			{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+${{ingredient.priceChange}})</span><!-- 
-				 --><span ng-hide="$last">, </span>
+				 --><span ng-hide="$last">, </span>	 
 		</li>
-	</ul>	
+	</ul>
+	<span class="icon-checkmark dish-status" ng-class="{'prepared': dish.status == 'PREPARED'}"></span>
+	<div style="clear: both"></div>
 </div>

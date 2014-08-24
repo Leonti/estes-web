@@ -94,13 +94,13 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 		
 		return {
 			readAll: function() {
-				return $q.when(storage.get('mockDishes'));
+				return $q.when(angular.copy(storage.get('mockDishes')));
 			},
 			readAllMenus: function() {
-				return $q.when(storage.get('mockMenus'));
+				return $q.when(angular.copy(storage.get('mockMenus')));
 			},
 			readAllIngredients: function() {
-				return $q.when(storage.get('mockIngredients'));			
+				return $q.when(angular.copy(storage.get('mockIngredients')));			
 			},
 			save: function(dish) {
 				return $q.when(saveDish(dish));
