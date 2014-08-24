@@ -23,15 +23,7 @@
 
     <!-- Add your site or application content here -->
     <div class="container-fluid">
-      <div class="header">
-        <ul class="nav nav-pills pull-right">
-          <li class="active"><a ng-href="#">Home</a></li>
-          <li><a ng-href="#/about">About</a></li>
-          <li><a ng-href="#">Contact</a></li>
-        </ul>
-        <h3 class="text-muted">estesWeb</h3>
-      </div>
-
+      <div ng-include="'views/header.html'"></div>
       <div ng-view=""></div>
 
     </div>
@@ -86,6 +78,7 @@
         <script src="scripts/controllers/kitchen.js"></script>
         <script src="scripts/directives/kitchen-dish-list-item.js"></script>
         <script src="scripts/controllers/demo.js"></script>
+        <script src="scripts/controllers/header.js"></script>
         <!-- endbuild -->
 </body>
 </html>

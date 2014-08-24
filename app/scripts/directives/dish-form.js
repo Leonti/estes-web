@@ -2,7 +2,7 @@
 
 angular.module('estesWebApp').directive('dishForm', function (Dish) {
     return {
-      templateUrl: 'views/dish-form.html',
+      templateUrl: 'views/directives/dish-form.html',
       restrict: 'EA',
       scope: {
     	  inputDish: '=?dish',
