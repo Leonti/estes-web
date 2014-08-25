@@ -1,0 +1,49 @@
+<div class="order-form shadow-border" >
+	<div class="waiter-block">
+		<label class="form-label">Waiter:</label>
+		<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
+	</div>
+	
+	<label class="form-label">Dishes</label>
+	<span class="add-new-dish" ng-hide="addingNewDish" ng-click="showAddDish()">+ Add dish</span>
+	<div ng-show="addingNewDish">		
+		<div class="dish-selector shadow-border" ng-hide="orderFormDish">
+			<span class="add-new-dish-close icon-close2" ng-click="hideAddDish()"></span>
+			<div class="dish-filter">
+				<dish-filter menus="menus" selected-menus="selectedMenus" search-term="searchTerm"></dish-filter>
+			</div>
+			<div class="selector-dish-list" ng-class="{expanded: dishListExpanded}">
+				<div class="selector-dish" ng-repeat="dish in dishList" ng-click="configDish(dish)" ng-show="filterDish(dish)">
+					<dish-list-item dish="dish"></dish-list-item>
+				</div>
+				<div class="list-expander" ng-click="toggleDishList()">
+					<span ng-hide="dishListExpanded">Show all</span>
+					<span ng-show="dishListExpanded">Collapse</span>
+				</div>					
+			</div>
+		</div>
+		<div class="order-dish-config shadow-border" ng-show="orderFormDish">
+			<dish-config dish="orderFormDish" on-save="addDishToOrder(dish)" on-cancel="cancelAddingDish()"></dish-config>
+		</div>
+	</div>
+	
+	<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
+		<div class="order-dish" ng-repeat="dish in order.dishes">
+			<order-dish-list-item dish="dish"></order-dish-list-item>
+		</div>
+	</div>
+	
+	<label class="form-label">Note</label>
+	<div class="order-note shadow-border">
+		<textarea class="order-note-text" ng-model="order.note"></textarea>
+	</div>
+	
+	<div class="order-total">
+		<span class="total-label">Total: ${{calculateTotal(order)}}</span>
+	</div>
+	
+	<div class="form-action-buttons">
+		<button class="save-button" ng-click="save(order)">Save</button>
+		<button class="cancel-button" ng-click="cancel()">Cancel</button>
+	</div>			
+</div>

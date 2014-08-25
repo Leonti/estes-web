@@ -146,117 +146,7 @@ body {
 	margin: 1em 0;
 }
 
-.dish-form {
-	
-	.dish-name, .dish-price {
-		input {
-			border: 1px solid #E4E4E4;
-			color: #404040;
-			padding: 0.3em;
-		}	
-	}
 
-	.dish-name, .dish-price {
-		display:inline-block;
-	}
-	.dish-name {
-		width: 73%;
-		input {
-			width: 100%;
-		}
-	}
-	.dish-price {
-		width: 20%;
-		text-align: right;
-		input {
-			width: 40%;
-		}
-	}
-	.menu-tags {
-		margin: 0.5em 0;
-		width: 73%;
-	}
-	
-	.ingredient-row {
-		border-bottom: 0.2em solid #D8D8D8;
-		
-		.ingredient-ors {
-			float: left;
-			padding: 0.5em 0.3em;
-			
-			.ingredient-title {
-				.icon-close {
-					font-size: 0.7em;
-					cursor: pointer;
-				}
-			}
-		}
-		
-		.typeahead-items {
-			font-size: 1em;
-		}
-			
-		.ingredient-add {
-			position: relative;
-			cursor: pointer;
-			float: right;
-			.icon-plus {
-				display: inline-block;
-				margin: 0.7em;
-			}
-			.typeahead-items {
-				font-size: 1em;
-			}
-			.add-ingredient-form {
-				position: absolute;
-				top: 0.15em;
-				right: 0;
-				width: 1000%;	
-			}
-		}
-		
-		&.add-ingredient-row {
-			border: none;
-			.add-ingredient-form {
-				width: 50%;			
-			}
-		}
-		
-		.add-ingredient-form {
-			background: white;
-			input {
-				display: inline-block;
-				border: 1px solid #E4E4E4;
-				color: #404040;
-				padding: 0.3em;
-				&.name {
-					width: 58%;
-				}
-				&.price-change {
-					width: 15%;
-				}
-			}
-			.money-sign {
-				display: inline-block;
-				width: 5%;
-				text-align: right;
-			}
-			.controls {
-				float: right;
-				padding-right: 0.3em;
-				font-size: 1.4em;
-			
-				span {
-					vertical-align: middle;
-					cursor: pointer;			
-				}
-				.ok {
-					color: #2BD672;
-				}
-			}		
-		}		
-	}
-}
 
 /* General */
 .search-field {
@@ -351,3 +241,5 @@ body {
 @import 'directives/dish-filter';
 @import 'directives/dish-config';
 @import 'directives/kitchen-dish-list-item';
+@import 'directives/order-form';
+@import 'directives/dish-form';
