@@ -85,14 +85,16 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				$scope.orderFormDish = null;
 			}
 			
-			$scope.calculateTotal = function(order) {
+			$scope.calculateSubtotal = function(order) {
 				if (!order) return 0;
 				
-				var total = 0;
-				_.each(order.dishes, function(dish) {
-					total += Dish.getPrice(dish);
-				});
-				return total;
+				return Order.calculatePrice(order);
+			}
+	
+			$scope.calculateTax = function(order) {
+				if (!order) return 0;
+				
+				return Math.round(Order.calculateTax(order) * 100) / 100;
 			}
 			
 			$scope.save = function(order) {

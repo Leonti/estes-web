@@ -81,13 +81,18 @@
 		}
 	}
 	
-	.order-total {
-		margin: 1em 0;
-		font-size: 1.5em;
-		height: 1em;
+	.order-payment {
+		margin: 1em 0;		
+		
+		.subtotal-label,
+		.tax-label,
+		.total-label {
+			display: block;
+			text-align: right;
+		}
 		
 		.total-label {
-			float: right;
+			font-size: 1.5em;
 		}
 	}	
 }

@@ -38,8 +38,12 @@
 		<textarea class="order-note-text" ng-model="order.note"></textarea>
 	</div>
 	
-	<div class="order-total">
-		<span class="total-label">Total: ${{calculateTotal(order)}}</span>
+	<label class="form-label">Payment</label>
+	<div class="order-payment">
+		
+		<span class="subtotal-label">Subtotal: ${{calculateSubtotal(order)}}</span>
+		<span class="tax-label">Tax: ${{calculateTax(order)}}</span>
+		<span class="total-label">Total: ${{calculateSubtotal(order) + calculateTax(order)}}</span>
 	</div>
 	
 	<div class="form-action-buttons">

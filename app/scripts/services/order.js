@@ -1,8 +1,22 @@
 'use strict';
 
-angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, storage) {
+angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', function($q, storage, Dish) {
+	
+	var tax = 0.07;
 	
 	return new OrderMock($q, storage);
+	
+	function calculatePrice(order) {
+		var total = 0;
+		_.each(order.dishes, function(dish) {
+			total += Dish.getPrice(dish);
+		});
+		return total;
+	}
+
+	function calculateTax(order) {
+		return calculatePrice(order) * tax;
+	}
 	
 	function OrderMock($q, storage) {
 		
@@ -124,7 +138,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', function($q, st
 					selectedIngredients: [],
 					status: 'PREPARATION'
 				}
-			}
+			},
+			calculatePrice: calculatePrice,
+			calculateTax: calculateTax
 		}
 	}
 	
