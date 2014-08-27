@@ -15,6 +15,23 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', function($q, s
 		return {
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockWaiters')));
+			},
+			save: function(waiter) {
+				var waiters = storage.get('mockWaiters');
+
+				if (waiter.id == null || waiter.id == undefined) {
+					waiter.id = waiter.length;
+					waiters.push(waiter);				
+				} else {
+					for (var i = 0; i < waiters.length; i++) {
+						if (waiters[i].id == waiter.id) {
+							waiters[i] = waiter;
+						}
+					}
+				}				
+				
+				storage.set('mockWaiters', waiters);
+				return $q.when(waiter);
 			}
 		}
 	}

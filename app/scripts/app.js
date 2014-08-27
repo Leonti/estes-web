@@ -34,6 +34,10 @@ angular
         templateUrl: 'views/kitchen.html',
         controller: 'KitchenCtrl'
       })
+      .when('/settings', {
+        templateUrl: 'views/settings.html',
+        controller: 'SettingsCtrl'
+      })       
       .when('/demo', {
         templateUrl: 'views/demo.html',
         controller: 'DemoCtrl'
