@@ -28,6 +28,11 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			$scope.dishListExpanded = false;
 			$scope.orderFormDish = null;
 			$scope.addingNewDish = false;
+			var viewOverride = null;
+			
+			$scope.$watch('order', function() {
+				viewOverride = null;
+			});
 			
 			Waiter.readAll().then(function(waiters) {
 				$scope.waiterList = waiters;
@@ -106,6 +111,24 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			
 			$scope.cancel = function() {
 				resetOrder();
+			}
+			
+			$scope.forcePayment = function() {
+				viewOverride = 'PAYMENT';
+			}
+
+			$scope.forceEdit = function() {
+				viewOverride = 'EDIT';
+			}
+			
+			$scope.isEditView = function() {
+				if (viewOverride == 'PAYMENT') return false;
+				return $scope.order.status == 'PREPARATION' || viewOverride == 'EDIT';
+			}
+			
+			$scope.isPaymentView = function() {
+				if (viewOverride == 'EDIT') return false;
+				return $scope.order.status != 'PREPARATION' || viewOverride == 'PAYMENT';
 			}
 			
 			function resetOrder() {

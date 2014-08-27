@@ -27,7 +27,6 @@
 		}
 		
 		.order-total {
-			border-bottom: 1px solid;
 			margin-bottom: 1em;
 			.order-to-pay {
 				text-align: right;
@@ -36,7 +35,9 @@
 		}
 		
 		.order-note {
-			font-style: italic;		
+			font-style: italic;
+			border-top: 1px solid;
+			padding-top: 1em;		
 		}
 	}
 }

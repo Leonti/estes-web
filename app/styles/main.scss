@@ -24,6 +24,22 @@ body {
 	}
 }
 
+.button {
+	border: 1px solid #E4E4E4;
+	background: none repeat scroll 0% 0% #FFF;
+	padding: 0.3em 0.5em;
+	
+	&.button-action {
+		background-color: #2BD672;
+		color: #FFF;	
+	}
+}
+
+.text-action {
+	cursor: pointer;
+	text-decoration: underline;
+}
+
 .typeahead {
 	position: relative;
 	display: block;

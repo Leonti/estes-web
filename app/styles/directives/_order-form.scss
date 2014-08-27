@@ -2,8 +2,10 @@
 	background-color: #F5F5F5;
 	padding: 1em;
 	
-	.status-block, .waiter-block {
-		display: inline-block;
+	.waiter-block {
+		.print-payment-action {
+			float: right;			
+		}
 	}
 	
 	.status-block {
@@ -79,20 +81,61 @@
 			color: #404040;
 			width: 100%;
 		}
+	}	
+}
+
+.order-form-payment {
+	background-color: #F5F5F5;
+	padding: 1em;
+	
+	.order-header {
+		border-bottom: 1px solid;
+		margin-bottom: 1em;
+		
+		.order-waiter {
+			float: left;
+		}
+		.order-actions {
+			float: right;
+			
+			.order-actions-edit {
+				cursor: pointer;
+				text-decoration: underline;
+				padding-right: 2em;
+			}
+		}
+		.order-submitted {
+			clear: both;
+			padding-top: 1em;
+		}
 	}
 	
-	.order-payment {
-		margin: 1em 0;		
-		
-		.subtotal-label,
-		.tax-label,
-		.total-label {
-			display: block;
-			text-align: right;
-		}
-		
-		.total-label {
-			font-size: 1.5em;
-		}
+	.order-note {
+		border-top: 1px solid;
+		font-style: italic;
+		padding-top: 1em;
 	}	
+}
+
+.order-payment {
+	margin: 1em 0;		
+	
+	.subtotal-label,
+	.tax-label,
+	.total-label {
+		display: block;
+		text-align: right;
+		
+		.payment-amount {
+			display: inline-block;
+			width: 7em;
+		}
+	}
+	
+	.total-label {
+		font-size: 1.5em;
+		.payment-amount {
+			width: 4.67em; // 1/1.5 * 7em
+		}
+	}
 }
