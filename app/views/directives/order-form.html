@@ -1,7 +1,8 @@
 <div>
 	<div class="order-form shadow-border" ng-show="isEditView()">
 		<div class="waiter-block">
-			<span class="print-payment-action text-action" ng-click="forcePayment()">Print & Payment</span>
+			<span class="print-payment-action text-action" ng-click="forcePayment()" 
+				ng-show="order.dishes.length > 0">Print & Payment</span>
 			<label class="form-label">Waiter:</label>
 			<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
 		</div>
@@ -64,7 +65,8 @@
 			<div class="order-actions">
 				<span class="order-actions-edit" ng-click="forceEdit()">Edit Order</span>
 				<button class="button button-action" ng-click="print(order)">Print</button>
-				<button class="button button-action" ng-click="paid(order)">Mark As Paid</button>
+				<button class="button button-action" ng-click="paid(order)" ng-show="order.status != 'PAID'">Mark As Paid</button>
+				<span ng-show="order.status == 'PAID'">PAID</span>
 			</div>
 			<div class="order-submitted" am-time-ago="order.submitted"></div>			
 		</div>

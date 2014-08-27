@@ -109,6 +109,11 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				});
 			}
 			
+			$scope.paid = function(order) {
+				order.status = 'PAID';
+				$scope.save(order);
+			}
+			
 			$scope.cancel = function() {
 				resetOrder();
 			}
