@@ -1,5 +1,5 @@
 <div>
-	<div class="order-form shadow-border" ng-if="isEditView()">
+	<div class="order-form shadow-border" ng-show="isEditView()">
 		<div class="waiter-block">
 			<span class="print-payment-action text-action" ng-click="forcePayment()">Print & Payment</span>
 			<label class="form-label">Waiter:</label>
@@ -58,7 +58,7 @@
 		</div>
 	</div>
 	
-	<div class="order-form-payment shadow-border" ng-if="isPaymentView()">
+	<div class="order-form-payment shadow-border" ng-show="isPaymentView()">
 		<div class="order-header">
 			<div class="order-waiter">{{order.waiter.name}}</div>
 			<div class="order-actions">
