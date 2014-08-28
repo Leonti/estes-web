@@ -9,7 +9,8 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Set
 	
 		var mockSettings = {
 			tax: 0.07,
-			printer: 'BROWSER'
+			printer: 'BROWSER',
+			receiptWidth: 40
 		};
 		
 		if (!storage.get('mockSettings')) {
