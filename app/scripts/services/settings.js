@@ -8,7 +8,7 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Set
 	function SettingsMock($q, storage) {
 	
 		var mockSettings = {
-			tax: 0.07,
+			tax: 7,
 			printer: 'BROWSER',
 			receiptWidth: 40
 		};
@@ -22,7 +22,7 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Set
 				return $q.when(angular.copy(storage.get('mockSettings')));
 			},
 			save: function(settings) {
-				storage.set('settings', angular.copy(settings));
+				storage.set('mockSettings', angular.copy(settings));
 				return $q.when(settings);
 			}
 		}
