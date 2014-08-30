@@ -2,7 +2,7 @@
 
 angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', function($scope, Settings) {
 	
-	$scope.availablePrinters = ['BROWSER', 'CUSTOM'];
+	$scope.availablePrinters = ['BROWSER', 'JAVA APPLET'];
 	
 	Settings.read().then(function(settings) {
 		$scope.settings = settings;

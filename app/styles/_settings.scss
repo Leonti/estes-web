@@ -1,3 +1,21 @@
 .settings-form {
-	
+	padding: 1em;
+	background: white;
+	.settings-form-entry {
+		margin-bottom: 1em;
+		
+		label {
+			width: 9em;
+		}
+		
+		.printer-explanation {
+			margin-top: 1em;
+			padding: 0.5em;
+			background-color: #F5F5F5;
+			border: 1px solid #E4E4E4;
+		}
+	}
+	.settings-form-actions {
+		text-align: right;
+	}
 }
