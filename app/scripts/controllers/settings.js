@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', function($scope, Settings) {
+angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 'Printer', function($scope, Settings, Printer) {
 	
-	$scope.availablePrinters = ['BROWSER', 'JAVA APPLET'];
+	Printer.getAvailablePrinters().then(function(printers) {		
+		$scope.availablePrinters = printers;
+	});
 	
 	Settings.read().then(function(settings) {
 		$scope.settings = settings;
@@ -13,7 +15,7 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	} 
 	
 	$scope.printerToLabel = function(printer) {
-		return printer.toLowerCase();
+		return printer.substring(0, 1) + printer.substring(1).toLowerCase();
 	}
 	
 }]);

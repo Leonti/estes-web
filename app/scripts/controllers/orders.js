@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order', 'Waiter', 'Dish',
-                                                function($scope, $interval, Order, Waiter, Dish) {
+angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order', 'Waiter', 'Dish', 'Printer',
+                                                function($scope, $interval, Order, Waiter, Dish, Printer) {
 
 	var cols = 4;
 	
@@ -19,11 +19,7 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 	$scope.calculateTotal = function(order) {
 		if (!order) return 0;
 		
-		var total = 0;
-		_.each(order.dishes, function(dish) {
-			total += Dish.getPrice(dish);
-		});
-		return total;
+		return Order.calculatePrice(order);
 	}
 	
 	$scope.editOrder = function(order) {

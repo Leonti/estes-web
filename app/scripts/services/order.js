@@ -14,7 +14,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 		return total;
 	}
 
-	function calculateTax(order) {
+	function calculateTax(order, getDishPrice) {
 		return calculatePrice(order) * tax;
 	}
 	

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order', 
-                                              function(Waiter, Dish, Order) {
+angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order', 'Printer', 
+                                              function(Waiter, Dish, Order, Printer) {
 
 	var OrderTemplate = function(waiter) {
 		return {
@@ -93,13 +93,13 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			$scope.calculateSubtotal = function(order) {
 				if (!order) return 0;
 				
-				return Order.calculatePrice(order);
+				return Order.calculatePrice(order, Dish.getPrice);
 			}
 	
 			$scope.calculateTax = function(order) {
 				if (!order) return 0;
 				
-				return Math.round(Order.calculateTax(order) * 100) / 100;
+				return Math.round(Order.calculateTax(order, Dish.getPrice) * 100) / 100;
 			}
 			
 			$scope.save = function(order) {
@@ -134,6 +134,10 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			$scope.isPaymentView = function() {
 				if (viewOverride == 'EDIT') return false;
 				return $scope.order.status != 'PREPARATION' || viewOverride == 'PAYMENT';
+			}
+			
+			$scope.print = function(order) {
+				Printer.print(order);
 			}
 			
 			function resetOrder() {
