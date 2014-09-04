@@ -9,8 +9,6 @@ angular.module('estesWebApp').directive('dishFilter', function() {
 			menus: '=',
 			selectedMenus: '=',
 			searchTerm: '='
-		},
-		link : function postLink(scope, element, attrs) {
 		}
 	};
 });

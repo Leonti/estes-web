@@ -9,13 +9,13 @@ angular.module('estesWebApp').directive('pillsFilter', function () {
     	  items: '=',
     	  selectedItems: '='
       },
-      link: function postLink($scope, element, attrs) {
+      link: function postLink($scope) {
     		$scope.selected = [];
     		$scope.allSelected = false;
     		
     		$scope.isSelected = function(item) {
-    			return $scope.selectedItems.indexOf(item) != -1;
-    		}
+    			return $scope.selectedItems.indexOf(item) !== -1;
+    		};
     		
     		$scope.toggleAll = function() {
     			if ($scope.allSelected) {
@@ -25,17 +25,17 @@ angular.module('estesWebApp').directive('pillsFilter', function () {
     				$scope.allSelected = true;
     				$scope.selectedItems = angular.copy($scope.items);
     			}
-    		}
+    		};
     		
     		$scope.toggleItem = function(item) {
     			$scope.allSelected = false;
     			
-    			if ($scope.selectedItems.indexOf(item) != -1) {
+    			if ($scope.selectedItems.indexOf(item) !== -1) {
     				$scope.selectedItems.splice($scope.selectedItems.indexOf(item), 1);
     			} else {
     				$scope.selectedItems.push(item);
     			}
-    		}    	  
+    		};    	  
       }
     };
   });

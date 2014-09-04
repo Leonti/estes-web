@@ -1,4 +1,5 @@
 'use strict';
+/*global _:false */
 
 angular.module('estesWebApp').directive('dishConfig', function() {
 	return {
@@ -10,18 +11,18 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 			onSave: '&',
 			onCancel: '&'
 		},
-		link : function postLink(scope, element, attrs) {
+		link : function postLink(scope) {
 			scope.selectedIngredients = [];
 			
 			scope.$watch('inputDish', function(dish) {
-				if (!dish) return;
+				if (!dish) { return; }
 
 				scope.dish = angular.copy(dish);
 				
 				scope.selectedIngredients = [];
 				_.each(dish.ingredients, function(ingredientsOr) {
 					var ingredientStates = [];
-					_.each(ingredientsOr, function(ingredient) {
+					_.each(ingredientsOr, function() {
 						var initialState = ingredientStates.length ? false : true;
 						ingredientStates.push(initialState);
 					});					
@@ -30,34 +31,33 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 			});
 			
 			scope.$watch('selectedIngredients', function(selectedIngredients, oldSelectedIngredients) {
-				if (!oldSelectedIngredients.length) return;
+				if (!oldSelectedIngredients.length) { return; }
+				
+				function findChangedInRow(row, oldRow) {
+					if (!oldRow) { return -1; }
+					
+					for (var i = 0; i < row.length; i++) {
+						if (row[i] === true && oldRow[i] === false) {
+							return i;
+						}
+					}
+					return -1;
+				}
 				
 				for (var i = 0; i < selectedIngredients.length; i++) {
 					
 					var selectedOrs = selectedIngredients[i];
 					var oldSelectedOrs = oldSelectedIngredients[i];
 					var changedPosition = findChangedInRow(selectedOrs, oldSelectedOrs);
-					if (changedPosition == -1) {
+					if (changedPosition === -1) {
 						continue;
 					}
 					
 					for (var j = 0; j < selectedOrs.length; j++) {
-						var ingredientState = selectedOrs[j];
-						if (j != changedPosition) {
+						if (j !== changedPosition) {
 							selectedIngredients[i][j] = false;
 						}
 					}
-				}
-				
-				function findChangedInRow(row, oldRow) {
-					if (!oldRow) return -1;
-					
-					for (var i = 0; i < row.length; i++) {
-						if (row[i] == true && oldRow[i] == false) {
-							return i;
-						}
-					}
-					return -1;
 				}
 				
 			}, true);
@@ -77,7 +77,7 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 				// use 2-way binding to update the ui
 				angular.extend(scope.inputDish, dish);
 				scope.onSave({dish: dish});
-			}
+			};
 			
 			scope.cancel = scope.onCancel;
 		}

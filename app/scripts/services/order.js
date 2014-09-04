@@ -1,10 +1,9 @@
 'use strict';
+/*global _:false */
 
 angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', function($q, storage, Dish) {
 	
 	var tax = 0.07;
-	
-	return new OrderMock($q, storage);
 	
 	function calculatePrice(order) {
 		var total = 0;
@@ -14,7 +13,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 		return total;
 	}
 
-	function calculateTax(order, getDishPrice) {
+	function calculateTax(order) {
 		return calculatePrice(order) * tax;
 	}
 	
@@ -30,21 +29,21 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 		
 		var getStatus = function(i) {
 
-			if (i % 7 == 0) {
+			if (i % 7 === 0) {
 				return 'PREPARED';
 			}		
 			
-			if (i % 5 == 0) {
+			if (i % 5 === 0) {
 				return 'PAID';
 			}
 			
 			return 'PREPARATION';
-		}
+		};
 		
 		var generateOrderDishes = function(i, status) {
 			var dishes = [];
 			var titleBase = 'Burger';
-			for (var i = 0; i < getRandomInt(0, 8); i++) {
+			for (i = 0; i < getRandomInt(0, 8); i++) {
 				var orderDish = {
 						id: i,
 						name: 'Dish ' + titleBase,
@@ -54,7 +53,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 						selectedIngredients: selectedIngredients
 					};
 				
-				if (status == 'PREPARED' || status == 'PAID') {
+				if (status === 'PREPARED' || status === 'PAID') {
 					orderDish.status = 'PREPARED';
 				}
 				
@@ -62,7 +61,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 			}
 			
 			return dishes;		
-		}
+		};
 		
 		function getRandomInt(min, max) {
 			  return Math.floor(Math.random() * (max - min)) + min;
@@ -84,7 +83,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 			}
 			
 			return orders;
-		}
+		};
 		
 		var mockOrders = generateMockOrders();
 		
@@ -106,18 +105,18 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 			save: function(order) {
 				var orders = storage.get('mockOrders');
 				
-				if (order.status == 'PREPARATION') {
-					if (_.every(order.dishes, function(dish) { return dish.status == 'PREPARED'; })) {
+				if (order.status === 'PREPARATION') {
+					if (_.every(order.dishes, function(dish) { return dish.status === 'PREPARED'; })) {
 						order.status = 'PREPARED';
 					}
 				}
 				
-				if (order.id == null || order.id == undefined) {
+				if (order.id === null || order.id === undefined) {
 					order.id = orders.length;
 					orders.push(order);				
 				} else {
 					for (var i = 0; i < orders.length; i++) {
-						if (orders[i].id == order.id) {
+						if (orders[i].id === order.id) {
 							orders[i] = order;
 						}
 					}
@@ -137,11 +136,13 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 					ingredients: angular.copy(dish.ingredients),
 					selectedIngredients: [],
 					status: 'PREPARATION'
-				}
+				};
 			},
 			calculatePrice: calculatePrice,
 			calculateTax: calculateTax
-		}
+		};
 	}
+	
+	return new OrderMock($q, storage);
 	
 }]);

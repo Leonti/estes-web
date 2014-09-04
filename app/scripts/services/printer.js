@@ -1,9 +1,40 @@
 'use strict';
+/*global _:false, moment:false */
+
 angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', function Printer($q, Settings, Order) {
 	
 	var availablePrinters = ['BROWSER', 'JAVA APPLET'];
 	
-	var settingsPromise = Settings.read();
+	function round(price) {
+		return Math.round(price * 100)/100;
+	}
+	
+	function printWithBrowser(lines) {
+		var content = '<pre>';
+		_.each(lines, function(line) {
+			content += line + '<br>';
+		});
+		content += '</pre>';
+		
+		var pri = document.getElementById('ifmcontentstoprint').contentWindow;
+		pri.document.open();
+		pri.document.write(content);
+		pri.document.close();
+		pri.focus();
+		pri.print();
+	}
+	
+	function formatLine(left, right, lineWidth) {
+		right = right + '';
+		var leftWidth = lineWidth - right.length - 1;
+		var leftConcatenated = left.substring(0, leftWidth);
+		while (leftConcatenated.length < leftWidth) {
+			leftConcatenated += ' ';
+		}
+		
+		return leftConcatenated + ' ' + right;
+	}
+	
 	var print = function(order) {
 		
 		Settings.read().then(function(settings) {
@@ -28,44 +59,14 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 			lines.push(formatLine('Total:', round(Order.calculatePrice(order)) + round(Order.calculateTax(order)), lineWidth));
 			
 			
-			if (settings.printer == 'BROWSER') {
+			if (settings.printer === 'BROWSER') {
 				printWithBrowser(lines);			
 			} else {
 				console.log('other printer');
 				console.log(lines);
 			}
 		});
-	}
-	
-	function round(price) {
-		return Math.round(price * 100)/100;
-	}
-	
-	function printWithBrowser(lines) {
-		var content = '<pre>';
-		_.each(lines, function(line) {
-			content += line + '<br>';
-		});
-		content += '</pre>';
-		
-		var pri = document.getElementById("ifmcontentstoprint").contentWindow;
-		pri.document.open();
-		pri.document.write(content);
-		pri.document.close();
-		pri.focus();
-		pri.print();
-	}
-	
-	function formatLine(left, right, lineWidth) {
-		right = right + '';
-		var leftWidth = lineWidth - right.length - 1;
-		var leftConcatenated = left.substring(0, leftWidth);
-		while (leftConcatenated.length < leftWidth) {
-			leftConcatenated += ' ';
-		}
-		
-		return leftConcatenated + ' ' + right;
-	} 
+	}; 
 	
 	return {
 		getAvailablePrinters: function() {
@@ -73,5 +74,5 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 		},
 		
 		print: print
-	}
+	};
 }]);

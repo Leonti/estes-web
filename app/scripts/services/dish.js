@@ -1,8 +1,7 @@
 'use strict';
+/*global _:false */
 
 angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, storage) {
-	
-	return new DishMock($q, storage);
 	
 	function DishMock($q, storage) {
 		
@@ -25,9 +24,9 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 			var dishes = [];
 			var titleBase = '';
 			for (var i = 0; i < menus.length; i++) {
-				titleBase += '_' + menus[i]
+				titleBase += '_' + menus[i];
 			}
-			for (var i = 0; i < 10; i++) {
+			for (i = 0; i < 10; i++) {
 				dishes.push({
 					id: idBase + i,
 					name: 'Dish ' + titleBase + '_' + i,
@@ -49,7 +48,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 			allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Lunch'], allDishes.length));
 			allDishes = allDishes.concat(generateDishesForMenus(['Breakfast', 'Lunch', 'Dinner'], allDishes.length));
 			return allDishes;
-		}
+		};
 		
 		var getPrice = function(dish) {
 			var price = dish.price;
@@ -58,7 +57,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 			});
 			
 			return price;
-		}
+		};
 		
 		var saveDish = function(dish) {
 			var dishes = storage.get('mockDishes');
@@ -74,7 +73,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 			}
 			storage.set('mockDishes', dishes);
 			return dish;
-		}
+		};
 		
 		var removeDish = function(id) {
 			var dishes = storage.get('mockDishes');
@@ -84,7 +83,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 				}
 			}
 			storage.set('mockDishes', dishes);
-		}
+		};
 		
 		if (!storage.get('mockDishes')) {
 			storage.set('mockDishes', generateFakeDishes());
@@ -111,7 +110,9 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 			getPrice: function(dish) {
 				return getPrice(dish);
 			}
-		}
-	}	
+		};
+	}
+	
+	return new DishMock($q, storage);
 	
 }]);

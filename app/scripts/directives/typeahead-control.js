@@ -21,14 +21,14 @@ angular.module('estesWebApp').directive('typeaheadControl', function () {
     		  }
     	   
     		  if (e.keyCode === 27) {
-    			  scope.$apply(function() { controller.hide(true) });
+    			  scope.$apply(function() { controller.hide(true); });
     		  }
     	  });
     	   
     	  $input.bind('keydown', function(e) {
     		  if (e.keyCode === 9 || e.keyCode === 13 || e.keyCode === 27) {
     			  e.preventDefault();
-    		  };
+    		  }
     	   
     		  if (e.keyCode === 40) {
     			  e.preventDefault();

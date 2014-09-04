@@ -10,16 +10,16 @@ angular.module('estesWebApp').directive('dropdown', function () {
     	  selectedItem: '=',
     	  toLabel: '&'
       },
-      link: function postLink(scope, element, attrs) {
+      link: function postLink(scope) {
     	  
 		  scope.convertToLabel = function(item) {
 			  var label = scope.toLabel({item: item});
 			  return label ? label : item;
-		  }    	  
+		  };    	  
     	  
     	  scope.select = function(item) {
     		  scope.selectedItem = item;
-    	  }
+    	  };
       }
     };
 });

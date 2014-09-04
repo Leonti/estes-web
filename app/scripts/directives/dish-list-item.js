@@ -6,7 +6,6 @@ angular.module('estesWebApp').directive('dishListItem', function() {
 		restrict : 'E',
 		scope: {
 			dish: '='
-		},
-		link : function postLink(scope, element, attrs) {}
+		}
 	};
 });

@@ -2,9 +2,6 @@
 
 angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Settings($q, storage) {
 
-	return new SettingsMock($q, storage);
-	
-	
 	function SettingsMock($q, storage) {
 	
 		var mockSettings = {
@@ -25,7 +22,9 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Set
 				storage.set('mockSettings', angular.copy(settings));
 				return $q.when(settings);
 			}
-		}
+		};
 	}	
 
+	return new SettingsMock($q, storage);
+	
 }]);

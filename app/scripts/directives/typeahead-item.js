@@ -23,11 +23,11 @@ angular.module('estesWebApp').directive('typeaheadItem', function () {
     		  scope.$apply(function() { controller.mousedOver(false); });
     	  });
     	  
-    	  element.bind('mouseenter', function(e) {
+    	  element.bind('mouseenter', function() {
     		  scope.$apply(function() { controller.activate(item); });
     	  });
     	   
-    	  element.bind('click', function(e) {
+    	  element.bind('click', function() {
     		  scope.$apply(function() { controller.select(item); });
     	  });
       }

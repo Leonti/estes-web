@@ -6,15 +6,11 @@ angular.module('estesWebApp').directive('typeahead', function () {
       restrict: 'A',
       transclude: true,
       scope: {
-    	  onSelect: "&",
-    	  items: "="
+    	  onSelect: '&',
+    	  items: '='
       },
-      link: function postLink(scope, element, attrs, controller) {
- 	  
-      },
-      controller: ["$scope", function($scope) {
+      controller: ['$scope', function($scope) {
     	  $scope.hide = false;
-
     	  
     	  this.activate = function(item) {
     		  $scope.active = item;
@@ -46,15 +42,15 @@ angular.module('estesWebApp').directive('typeahead', function () {
     	  
     	  this.hide = function(hide) {
     		  $scope.hide = hide;
-    	  }
+    	  };
     	  
     	  this.focused = function(focused) {
     		  $scope.focused = focused;
-    	  }
+    	  };
     	  
     	  this.mousedOver = function(mousedOver) {
     		  $scope.mousedOver = mousedOver;
-    	  }
+    	  };
     	  
     	  $scope.$parent.isVisible = function() {
     		  return !$scope.hide && ($scope.focused || $scope.mousedOver) && $scope.items.length > 0;

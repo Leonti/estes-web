@@ -1,4 +1,5 @@
 'use strict';
+/*global _:false */
 
 angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dish) {
 
@@ -6,8 +7,8 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		return {
 			menus: [],
 			ingredients: []
-		}
-	}
+		};
+	};
 	
 	Dish.readAllMenus().then(function(menus) {
 		$scope.menus = menus;
@@ -18,7 +19,7 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		Dish.readAll().then(function(dishes) {
 			$scope.dishes = dishes;
 		});
-	}
+	};
 	
 	refreshDishes();
 	
@@ -27,53 +28,53 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	$scope.editedDishIndex = null;
 	
 	$scope.isMenuSelected = function(menu) {
-		return $scope.selectedMenus.indexOf(menu) != -1;
-	}
+		return $scope.selectedMenus.indexOf(menu) !== -1;
+	};
 	
 	$scope.filterDish = function(dish) {
     	var menuFilter = _.some(dish.menus, function(menu) {
-    		return $scope.selectedMenus.indexOf(menu) != -1;
+    		return $scope.selectedMenus.indexOf(menu) !== -1;
     	});	
     
     	function isInSearch(dish) {
-    		return $scope.searchTerm.length > 0 ? dish.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) != -1: true;
+    		return $scope.searchTerm.length > 0 ? dish.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
     	}
     	
     	return menuFilter && isInSearch(dish);
-	}
+	};
 	
 	$scope.openNewDishForm = function() {
-		$scope.newDish = DishTemplate();		
-	}
+		$scope.newDish = new DishTemplate();		
+	};
 	
 	$scope.closeNewDishForm = function() {
 		$scope.newDish = null;
-	}
+	};
 	
 	$scope.saveNewDish = function(dish) {
 		Dish.save(dish).then(refreshDishes);
 		$scope.closeNewDishForm();
-	}
+	};
 	
 	$scope.startDishEdit = function(index) {
 		$scope.editedDishIndex = index;
-	}
+	};
 	
 	$scope.removeDish = function(dish) {
 		Dish.remove(dish.id).then(refreshDishes);		
-	}
+	};
 
 	$scope.closeDishForm = function() {
 		$scope.editedDishIndex = null;
-	}
+	};
 	
-	$scope.saveDish = function(dish, index) {
+	$scope.saveDish = function(dish) {
 		Dish.save(dish).then(refreshDishes);
 		$scope.closeDishForm();
-	}
+	};
 	
 	$scope.isDishEdited = function(index) {
-		return $scope.editedDishIndex == index;
-	}
+		return $scope.editedDishIndex === index;
+	};
 	
 });

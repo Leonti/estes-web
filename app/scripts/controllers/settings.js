@@ -12,10 +12,10 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	
 	$scope.saveSettings = function(settings) {
 		Settings.save(settings);
-	} 
+	}; 
 	
 	$scope.printerToLabel = function(printer) {
 		return printer.substring(0, 1) + printer.substring(1).toLowerCase();
-	}
+	};
 	
 }]);
