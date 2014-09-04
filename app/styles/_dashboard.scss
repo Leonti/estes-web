@@ -1,0 +1,55 @@
+.dashboard {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	
+	.dashboard-inner {
+		display: table;
+		height: 100%;
+		width: 100%;
+
+		.dashboard-items-wrapper {
+		    display: table-cell;
+	    	vertical-align:middle;
+			text-align: center;
+		
+			.dashboard-items {
+				display: inline-block;
+		    	height: 20em;
+		    	width: 42em;
+		    	
+		    	.dashboard-item {
+		    		width: 20em;
+		    		height: 20em;
+		    		background: white;
+		    		position: relative;
+		    		
+		    		a {
+		    			text-decoration: none;
+		    			height: 100%;
+		    			width: 100%;
+		    			display: table;
+		    			color: #666;
+		    			
+		    			&:hover {
+		    				color: #333;
+		    			}
+		    			
+		    			.dashboard-item-content {
+		    				display: table-cell;
+		    				vertical-align: middle;			
+		    				font-size: 2.5em;
+		    				
+		    				.dashbord-icon {
+		    					font-size: 3.5em;
+		    				}
+		    			}
+		    		}
+		    	}
+			}
+		}
+	}
+	
+}

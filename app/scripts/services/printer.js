@@ -23,9 +23,9 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 			});
 			
 			lines.push('');
-			lines.push(formatLine('Subtotal:', Order.calculatePrice(order), lineWidth));
-			lines.push(formatLine('Tax:', Order.calculateTax(order), lineWidth));
-			lines.push(formatLine('Total:', Order.calculatePrice(order) + Order.calculateTax(order), lineWidth));
+			lines.push(formatLine('Subtotal:', round(Order.calculatePrice(order)), lineWidth));
+			lines.push(formatLine('Tax:', round(Order.calculateTax(order)), lineWidth));
+			lines.push(formatLine('Total:', round(Order.calculatePrice(order)) + round(Order.calculateTax(order)), lineWidth));
 			
 			
 			if (settings.printer == 'BROWSER') {
@@ -35,6 +35,10 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 				console.log(lines);
 			}
 		});
+	}
+	
+	function round(price) {
+		return Math.round(price * 100)/100;
 	}
 	
 	function printWithBrowser(lines) {
