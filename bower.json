@@ -15,7 +15,8 @@
     "lodash": "~2.4.1",
     "angular-ui-sortable": "~0.12.8",
     "angular-moment": "~0.8.0",
-    "angularLocalStorage": "~0.1.7"
+    "angularLocalStorage": "~0.1.7",
+    "restangular": "~1.4.0"
   },
   "devDependencies": {
     "angular-mocks": "1.2.16",

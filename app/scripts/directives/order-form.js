@@ -62,7 +62,7 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			};	
 			
 			$scope.waiterToLabel = function(waiter) {
-				return waiter.name + ' (' + waiter.id + ')';
+				return waiter.name;
 			};
 			
 			$scope.showAddDish = function() {

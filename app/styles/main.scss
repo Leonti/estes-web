@@ -258,10 +258,12 @@ body {
 	width: 3em;
 }
 
+@import 'header';
 @import 'orders';
 @import 'kitchen';
 @import 'settings';
 @import 'dashboard';
+@import 'login';
 @import 'directives/dropdown';
 @import 'directives/dish-list-item';
 @import 'directives/order-dish-list-item';

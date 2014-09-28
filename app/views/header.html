@@ -1,11 +1,10 @@
 <div ng-controller="HeaderCtrl">
 	<div class="header" ng-if="!isStation">
-		<ul class="nav nav-pills pull-right">
-			<li class="active"><a ng-href="#">Home</a></li>
-			<li><a ng-href="#/about">About</a></li>
-			<li><a ng-href="#">Contact</a></li>
-		</ul>
-		<h3 class="text-muted">estesWeb</h3>
+		<span class="header-menu pull-right" ng-if="isLoggedIn">
+			<a ng-href="#/settings">Settings</a>
+			<a ng-href="#/logout">Logout</a>
+		</span>
+		<h3 class="text-muted"><a href="#" class="header-home">Estes - Restaurant POS</a></h3>
 	</div>
 	<div class="header-station">
 	</div>
