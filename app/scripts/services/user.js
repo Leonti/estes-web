@@ -15,7 +15,13 @@ angular.module('estesWebApp').factory('User', [ '$q', '$location', '$cookies', '
 			};			
 		}
 		
-		return {			
+		return {
+			
+			saveUserSession : function(userSession) {
+				$cookies.userSession_id = userSession.id;
+				$cookies.userSession_userId = userSession.userId;
+			}, 
+			
 			getUserSession : getUserSession,
 			
 			destroyUserSession : function() {

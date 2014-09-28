@@ -32,6 +32,5 @@ angular.module(
 			}).otherwise({
 				redirectTo : '/'
 			});
-
-			RestangularProvider.setBaseUrl('http://localhost:8080/rest/');
+			
 		} ]);

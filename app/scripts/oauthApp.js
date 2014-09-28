@@ -1,5 +1,5 @@
 angular.module('estesWebApp', [ 'ngCookies' ]).controller('OauthCtrl',
-[ '$scope', '$location', '$http', '$cookies', 'Config', function($scope, $location, $http, $cookies, Config) {
+[ '$scope', '$location', '$http', '$cookies', 'Config', 'User', function($scope, $location, $http, $cookies, Config, User) {
 
 	$scope.error = undefined;
 	
@@ -23,9 +23,7 @@ angular.module('estesWebApp', [ 'ngCookies' ]).controller('OauthCtrl',
 			console.log(data);
 			
 			if (!data.error) {
-				$cookies.userSession_id = data.id;
-				$cookies.userSession_userId = data.userId;
-				
+				User.saveUserSession(data);
 				window.location.href = '/';
 			} else {
 				$scope.error = data.error_description;

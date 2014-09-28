@@ -11,6 +11,8 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	});
 	
 	$scope.saveSettings = function(settings) {
+		settings.tax = parseFloat(settings.tax);
+		settings.receiptWidth = parseInt(settings.receiptWidth);
 		Settings.save(settings);
 	}; 
 	

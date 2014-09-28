@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Settings($q, storage) {
+angular.module('estesWebApp').service('Settings', ['$q', 'storage', 'Rest', 'Restangular', 'Demo', function Settings($q, storage, Rest, Restangular, Demo) {
 
 	function SettingsMock($q, storage) {
 	
@@ -23,8 +23,26 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', function Set
 				return $q.when(settings);
 			}
 		};
-	}	
+	}
+	
+	function Settings(Restangular) {
+		
+		return {
+			read: function() {
+				return Rest.configure().then(function() {
+					return Restangular.one('settings').get();	
+				});
+			},
+			save: function(settings) {
+				return settings.put();
+			}
+		};		
+	}
 
-	return new SettingsMock($q, storage);
+	if (Demo.isEnabled()) {
+		return new SettingsMock($q, storage);
+	} else {
+		return new Settings(Restangular);
+	}
 	
 }]);

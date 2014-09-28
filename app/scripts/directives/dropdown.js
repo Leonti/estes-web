@@ -13,6 +13,9 @@ angular.module('estesWebApp').directive('dropdown', function () {
       link: function postLink(scope) {
     	  
 		  scope.convertToLabel = function(item) {
+			  if (item === undefined) {
+				  return;
+			  }
 			  var label = scope.toLabel({item: item});
 			  return label ? label : item;
 		  };    	  
