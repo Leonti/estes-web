@@ -25,7 +25,7 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', 'Rest', 'Res
 		};
 	}
 	
-	function Settings(Restangular) {
+	function Settings(Rest, Restangular) {
 		
 		return {
 			read: function() {
@@ -42,7 +42,7 @@ angular.module('estesWebApp').service('Settings', ['$q', 'storage', 'Rest', 'Res
 	if (Demo.isEnabled()) {
 		return new SettingsMock($q, storage);
 	} else {
-		return new Settings(Restangular);
+		return new Settings(Rest, Restangular);
 	}
 	
 }]);

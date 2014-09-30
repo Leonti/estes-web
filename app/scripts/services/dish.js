@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, storage) {
+angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 'Restangular', function($q, storage, Demo, Rest, Restangular) {
 	
 	function DishMock($q, storage) {
 		
@@ -113,6 +113,51 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', function($q, sto
 		};
 	}
 	
-	return new DishMock($q, storage);
+	function Dish(Rest, Restangular) {
+		
+		return {
+			
+			readAll: function() {
+				return Rest.configure().then(function() {
+					return Restangular.all('dish').getList();	
+				});
+			},
+			readAllMenus: function() {
+				return $q.when(angular.copy(storage.get('mockMenus')));
+			},
+			readAllIngredients: function() {
+				return $q.when(angular.copy(storage.get('mockIngredients')));			
+			},
+			save: function(dish) {
+				dish.selectedIngredients = [];
+				dish.price = 1;
+				return Rest.configure().then(function() {
+					if (dish.id !== undefined || dish.id !== null) {
+						return Restangular.one('dish').post('', dish);
+					} else {
+						return dish.put();
+					}
+				});
+			},
+			remove: function(id) {
+				Restangular.getList('dish').then(function(dishes) {
+					for (var i = 0; i < dishes.length; i++) {
+						if (dishes[i].id === id) {
+							dishes[i].remove();
+						}
+					}
+				});
+			},
+			getPrice: function(dish) {
+				return getPrice(dish);
+			}			
+		};		
+	}
+
+	if (Demo.isEnabled()) {
+		return new DishMock($q, storage);
+	} else {
+		return new Dish(Rest, Restangular);
+	}
 	
 }]);

@@ -18,6 +18,8 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	var refreshDishes = function() {
 		Dish.readAll().then(function(dishes) {
 			$scope.dishes = dishes;
+			
+			console.log($scope.dishes);
 		});
 	};
 	
