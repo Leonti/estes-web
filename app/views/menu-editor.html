@@ -31,7 +31,8 @@
 						</div>
 					</div>					
 				</div>
-				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish" 
+				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish"
+					ingredients="ingredients" menus="menus" 
 					on-close="closeDishForm()" on-save="saveDish(dish)"></div>
 			</div>
 		</div>

@@ -3,6 +3,17 @@
 
 angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 'Restangular', function($q, storage, Demo, Rest, Restangular) {
 	
+	function getMenus(dishes) {
+		return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.menus; })));
+	}
+	
+	function getIngredients(dishes) {
+		return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.ingredients; })), 
+			function (ingredient) {
+				return ingredient.name + ingredient.priceChange;
+			});
+	}
+	
 	function DishMock($q, storage) {
 		
 		var mockMenus = ['Breakfast', 'Lunch', 'Dinner'];
@@ -19,17 +30,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		            		   [{ id: 2, name: 'Onions', priceChange: 0 }], 
 		            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
 		            		];
-		
-		function getMenus(dishes) {
-			return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.menus; })));
-		}
-		
-		function getIngredients(dishes) {
-			return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.ingredients; })), 
-				function (ingredient) {
-					return ingredient.name + ingredient.priceChange;
-				});
-		}
 		
 		function generateDishesForMenus(menus, idBase) {
 			var dishes = [];
@@ -137,7 +137,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					if (dish.id === undefined || dish.id === null) {
 						return Restangular.one('dish').post('', dish);
 					} else {
-						return dish.put();
+						return Restangular.one("dish", dish.id.id).customPUT(dish);
 					}
 				});
 			},
