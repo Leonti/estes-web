@@ -10,16 +10,14 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		};
 	};
 	
-	Dish.readAllMenus().then(function(menus) {
-		$scope.menus = menus;
-		$scope.selectedMenus = angular.copy($scope.menus);	
-	});
-	
 	var refreshDishes = function() {
 		Dish.readAll().then(function(dishes) {
 			$scope.dishes = dishes;
 			
-			console.log($scope.dishes);
+			$scope.menus = Dish.getMenus(dishes);
+			$scope.selectedMenus = angular.copy($scope.menus);
+			
+			$scope.ingredients = Dish.getIngredients(dishes);
 		});
 	};
 	
@@ -34,15 +32,15 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	};
 	
 	$scope.filterDish = function(dish) {
-    	var menuFilter = _.some(dish.menus, function(menu) {
+    	var isInMenus = _.some(dish.menus, function(menu) {
     		return $scope.selectedMenus.indexOf(menu) !== -1;
-    	});	
+    	}) || $scope.selectedMenus.length == 0;	
     
     	function isInSearch(dish) {
     		return $scope.searchTerm.length > 0 ? dish.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
     	}
     	
-    	return menuFilter && isInSearch(dish);
+    	return isInMenus && isInSearch(dish);
 	};
 	
 	$scope.openNewDishForm = function() {

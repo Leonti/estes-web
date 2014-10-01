@@ -20,6 +20,17 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
 		            		];
 		
+		function getMenus(dishes) {
+			return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.menus; })));
+		}
+		
+		function getIngredients(dishes) {
+			return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.ingredients; })), 
+				function (ingredient) {
+					return ingredient.name + ingredient.priceChange;
+				});
+		}
+		
 		function generateDishesForMenus(menus, idBase) {
 			var dishes = [];
 			var titleBase = '';
@@ -61,15 +72,16 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		
 		var saveDish = function(dish) {
 			var dishes = storage.get('mockDishes');
-			if (dish.id !== undefined || dish.id !== null) {
+			
+			if (dish.id === undefined || dish.id === null) {
+				dish.id = dishes.length + 1;
+				dishes.push(dish);
+			} else {
 				for (var i = 0; i < dishes.length; i++) {
 					if (dishes[i].id === dish.id) {
 						dishes[i] = dish;
 					}
 				}
-			} else {
-				dish.id = dishes.length + 1;
-				dishes.push(dish);
 			}
 			storage.set('mockDishes', dishes);
 			return dish;
@@ -95,12 +107,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockDishes')));
 			},
-			readAllMenus: function() {
-				return $q.when(angular.copy(storage.get('mockMenus')));
-			},
-			readAllIngredients: function() {
-				return $q.when(angular.copy(storage.get('mockIngredients')));			
-			},
 			save: function(dish) {
 				return $q.when(saveDish(dish));
 			},
@@ -109,7 +115,9 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			},
 			getPrice: function(dish) {
 				return getPrice(dish);
-			}
+			},
+			getMenus: getMenus,
+			getIngredients: getIngredients
 		};
 	}
 	
@@ -122,17 +130,11 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					return Restangular.all('dish').getList();	
 				});
 			},
-			readAllMenus: function() {
-				return $q.when(angular.copy(storage.get('mockMenus')));
-			},
-			readAllIngredients: function() {
-				return $q.when(angular.copy(storage.get('mockIngredients')));			
-			},
 			save: function(dish) {
 				dish.selectedIngredients = [];
 				dish.price = 1;
 				return Rest.configure().then(function() {
-					if (dish.id !== undefined || dish.id !== null) {
+					if (dish.id === undefined || dish.id === null) {
 						return Restangular.one('dish').post('', dish);
 					} else {
 						return dish.put();
@@ -150,7 +152,9 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			},
 			getPrice: function(dish) {
 				return getPrice(dish);
-			}			
+			},
+			getMenus: getMenus,
+			getIngredients: getIngredients
 		};		
 	}
 

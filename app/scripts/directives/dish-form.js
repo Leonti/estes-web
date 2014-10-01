@@ -7,6 +7,8 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
       restrict: 'EA',
       scope: {
     	  inputDish: '=?dish',
+    	  menus: '=',
+    	  ingredients: '=',
     	  onClose: '&',
     	  onSave: '&'
       },
@@ -19,13 +21,11 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 			priceChange: 0
 		};
 		
-		Dish.readAllIngredients().then(function(ingredients) {
-			$scope.typeaheadItems = ingredients; 
+		$scope.$watch('ingredients', function(ingredients) {
+			if (!ingredients) { return; }
+			
+			$scope.typeaheadItems = ingredients;
 			$scope.filteredIngredients = angular.copy($scope.typeaheadItems);
-		});
-		
-		Dish.readAllMenus().then(function(menus) {
-			$scope.menus = menus;
 		});
 		
 		$scope.$watch('inputDish', function(dish) {

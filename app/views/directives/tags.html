@@ -1,6 +1,6 @@
 <div class="tags">
 	<div class="tag-list">
-		<span class="tag" ng-repeat="tag in selectedTags">{{tag}} <span class="icon-close"></span></span>
+		<span class="tag" ng-repeat="tag in selectedTags">{{tag}} <span ng-click="removeTag(tag)" class="icon-close"></span></span>
 		<span class="add-tag-link" ng-click="toggleSelecting()">+ Add {{tagName}}</span>
 	</div>
 	<div class="dropdown-anchor">

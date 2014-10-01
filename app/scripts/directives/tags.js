@@ -6,13 +6,19 @@ angular.module('estesWebApp').directive('tags', function () {
       replace: true,
       restrict: 'E',
       scope: {
-    	  availableTags: '=',
+    	  availableTagsInput: '=availableTags',
     	  selectedTags: '=',
     	  tagName: '@'
       },
       link: function postLink(scope) {
     	  scope.newTag = '';
     	  scope.selecting = false;
+  
+    	  scope.$watch('availableTagsInput', function(availableTagsInput) {
+    		  if (!availableTagsInput) { return; }
+				
+    		  scope.availableTags = angular.copy(availableTagsInput);
+    	  });    	  
     	  
     	  scope.toggleSelecting = function() {
     		  scope.selecting = !scope.selecting;
@@ -36,6 +42,10 @@ angular.module('estesWebApp').directive('tags', function () {
     		  scope.selectTag(tag);
     		  scope.newTag = '';
     	  };
+    	  
+    	  scope.removeTag = function(tag) {
+    		  scope.selectedTags.splice(scope.selectedTags.indexOf(tag), 1);   		  
+    	  }
       }
     };
   });
