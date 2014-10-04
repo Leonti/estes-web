@@ -107,6 +107,18 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 			});
 		}
 		
+		function parseNumbers(dish) {
+			console.log(dish);
+			dish.price = parseFloat(dish.price);
+			for (var i = 0; i < dish.ingredients.length; i++) {
+				for (var j = 0; j < dish.ingredients[i].length; j++) {
+					dish.ingredients[i][j].priceChange = parseFloat(dish.ingredients[i][j].priceChange);					
+				}
+				
+			}
+			return dish;
+		}
+		
 		$scope.save = function(dish) {
 			$scope.onSave({dish: dish});
 		};
@@ -114,6 +126,7 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		$scope.cancel = function() {
 			$scope.onClose();
 		};
+		
       }
     };
   });

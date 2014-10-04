@@ -132,7 +132,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			},
 			save: function(dish) {
 				dish.selectedIngredients = [];
-				dish.price = 1;
 				return Rest.configure().then(function() {
 					if (dish.id === undefined || dish.id === null) {
 						return Restangular.one('dish').post('', dish);
@@ -142,12 +141,15 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 				});
 			},
 			remove: function(id) {
-				Restangular.getList('dish').then(function(dishes) {
-					for (var i = 0; i < dishes.length; i++) {
-						if (dishes[i].id === id) {
-							dishes[i].remove();
+				console.log(id);
+				return Rest.configure().then(function() {
+					return Restangular.all('dish').getList().then(function(dishes) {
+						for (var i = 0; i < dishes.length; i++) {
+							if (dishes[i].id.id === id.id) {
+								return Restangular.one("dish", id.id).customDELETE();
+							}
 						}
-					}
+					});					
 				});
 			},
 			getPrice: function(dish) {

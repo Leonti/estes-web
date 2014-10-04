@@ -16,7 +16,7 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 			
 			$scope.menus = Dish.getMenus(dishes);
 			console.log($scope.menus);
-			$scope.selectedMenus = angular.copy($scope.menus);
+			$scope.selectedMenus = [];
 			
 			$scope.ingredients = Dish.getIngredients(dishes);
 		});
