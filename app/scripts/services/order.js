@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', function($q, storage, Dish) {
+angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', function($q, storage, Dish, Demo, Rest, Restangular) {
 	
 	var tax = 0.07;
 	
@@ -97,6 +97,30 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 			storage.set('mockOrders', mockOrders);
 		}
 		
+		function updateStatus(order) {
+			if (order.status === 'PREPARATION') {
+				if (_.every(order.dishes, function(dish) { return dish.status === 'PREPARED'; })) {
+					order.status = 'PREPARED';
+				}
+			}
+		}
+		
+		function toOrderDish(dish) {
+			function(dish) {
+				return {
+					name: dish.name,
+					price: dish.price,
+					ingredients: angular.copy(dish.ingredients),
+					selectedIngredients: [],
+					status: 'PREPARATION'
+				};
+			}			
+		}
+		
+		function getStatusPriority(status) {
+			return statusPriorities[status];
+		}
+		
 		return {
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockOrders')));			
@@ -105,12 +129,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 			save: function(order) {
 				var orders = storage.get('mockOrders');
 				
-				if (order.status === 'PREPARATION') {
-					if (_.every(order.dishes, function(dish) { return dish.status === 'PREPARED'; })) {
-						order.status = 'PREPARED';
-					}
-				}
-				
+				updateStatus(order);
 				if (order.id === null || order.id === undefined) {
 					order.id = orders.length;
 					orders.push(order);				
@@ -126,23 +145,45 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', functio
 				return $q.when(order);
 			},
 			
-			getStatusPriority: function(status) {
-				return statusPriorities[status];
-			},
-			toOrderDish: function(dish) {
-				return {
-					name: dish.name,
-					price: dish.price,
-					ingredients: angular.copy(dish.ingredients),
-					selectedIngredients: [],
-					status: 'PREPARATION'
-				};
-			},
+			getStatusPriority: getStatusPriority,
+			toOrderDish: toOrderDish,
 			calculatePrice: calculatePrice,
 			calculateTax: calculateTax
 		};
 	}
 	
-	return new OrderMock($q, storage);
+	function Order(Rest, Restangular) {
+		
+		return {
+			
+			readAll: function() {
+				return Rest.configure().then(function() {
+					return Restangular.all('order').getList();	
+				});
+			},
+			save: function(dish) {
+				
+				updateStatus(order);
+				return Rest.configure().then(function() {
+					if (order.id === undefined || order.id === null) {
+						return Restangular.one('order').post('', order);
+					} else {
+						return Restangular.one('order', order.id.id).customPUT(order);
+					}
+				});
+			},
+			
+			getStatusPriority: getStatusPriority,
+			toOrderDish: toOrderDish,
+			calculatePrice: calculatePrice,
+			calculateTax: calculateTax
+		};		
+	}
+	
+	if (Demo.isEnabled()) {
+		return new OrderMock($q, storage);
+	} else {
+		return new Order(Rest, Restangular);
+	}
 	
 }]);
