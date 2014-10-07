@@ -57,7 +57,7 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		
 		function resetNewIngredient() {
 			$scope.newIngredientNames = [];
-			$scope.newIngredientPriceChanges = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+			$scope.newIngredientPriceChanges = ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"];
 			$scope.expandedRow = null;
 			rowJustClosed = true;
 		}

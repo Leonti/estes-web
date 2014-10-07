@@ -42,12 +42,10 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 
 			Dish.readAll().then(function(dishList) {
 				$scope.dishList = dishList;
-			});		
-			
-			Dish.readAllMenus().then(function(menus) {
-				$scope.menus = menus;
-				$scope.selectedMenus = angular.copy($scope.menus);	
-			});	
+				
+				$scope.menus = Dish.getMenus(dishList);
+				$scope.selectedMenus = angular.copy($scope.menus);
+			});
 			
 			$scope.filterDish = function(dish) {
 		    	var menuFilter = _.some(dish.menus, function(menu) {

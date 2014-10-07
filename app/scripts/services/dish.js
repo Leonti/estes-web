@@ -14,6 +14,15 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			});
 	}
 	
+	var getPrice = function(dish) {
+		var price = dish.price;
+		_.each(dish.selectedIngredients, function(ingredient) {
+			price += ingredient.priceChange;
+		});
+		
+		return price;
+	};
+	
 	function DishMock($q, storage) {
 		
 		var mockMenus = ['Breakfast', 'Lunch', 'Dinner'];
@@ -61,15 +70,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			return allDishes;
 		};
 		
-		var getPrice = function(dish) {
-			var price = dish.price;
-			_.each(dish.selectedIngredients, function(ingredient) {
-				price += ingredient.priceChange;
-			});
-			
-			return price;
-		};
-		
 		var saveDish = function(dish) {
 			var dishes = storage.get('mockDishes');
 			
@@ -113,9 +113,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			remove: function(id) {
 				return $q.when(removeDish(id));
 			},
-			getPrice: function(dish) {
-				return getPrice(dish);
-			},
+			getPrice: getPrice,
 			getMenus: getMenus,
 			getIngredients: getIngredients
 		};
@@ -141,7 +139,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 				});
 			},
 			remove: function(id) {
-				console.log(id);
 				return Rest.configure().then(function() {
 					return Restangular.all('dish').getList().then(function(dishes) {
 						for (var i = 0; i < dishes.length; i++) {
@@ -152,9 +149,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					});					
 				});
 			},
-			getPrice: function(dish) {
-				return getPrice(dish);
-			},
+			getPrice: getPrice,
 			getMenus: getMenus,
 			getIngredients: getIngredients
 		};		

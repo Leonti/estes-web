@@ -17,6 +17,34 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		return calculatePrice(order) * tax;
 	}
 	
+	var statusPriorities = {
+			'PREPARATION': 1,
+			'PREPARED': 2,
+			'PAID': 3
+	};
+	
+	function updateStatus(order) {
+		if (order.status === 'PREPARATION') {
+			if (_.every(order.dishes, function(dish) { return dish.status === 'PREPARED'; })) {
+				order.status = 'PREPARED';
+			}
+		}
+	}
+	
+	function toOrderDish(dish) {
+		return {
+			name: dish.name,
+			price: dish.price,
+			ingredients: angular.copy(dish.ingredients),
+			selectedIngredients: [],
+			status: 'PREPARATION'
+		};
+	}
+	
+	function getStatusPriority(status) {
+		return statusPriorities[status];
+	}	
+	
 	function OrderMock($q, storage) {
 		
 		var mockIngredients = [
@@ -87,38 +115,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		
 		var mockOrders = generateMockOrders();
 		
-		var statusPriorities = {
-			'PREPARATION': 1,
-			'PREPARED': 2,
-			'PAID': 3
-		};
-		
 		if (!storage.get('mockOrders')) {			
 			storage.set('mockOrders', mockOrders);
-		}
-		
-		function updateStatus(order) {
-			if (order.status === 'PREPARATION') {
-				if (_.every(order.dishes, function(dish) { return dish.status === 'PREPARED'; })) {
-					order.status = 'PREPARED';
-				}
-			}
-		}
-		
-		function toOrderDish(dish) {
-			function(dish) {
-				return {
-					name: dish.name,
-					price: dish.price,
-					ingredients: angular.copy(dish.ingredients),
-					selectedIngredients: [],
-					status: 'PREPARATION'
-				};
-			}			
-		}
-		
-		function getStatusPriority(status) {
-			return statusPriorities[status];
 		}
 		
 		return {
@@ -161,11 +159,12 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 					return Restangular.all('order').getList();	
 				});
 			},
-			save: function(dish) {
+			save: function(order) {
 				
 				updateStatus(order);
 				return Rest.configure().then(function() {
 					if (order.id === undefined || order.id === null) {
+						order.submitted = Date.now();
 						return Restangular.one('order').post('', order);
 					} else {
 						return Restangular.one('order', order.id.id).customPUT(order);
