@@ -19,3 +19,22 @@
 		text-align: right;
 	}
 }
+
+.waiters-form {
+	padding: 1em;
+	background: white;	
+	.waiters-form-waiter-list {
+		list-style: none;
+		padding-left: 0;
+		
+		.waiter-name {
+			display: inline-block;
+			min-width: 20em;
+		}
+		
+		.remove-waiter {
+			cursor: pointer;
+		}
+	}
+}
+

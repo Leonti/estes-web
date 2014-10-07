@@ -10,6 +10,16 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 			storage.set('mockWaiters', mockWaiters);
 		}
 		
+		var removeWaiter = function(id) {
+			var waiters = storage.get('mockWaiters');
+			for (var i = 0; i < waiters.length; i++) {
+				if (waiters[i].id === id) {
+					waiters.splice(i, 1);
+				}
+			}
+			storage.set('mockWaiters', waiters);
+		};
+		
 		return {
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockWaiters')));
@@ -30,7 +40,10 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 				
 				storage.set('mockWaiters', waiters);
 				return $q.when(waiter);
-			}
+			},
+			remove: function(id) {
+				return $q.when(removeWaiter(id));
+			},
 		};
 	}
 	
