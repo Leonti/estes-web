@@ -1,6 +1,6 @@
 <div class="row order-list">
 	<div class="col-md-8">
-		<div class="order shadow-border" ng-repeat="order in orders track by order.id">
+		<div class="order shadow-border" ng-repeat="order in orders track by order.id.id">
 			<div class="order-header" ng-click="editOrder(order)">
 				<div class="order-waiter">{{order.waiter.name}}</div>
 				<div class="order-status">{{order.status}}</div>

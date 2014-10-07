@@ -48,12 +48,12 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 	function OrderMock($q, storage) {
 		
 		var mockIngredients = [
-		            		   [{ id: 4, name: 'Regular fries', priceChange: 0 }, { id: 5, name: 'Curly fries', priceChange: 0.5 }],
-		            		   [{ id: 2, name: 'Onions', priceChange: 0 }], 
-		            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
+		            		   [{ name: 'Regular fries', priceChange: '0' }, { name: 'Curly fries', priceChange: '0.5' }],
+		            		   [{ name: 'Onions', priceChange: '0' }], 
+		            		   [{ name: 'Beef', priceChange: '0' }]
 		            		];
 		
-		var selectedIngredients = [{ id: 5, name: 'Curly fries', priceChange: 0.5 }, { id: 2, name: 'Onions', priceChange: 0 }, { id: 1, name: 'Beef', priceChange: 0 }];
+		var selectedIngredients = [{ name: 'Curly fries', priceChange: '0.5' }, { name: 'Onions', priceChange: '0' }, { name: 'Beef', priceChange: '0' }];
 		
 		var getStatus = function(i) {
 
@@ -73,9 +73,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			var titleBase = 'Burger';
 			for (i = 0; i < getRandomInt(0, 8); i++) {
 				var orderDish = {
-						id: i,
 						name: 'Dish ' + titleBase,
-						price: 10,
+						price: '10',
 						menus: ['Breakfast', 'Lunch'],
 						ingredients: mockIngredients,
 						selectedIngredients: selectedIngredients
@@ -101,7 +100,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			for (var i = 0; i < 41; i++) {
 				var status = getStatus(i);
 				orders.push({
-					id: i,
+					id: {userId: 1, id: i},
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
 					dishes: generateOrderDishes(i, status),
@@ -129,11 +128,11 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 				
 				updateStatus(order);
 				if (order.id === null || order.id === undefined) {
-					order.id = orders.length;
+					order.id = {userId: 1, id: orders.length};
 					orders.push(order);				
 				} else {
 					for (var i = 0; i < orders.length; i++) {
-						if (orders[i].id === order.id) {
+						if (orders[i].id.id === order.id.id) {
 							orders[i] = order;
 						}
 					}
@@ -162,6 +161,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			save: function(order) {
 				
 				updateStatus(order);
+				order.waiter = order.waiter.plain();
+				order.note = order.note || '';
 				return Rest.configure().then(function() {
 					if (order.id === undefined || order.id === null) {
 						order.submitted = Date.now();

@@ -126,12 +126,13 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			};
 			
 			$scope.isEditView = function() {
-				if (viewOverride === 'PAYMENT') { return false; }
+				if (viewOverride === 'PAYMENT' || !$scope.order) { return false; }
 				return $scope.order.status === 'PREPARATION' || viewOverride === 'EDIT';
 			};
 			
 			$scope.isPaymentView = function() {
-				if (viewOverride === 'EDIT') { return false; }
+				if (viewOverride === 'EDIT' || !$scope.order) { return false; }
+				
 				return $scope.order.status !== 'PREPARATION' || viewOverride === 'PAYMENT';
 			};
 			

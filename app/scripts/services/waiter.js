@@ -4,7 +4,7 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 	
 	function WaiterMock($q, storage) {
 
-		var mockWaiters = [{name: 'Leonti', id: 12}, {name: 'Vitali', id: 13}, {name: 'Krishti', id: 14}];
+		var mockWaiters = [{name: 'Leonti', id: {userId: 1, id: 12}}, {name: 'Vitali', id: {userId: 1, id: 13}}, {name: 'Krishti', id: {userId: 1, id: 14}}];
 		
 		if (!storage.get('mockWaiters')) {
 			storage.set('mockWaiters', mockWaiters);
@@ -13,7 +13,7 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 		var removeWaiter = function(id) {
 			var waiters = storage.get('mockWaiters');
 			for (var i = 0; i < waiters.length; i++) {
-				if (waiters[i].id === id) {
+				if (waiters[i].id.id === id.id) {
 					waiters.splice(i, 1);
 				}
 			}
@@ -28,11 +28,11 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 				var waiters = storage.get('mockWaiters');
 
 				if (waiter.id === null || waiter.id === undefined) {
-					waiter.id = waiter.length;
+					waiter.id = {userId: 1, id: waiter.length};
 					waiters.push(waiter);				
 				} else {
 					for (var i = 0; i < waiters.length; i++) {
-						if (waiters[i].id === waiter.id) {
+						if (waiters[i].id.id === waiter.id.id) {
 							waiters[i] = waiter;
 						}
 					}

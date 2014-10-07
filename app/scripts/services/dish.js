@@ -28,16 +28,16 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		var mockMenus = ['Breakfast', 'Lunch', 'Dinner'];
 		
 		var mockIngredients = [
-		            		   { id: 4, name: 'Regular fries', priceChange: 0 },
-		            		   { id: 5, name: 'Curly fries', priceChange: 0.5 }, 
-		            		   { id: 2, name: 'Onions', priceChange: 0 }, 
-		            		   { id: 1, name: 'Beef', priceChange: 0 }
+		            		   { name: 'Regular fries', priceChange: '0' },
+		            		   { name: 'Curly fries', priceChange: '0.5' }, 
+		            		   { name: 'Onions', priceChange: '0' }, 
+		            		   { name: 'Beef', priceChange: '0' }
 		            		];
 		
 		var dishIngredients =  [
-		            		   [{ id: 4, name: 'Regular fries', priceChange: 0 }, { id: 5, name: 'Curly fries', priceChange: 0.5 }],
-		            		   [{ id: 2, name: 'Onions', priceChange: 0 }], 
-		            		   [{ id: 1, name: 'Beef', priceChange: 0 }]
+		            		   [{ name: 'Regular fries', priceChange: '0' }, { name: 'Curly fries', priceChange: '0.5' }],
+		            		   [{ name: 'Onions', priceChange: '0' }], 
+		            		   [{ name: 'Beef', priceChange: '0' }]
 		            		];
 		
 		function generateDishesForMenus(menus, idBase) {
@@ -48,9 +48,9 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			}
 			for (i = 0; i < 10; i++) {
 				dishes.push({
-					id: idBase + i,
+					id: {userId: 1, id: idBase + i},
 					name: 'Dish ' + titleBase + '_' + i,
-					price: 10,
+					price: '10',
 					menus: menus,
 					ingredients: dishIngredients
 				});
@@ -74,11 +74,11 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			var dishes = storage.get('mockDishes');
 			
 			if (dish.id === undefined || dish.id === null) {
-				dish.id = dishes.length + 1;
+				dish.id = {userId: 1, id: dishes.length + 1};
 				dishes.push(dish);
 			} else {
 				for (var i = 0; i < dishes.length; i++) {
-					if (dishes[i].id === dish.id) {
+					if (dishes[i].id.id === dish.id.id) {
 						dishes[i] = dish;
 					}
 				}
@@ -90,7 +90,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		var removeDish = function(id) {
 			var dishes = storage.get('mockDishes');
 			for (var i = 0; i < dishes.length; i++) {
-				if (dishes[i].id === id) {
+				if (dishes[i].id.id === id.id) {
 					dishes.splice(i, 1);
 				}
 			}
