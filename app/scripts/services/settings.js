@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').service('Settings', ['$q', 'storage', 'Rest', 'Restangular', 'Demo', function Settings($q, storage, Rest, Restangular, Demo) {
+angular.module('estesWebApp').factory('Settings', ['$q', 'storage', 'Rest', 'Restangular', 'Demo', function($q, storage, Rest, Restangular, Demo) {
 
 	function SettingsMock($q, storage) {
 	

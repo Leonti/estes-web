@@ -23,12 +23,12 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	var WaiterTemplate = function(waiterName) {
 		return {
 			name: waiterName
-		}
-	}
+		};
+	};
 	
 	function resetWaiter() {
 		$scope.waiter = new WaiterTemplate();
-	};
+	}
 	
 	function refreshWaiters() {
 		Waiter.readAll().then(function(waiters) {
@@ -42,10 +42,10 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	$scope.addWaiter = function(waiterName) {
 		Waiter.save(new WaiterTemplate(waiterName)).then(refreshWaiters);
 		resetWaiter();
-	}
+	};
 	
 	$scope.removeWaiter = function(waiter) {
 		Waiter.remove(waiter.id).then(refreshWaiters);
-	}
+	};
 	
 }]);

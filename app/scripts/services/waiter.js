@@ -61,7 +61,7 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 					if (waiter.id === undefined || waiter.id === null) {
 						return Restangular.one('waiter').post('', waiter);
 					} else {
-						return Restangular.one("waiter", waiter.id.id).customPUT(waiter);
+						return Restangular.one('waiter', waiter.id.id).customPUT(waiter);
 					}
 				});
 			},
@@ -70,7 +70,7 @@ angular.module('estesWebApp').service('Waiter', ['$q', 'storage', 'Demo', 'Rest'
 					return Restangular.all('waiter').getList().then(function(waiters) {
 						for (var i = 0; i < waiters.length; i++) {
 							if (waiters[i].id.id === id.id) {
-								return Restangular.one("waiter", id.id).customDELETE();
+								return Restangular.one('waiter', id.id).customDELETE();
 							}
 						}
 					});					

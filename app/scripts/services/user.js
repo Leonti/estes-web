@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').factory('User', [ '$q', '$location', '$cookies', '$http', function User($q, $location, $cookies, $http) {
+angular.module('estesWebApp').factory('User', [ '$q', '$location', '$cookies', function($q, $location, $cookies) {
 
 	function User($q, $cookies) {
 		
@@ -42,7 +42,7 @@ angular.module('estesWebApp').factory('User', [ '$q', '$location', '$cookies', '
 					$location.url('/login');
 				}
 			}
-		}
+		};
 	}
 
 	return new User($q, $cookies);

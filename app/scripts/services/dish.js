@@ -14,15 +14,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			});
 	}
 	
-	var getPrice = function(dish) {
-		var price = dish.price;
-		_.each(dish.selectedIngredients, function(ingredient) {
-			price += ingredient.priceChange;
-		});
-		
-		return price;
-	};
-	
 	function DishMock($q, storage) {
 		
 		var mockMenus = ['Breakfast', 'Lunch', 'Dinner'];
@@ -113,7 +104,6 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			remove: function(id) {
 				return $q.when(removeDish(id));
 			},
-			getPrice: getPrice,
 			getMenus: getMenus,
 			getIngredients: getIngredients
 		};
@@ -134,7 +124,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					if (dish.id === undefined || dish.id === null) {
 						return Restangular.one('dish').post('', dish);
 					} else {
-						return Restangular.one("dish", dish.id.id).customPUT(dish);
+						return Restangular.one('dish', dish.id.id).customPUT(dish);
 					}
 				});
 			},
@@ -143,13 +133,12 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					return Restangular.all('dish').getList().then(function(dishes) {
 						for (var i = 0; i < dishes.length; i++) {
 							if (dishes[i].id.id === id.id) {
-								return Restangular.one("dish", id.id).customDELETE();
+								return Restangular.one('dish', id.id).customDELETE();
 							}
 						}
 					});					
 				});
 			},
-			getPrice: getPrice,
 			getMenus: getMenus,
 			getIngredients: getIngredients
 		};		

@@ -6,5 +6,6 @@ angular.module('estesWebApp').service('Demo', function Demo() {
 		isEnabled: function() {
 			return false;
 		}
-	}
+	};
+	
 });

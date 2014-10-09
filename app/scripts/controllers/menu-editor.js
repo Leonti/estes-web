@@ -35,7 +35,7 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	$scope.filterDish = function(dish) {
     	var isInMenus = _.some(dish.menus, function(menu) {
     		return $scope.selectedMenus.indexOf(menu) !== -1;
-    	}) || $scope.selectedMenus.length == 0;	
+    	}) || $scope.selectedMenus.length === 0;	
     
     	function isInSearch(dish) {
     		return $scope.searchTerm.length > 0 ? dish.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;

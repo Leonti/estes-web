@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').directive('dishForm', function (Dish) {
+angular.module('estesWebApp').directive('dishForm', function () {
     return {
       templateUrl: 'views/directives/dish-form.html',
       restrict: 'EA',
@@ -57,7 +57,7 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 		
 		function resetNewIngredient() {
 			$scope.newIngredientNames = [];
-			$scope.newIngredientPriceChanges = ["0","0","0","0","0","0","0","0","0","0","0","0","0","0","0"];
+			$scope.newIngredientPriceChanges = ['0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0','0'];
 			$scope.expandedRow = null;
 			rowJustClosed = true;
 		}
@@ -105,18 +105,6 @@ angular.module('estesWebApp').directive('dishForm', function (Dish) {
 			return _.filter(ingredients, function(ingredient) { 
 				return ingredient.name.toUpperCase().indexOf(term.toUpperCase()) === 0;
 			});
-		}
-		
-		function parseNumbers(dish) {
-			console.log(dish);
-			dish.price = parseFloat(dish.price);
-			for (var i = 0; i < dish.ingredients.length; i++) {
-				for (var j = 0; j < dish.ingredients[i].length; j++) {
-					dish.ingredients[i][j].priceChange = parseFloat(dish.ingredients[i][j].priceChange);					
-				}
-				
-			}
-			return dish;
 		}
 		
 		$scope.save = function(dish) {

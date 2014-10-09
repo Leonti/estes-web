@@ -4,8 +4,7 @@ angular.module('estesWebApp').controller('LoginCtrl', ['$scope', 'Config', funct
 	
 	Config.get().then(function(config) {
 		var callbackUrl = config.baseUrl + '/oauth2callback.html';
-		$scope.oauthUrl = 'https://accounts.google.com/o/oauth2/auth?scope=email%20profile&state=%2Fprofile&redirect_uri='
-			+ callbackUrl + '&response_type=token&client_id=' + config.oauthClientId;
+		$scope.oauthUrl = 'https://accounts.google.com/o/oauth2/auth?scope=email%20profile&state=%2Fprofile&redirect_uri=' + callbackUrl + '&response_type=token&client_id=' + config.oauthClientId;
 	});
 	
 }]);

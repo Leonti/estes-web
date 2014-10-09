@@ -3,7 +3,7 @@
 angular.module(
 		'estesWebApp',
 		[ 'ngAnimate', 'ngCookies', 'ngResource', 'ngRoute', 'ngSanitize', 'ngTouch', 'ui.sortable', 'angularMoment','angularLocalStorage', 'restangular' ])
-		.config([ '$routeProvider', 'RestangularProvider', function($routeProvider, RestangularProvider) {
+		.config([ '$routeProvider', function($routeProvider) {
 
 			$routeProvider.when('/', {
 				templateUrl : 'views/dashboard.html',

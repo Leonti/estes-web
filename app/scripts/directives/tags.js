@@ -45,7 +45,7 @@ angular.module('estesWebApp').directive('tags', function () {
     	  
     	  scope.removeTag = function(tag) {
     		  scope.selectedTags.splice(scope.selectedTags.indexOf(tag), 1);   		  
-    	  }
+    	  };
       }
     };
   });

@@ -1,16 +1,25 @@
 'use strict';
-/*global _:false */
+/*global _,Big:false */
 
 angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', function($q, storage, Dish, Demo, Rest, Restangular) {
 	
 	var tax = 0.07;
 	
-	function calculatePrice(order) {
-		var total = 0;
-		_.each(order.dishes, function(dish) {
-			total += Dish.getPrice(dish);
+	function calculateDishPrice(dish) {
+		var price = new Big(dish.price);
+		_.each(dish.selectedIngredients, function(ingredient) {
+			price = price.plus(new Big(ingredient.priceChange));
 		});
-		return total;
+		
+		return price;		
+	}
+	
+	function calculatePrice(order) {
+		var total = new Big(0);
+		_.each(order.dishes, function(dish) {
+			total = total.plus(calculateDishPrice(dish));
+		});
+		return total.round(2).toString();
 	}
 
 	function calculateTax(order) {
