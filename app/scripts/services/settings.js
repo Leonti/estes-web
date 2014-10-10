@@ -2,10 +2,12 @@
 
 angular.module('estesWebApp').factory('Settings', ['$q', 'storage', 'Rest', 'Restangular', 'Demo', function($q, storage, Rest, Restangular, Demo) {
 
+	
+	
 	function SettingsMock($q, storage) {
 	
 		var mockSettings = {
-			tax: 7,
+			tax: '0.07',
 			printer: 'BROWSER',
 			receiptWidth: 40
 		};

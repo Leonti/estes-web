@@ -1,9 +1,8 @@
 'use strict';
 /*global _,Big:false */
 
-angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', function($q, storage, Dish, Demo, Rest, Restangular) {
-	
-	var tax = 0.07;
+angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', 
+                                                function($q, storage, Dish, Demo, Rest, Restangular) {
 	
 	function calculateDishPrice(dish) {
 		var price = new Big(dish.price);
@@ -14,16 +13,34 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		return price;		
 	}
 	
-	function calculatePrice(order) {
+	function calculatePriceNoRound(order) {
 		var total = new Big(0);
 		_.each(order.dishes, function(dish) {
 			total = total.plus(calculateDishPrice(dish));
 		});
-		return total.round(2).toString();
+		
+		return total;
 	}
-
+	
+	function calculateTaxNoRound(order) {
+		var total = new Big(0);
+		_.each(order.dishes, function(dish) {
+			total = total.plus(calculateDishPrice(dish).times(new Big(dish.tax)));
+		});
+		
+		return total;
+	}	
+	
+	function calculatePrice(order) {
+		return calculatePriceNoRound(order).toFixed(2).toString();
+	}
+	
 	function calculateTax(order) {
-		return calculatePrice(order) * tax;
+		return calculateTaxNoRound(order).toFixed(2).toString();
+	}
+	
+	function calculateTotal(order) {
+		return calculatePriceNoRound(order).plus(calculateTaxNoRound(order)).toFixed(2).toString();		
 	}
 	
 	var statusPriorities = {
@@ -40,10 +57,11 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		}
 	}
 	
-	function toOrderDish(dish) {
+	function toOrderDish(dish, tax) {
 		return {
 			name: dish.name,
 			price: dish.price,
+			tax: tax,
 			ingredients: angular.copy(dish.ingredients),
 			selectedIngredients: [],
 			status: 'PREPARATION'
@@ -84,6 +102,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 				var orderDish = {
 						name: 'Dish ' + titleBase,
 						price: '10',
+						tax: '0.07',
 						menus: ['Breakfast', 'Lunch'],
 						ingredients: mockIngredients,
 						selectedIngredients: selectedIngredients
@@ -154,7 +173,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			getStatusPriority: getStatusPriority,
 			toOrderDish: toOrderDish,
 			calculatePrice: calculatePrice,
-			calculateTax: calculateTax
+			calculateTax: calculateTax,
+			calculateTotal: calculateTotal
 		};
 	}
 	
@@ -185,7 +205,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			getStatusPriority: getStatusPriority,
 			toOrderDish: toOrderDish,
 			calculatePrice: calculatePrice,
-			calculateTax: calculateTax
+			calculateTax: calculateTax,
+			calculateTotal: calculateTotal
 		};		
 	}
 	
