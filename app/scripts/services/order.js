@@ -4,7 +4,7 @@
 angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', 
                                                 function($q, storage, Dish, Demo, Rest, Restangular) {
 	
-	function calculateDishPrice(dish) {
+	function calculateDishPriceNoRound(dish) {
 		var price = new Big(dish.price);
 		_.each(dish.selectedIngredients, function(ingredient) {
 			price = price.plus(new Big(ingredient.priceChange));
@@ -13,26 +13,49 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		return price;		
 	}
 	
-	function calculatePriceNoRound(order) {
+	function calculateDishDiscountNoRound(dish) {
+		return calculateDishPriceNoRound(dish).times(new Big(dish.discount));
+	}
+	
+	function calculateOrderPriceNoRound(order) {
 		var total = new Big(0);
 		_.each(order.dishes, function(dish) {
-			total = total.plus(calculateDishPrice(dish));
+			total = total.plus(calculateDishPriceNoRound(dish).minus(calculateDishDiscountNoRound(dish)));
 		});
 		
 		return total;
 	}
 	
+	function calculateOrderDiscountNoRound(order) {
+		return calculateOrderPriceNoRound(order).times(new Big(order.discount));
+	}
+	
 	function calculateTaxNoRound(order) {
 		var total = new Big(0);
 		_.each(order.dishes, function(dish) {
-			total = total.plus(calculateDishPrice(dish).times(new Big(dish.tax)));
+			var dishPrice = calculateDishPriceNoRound(dish).minus(calculateDishDiscountNoRound(dish));
+			var discountedDishPrice = dishPrice.minus(dishPrice.times(new Big(order.discount)));
+			
+			total = total.plus(discountedDishPrice.times(new Big(dish.tax)));
 		});
 		
 		return total;
 	}	
 	
-	function calculatePrice(order) {
-		return calculatePriceNoRound(order).toFixed(2).toString();
+	function calculateDishPrice(dish) {
+		return calculateDishPriceNoRound(dish).toFixed(2).toString();
+	}
+	
+	function calculateDishDiscount(dish) {
+		return calculateDishDiscountNoRound(dish).toFixed(2).toString();
+	}
+	
+	function calculateOrderPrice(order) {
+		return calculateOrderPriceNoRound(order).toFixed(2).toString();
+	}
+	
+	function calculateOrderDiscount(order) {
+		return calculateOrderDiscountNoRound(order).toFixed(2).toString();
 	}
 	
 	function calculateTax(order) {
@@ -40,7 +63,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 	}
 	
 	function calculateTotal(order) {
-		return calculatePriceNoRound(order).plus(calculateTaxNoRound(order)).toFixed(2).toString();		
+		return calculateOrderPriceNoRound(order).minus(calculateOrderDiscountNoRound(order)).plus(calculateTaxNoRound(order)).toFixed(2).toString();		
 	}
 	
 	var statusPriorities = {
@@ -62,6 +85,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			name: dish.name,
 			price: dish.price,
 			tax: tax,
+			discount: '0',
 			ingredients: angular.copy(dish.ingredients),
 			selectedIngredients: [],
 			status: 'PREPARATION'
@@ -103,6 +127,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 						name: 'Dish ' + titleBase,
 						price: '10',
 						tax: '0.07',
+						discount: '0',
 						menus: ['Breakfast', 'Lunch'],
 						ingredients: mockIngredients,
 						selectedIngredients: selectedIngredients
@@ -132,6 +157,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
 					dishes: generateOrderDishes(i, status),
+					discount: '0',
 					status: status,
 					note: 'Make it fast!'
 				});
@@ -172,7 +198,10 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			
 			getStatusPriority: getStatusPriority,
 			toOrderDish: toOrderDish,
-			calculatePrice: calculatePrice,
+			calculateDishPrice: calculateDishPrice,
+			calculateDishDiscount: calculateDishDiscount,
+			calculatePrice: calculateOrderPrice,
+			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
 			calculateTotal: calculateTotal
 		};
@@ -204,7 +233,10 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			
 			getStatusPriority: getStatusPriority,
 			toOrderDish: toOrderDish,
-			calculatePrice: calculatePrice,
+			calculateDishPrice: calculateDishPrice,
+			calculateDishDiscount: calculateDishDiscount,
+			calculatePrice: calculateOrderPrice,
+			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
 			calculateTotal: calculateTotal
 		};		

@@ -4,7 +4,7 @@ angular.module('estesWebApp').service('Demo', function Demo() {
 	
 	return {
 		isEnabled: function() {
-			return true;
+			return false;
 		}
 	};
 	
