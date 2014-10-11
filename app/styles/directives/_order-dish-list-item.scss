@@ -19,6 +19,16 @@
 		}
 	}
 	
+	.dish-discount-label {
+		display: inline-block;
+		margin-left: 2em;
+		font-size: 0.9em;
+	}
+	
+	.dish-discount-value {
+		float: right;
+	}
+	
 	.dish-status {
 		float: right;
 		opacity: 0;		

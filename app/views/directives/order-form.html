@@ -31,7 +31,8 @@
 	
 		<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
 			<div class="order-dish" ng-repeat="dish in order.dishes">
-				<order-dish-list-item dish="dish"></order-dish-list-item>
+				<order-dish-list-item ng-if="!isDishOrderBeingEdited($index)" dish="dish" ng-click="startEditingOrderDish($index)"></order-dish-list-item>
+				<dish-config ng-if="isDishOrderBeingEdited($index)" dish="dish" on-save="saveEditedOrderDish(dish, $index)" on-cancel="cancelEditingOrderDish()"></dish-config>
 			</div>
 		</div>
 	
@@ -40,18 +41,13 @@
 			<textarea class="order-note-text" ng-model="order.note"></textarea>
 		</div>
 	
-		<label class="form-label">Payment</label>
-		<div class="order-payment">
-			<span class="subtotal-label">
-				Subtotal:<span class="payment-amount"> ${{calculateSubtotal(order)}}</span>
-			</span>
-			<span class="tax-label">
-				Tax:<span class="payment-amount"> ${{calculateTax(order)}}</span>
-			</span>
-			<span class="total-label">
-				Total:<span class="payment-amount"> ${{calculateTotal(order)}}</span>
-			</span>
+		<label class="form-label">Discount</label>
+		<div class="order-discount">
+			<input type="text" ng-model="discount" ng-blur="updateDiscount(order, discount)" class="input-border input-numeric" /> %
 		</div>
+	
+		<label class="form-label">Payment</label>
+		<order-form-payment order="order"></order-form-payment>
 	
 		<div class="form-action-buttons">
 			<button class="save-button" ng-click="save(order)">Save</button>
@@ -59,7 +55,7 @@
 		</div>
 	</div>
 	
-	<div class="order-form-payment shadow-border" ng-show="isPaymentView()">
+	<div class="order-form-payment-view shadow-border" ng-show="isPaymentView()">
 		<div class="order-header">
 			<div class="order-waiter">{{order.waiter.name}}</div>
 			<div class="order-actions">
@@ -75,17 +71,7 @@
 				<order-dish-list-item dish="dish" show-selected="true"></order-dish-list-item>
 			</div>
 		</div>
-		<div class="order-payment">
-			<span class="subtotal-label">
-				Subtotal:<span class="payment-amount"> ${{calculateSubtotal(order)}}</span>
-			</span>
-			<span class="tax-label">
-				Tax:<span class="payment-amount"> ${{calculateTax(order)}}</span>
-			</span>
-			<span class="total-label">
-				Total:<span class="payment-amount"> ${{calculateSubtotal(order) + calculateTax(order)}}</span>
-			</span>
-		</div>
+		<order-form-payment order="order"></order-form-payment>
 		<div class="order-note" ng-show="order.note">{{order.note}}</div>
 	</div>
 </div>

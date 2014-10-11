@@ -66,6 +66,14 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		return calculateOrderPriceNoRound(order).minus(calculateOrderDiscountNoRound(order)).plus(calculateTaxNoRound(order)).toFixed(2).toString();		
 	}
 	
+	function formatDiscount(discount) {
+		return new Big(discount).times(new Big(100)).toString();
+	}
+	
+	function parseDiscount(discount) {
+		return new Big(discount).div(new Big(100)).toString();
+	}
+	
 	var statusPriorities = {
 			'PREPARATION': 1,
 			'PREPARED': 2,
@@ -203,7 +211,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			calculatePrice: calculateOrderPrice,
 			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
-			calculateTotal: calculateTotal
+			calculateTotal: calculateTotal,
+			formatDiscount: formatDiscount,
+			parseDiscount: parseDiscount
 		};
 	}
 	
@@ -238,7 +248,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			calculatePrice: calculateOrderPrice,
 			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
-			calculateTotal: calculateTotal
+			calculateTotal: calculateTotal,
+			formatDiscount: formatDiscount,
+			parseDiscount: parseDiscount			
 		};		
 	}
 	

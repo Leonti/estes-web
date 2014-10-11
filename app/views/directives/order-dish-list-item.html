@@ -1,6 +1,9 @@
 <div class="order-dish-list-item">
 	<span class="dish-name">{{dish.name}}</span>
-	<span class="dish-price">${{dish.price}}</span>
+	<span class="dish-price">${{calculatePrice(dish)}}</span>
+	<div style="clear: both;"></div>
+	<span class="dish-discount-label" ng-show="dish.discount !== '0'">Discount: {{formatDiscount(dish.discount)}} %</span>
+	<span class="dish-discount-value" ng-show="dish.discount !== '0'">- ${{calculateDiscount(dish)}}</span>
 	<ul class="dish-ingredients">
 		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients track by $index">
 			{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+${{ingredient.priceChange}})</span><!-- 

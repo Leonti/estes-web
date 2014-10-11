@@ -7,6 +7,7 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 	var OrderTemplate = function(waiter) {
 		return {
 			status: 'PREPARATION',
+			discount: '0',
 			waiter: waiter,
 			dishes: [],
 			note: null
@@ -29,10 +30,17 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			scope.dishListExpanded = false;
 			scope.orderFormDish = null;
 			scope.addingNewDish = false;
+			scope.orderDishEditIndex = null;
+			scope.discount = '0';
 			var viewOverride = null;
 			
-			scope.$watch('order', function() {
+			scope.$watch('order', function(order) {
 				viewOverride = null;
+				scope.discount = '0';
+				
+				if (order) {
+					scope.discount = Order.formatDiscount(order.discount);
+				}
 			});
 			
 			Waiter.readAll().then(function(waiters) {
@@ -93,22 +101,25 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				scope.orderFormDish = null;
 			};
 			
-			scope.calculateSubtotal = function(order) {
-				if (!order) { return 0; }
-				
-				return Order.calculatePrice(order);
-			};
-	
-			scope.calculateTax = function(order) {
-				if (!order) { return 0; }
-				
-				return Order.calculateTax(order);
-			};
+			scope.startEditingOrderDish = function(index) {
+				scope.orderDishEditIndex = index;
+			}
 			
-			scope.calculateTotal = function(order) {
-				if (!order) { return 0; }
-				
-				return Order.calculateTotal(order);
+			scope.saveEditedOrderDish = function(dish, index) {
+				scope.orderDishEditIndex = null;
+				scope.order.dishes[index] = dish;
+			}
+			
+			scope.cancelEditingOrderDish = function() {
+				scope.orderDishEditIndex = null;
+			}
+			
+			scope.isDishOrderBeingEdited = function(index) {
+				return index === scope.orderDishEditIndex;
+			}
+			
+			scope.updateDiscount = function(order, discount) {
+				order.discount = Order.parseDiscount(discount);
 			}
 			
 			scope.save = function(order) {

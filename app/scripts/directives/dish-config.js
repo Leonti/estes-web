@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').directive('dishConfig', function() {
+angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) {
 	return {
 		templateUrl: '/views/directives/dish-config.html',
 		restrict: 'E',
@@ -12,22 +12,32 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 			onCancel: '&'
 		},
 		link : function postLink(scope) {
+			
 			scope.selectedIngredients = [];
+			scope.discount = 0;
 			
 			scope.$watch('inputDish', function(dish) {
 				if (!dish) { return; }
 
 				scope.dish = angular.copy(dish);
+				scope.discount = Order.formatDiscount(dish.discount);
 				
 				scope.selectedIngredients = [];
-				_.each(dish.ingredients, function(ingredientsOr) {
+				for (var i = 0; i < dish.ingredients.length; i++) {
+					var ingredientOrs = dish.ingredients[i];
 					var ingredientStates = [];
-					_.each(ingredientsOr, function() {
-						var initialState = ingredientStates.length ? false : true;
-						ingredientStates.push(initialState);
-					});					
+					for (var j = 0; j < ingredientOrs.length; j++) {
+						
+						if (dish.selectedIngredients[i]) {
+							var state = ingredientOrs[j].name === dish.selectedIngredients[i].name;
+							ingredientStates.push(state);
+						} else {
+							ingredientStates.push(j == 0);							
+						}
+					}
+					
 					scope.selectedIngredients.push(ingredientStates);
-				});
+				}
 			});
 			
 			scope.$watch('selectedIngredients', function(selectedIngredients, oldSelectedIngredients) {
@@ -62,6 +72,10 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 				
 			}, true);
 			
+			scope.updateDiscount = function(discount) {
+				scope.dish.discount = Order.parseDiscount(discount);
+			}
+			
 			scope.save = function(dish) {
 				
 				dish.selectedIngredients = [];
@@ -82,4 +96,4 @@ angular.module('estesWebApp').directive('dishConfig', function() {
 			scope.cancel = scope.onCancel;
 		}
 	};
-});
+}]);

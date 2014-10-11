@@ -1,0 +1,23 @@
+.order-form-payment {
+	margin: 1em 0;		
+	
+	.subtotal-label,
+	.discount-label,
+	.tax-label,
+	.total-label {
+		display: block;
+		text-align: right;
+		
+		.payment-amount {
+			display: inline-block;
+			width: 7em;
+		}
+	}
+	
+	.total-label {
+		font-size: 1.5em;
+		.payment-amount {
+			width: 4.67em; // 1/1.5 * 7em
+		}
+	}
+}

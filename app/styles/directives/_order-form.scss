@@ -84,7 +84,7 @@
 	}	
 }
 
-.order-form-payment {
+.order-form-payment-view {
 	background-color: #F5F5F5;
 	padding: 1em;
 	
@@ -115,27 +115,4 @@
 		font-style: italic;
 		padding-top: 1em;
 	}	
-}
-
-.order-payment {
-	margin: 1em 0;		
-	
-	.subtotal-label,
-	.tax-label,
-	.total-label {
-		display: block;
-		text-align: right;
-		
-		.payment-amount {
-			display: inline-block;
-			width: 7em;
-		}
-	}
-	
-	.total-label {
-		font-size: 1.5em;
-		.payment-amount {
-			width: 4.67em; // 1/1.5 * 7em
-		}
-	}
 }

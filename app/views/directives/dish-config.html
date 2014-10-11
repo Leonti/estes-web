@@ -12,6 +12,9 @@
 			</span>
 		</li>
 	</ul>
+	<div class="dish-config-discount">
+		Discount: <input type="text" class="input-border input-numeric" ng-model="discount" ng-blur="updateDiscount(discount)" /> %
+	</div>
 	<div class="form-action-buttons">
 		<button class="save-button" ng-click="save(dish)">Save</button>
 		<button class="cancel-button" ng-click="cancel()">Cancel</button>

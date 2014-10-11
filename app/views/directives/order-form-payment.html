@@ -1,0 +1,14 @@
+<div class="order-form-payment">
+	<span class="subtotal-label">
+		Subtotal:<span class="payment-amount"> ${{calculateSubtotal(order)}}</span>
+	</span>
+	<span ng-show="order.discount !== '0'" class="discount-label">
+		Discount: {{formatDiscount(order.discount)}}%: <span class="payment-amount"> - ${{calculateDiscount(order)}}</span>
+	</span>		
+	<span class="tax-label">
+		Tax:<span class="payment-amount"> ${{calculateTax(order)}}</span>
+	</span>
+	<span class="total-label">
+		Total:<span class="payment-amount"> ${{calculateTotal(order)}}</span>
+	</span>
+</div>
