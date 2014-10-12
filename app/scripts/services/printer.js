@@ -3,7 +3,7 @@
 
 angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', function Printer($q, Settings, Order) {
 	
-	var availablePrinters = ['BROWSER', 'JAVA APPLET'];
+	var availablePrinters = ['THERMAL', 'BROWSER'];
 	
 	function round(price) {
 		return Math.round(price * 100)/100;
@@ -22,6 +22,11 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 		pri.document.close();
 		pri.focus();
 		pri.print();
+	}
+	
+	function printWithThermalPrinter(lines) {
+		var printerAppId = "ddihcjccbfbeonbaafmopanpdiifgilf";
+		chrome.runtime.sendMessage(printerAppId, {type: 'print', lines: lines});		
 	}
 	
 	function formatLine(left, right, lineWidth) {
@@ -61,9 +66,12 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 			
 			if (settings.printer === 'BROWSER') {
 				printWithBrowser(lines);			
+			} else if (settings.printer === 'THERMAL') {
+				lines = lines.concat(["", "", ""]);
+				printWithThermalPrinter(lines);
 			} else {
 				console.log('other printer');
-				console.log(lines);
+				console.log(lines);				
 			}
 		});
 	}; 

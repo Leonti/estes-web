@@ -6,4 +6,5 @@ angular.module('estesWebApp').controller('DemoCtrl', ['$scope', 'storage',
 	$scope.reset = function() {
 		storage.clearAll();
 	};
+
 }]);

@@ -257,6 +257,9 @@ body {
 .input-numeric {
 	width: 3em;
 }
+input.ng-invalid.ng-dirty {
+	border: 1px solid red !important; 
+}
 
 @import 'header';
 @import 'orders';

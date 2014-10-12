@@ -1,5 +1,6 @@
 <div>
-	<div class="order-form shadow-border" ng-show="isEditView()">
+	<form class="order-form shadow-border" name="orderForm" ng-show="isEditView()">
+	
 		<div class="waiter-block">
 			<span class="print-payment-action text-action" ng-click="forcePayment()" 
 				ng-show="order.dishes.length > 0">Print & Payment</span>
@@ -43,7 +44,7 @@
 	
 		<label class="form-label">Discount</label>
 		<div class="order-discount">
-			<input type="text" ng-model="discount" ng-blur="updateDiscount(order, discount)" class="input-border input-numeric" /> %
+			<input type="text" ng-model="discount" ng-blur="updateDiscount(order, discount)" class="input-border input-numeric" pattern="^-?\d*\.?\d*$" /> %
 		</div>
 	
 		<label class="form-label">Payment</label>
@@ -53,7 +54,7 @@
 			<button class="save-button" ng-click="save(order)">Save</button>
 			<button class="cancel-button" ng-click="cancel()">Cancel</button>
 		</div>
-	</div>
+	</form>
 	
 	<div class="order-form-payment-view shadow-border" ng-show="isPaymentView()">
 		<div class="order-header">
