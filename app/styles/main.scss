@@ -20,6 +20,7 @@ body {
 		&.save-button {
 			background-color: #2BD672;
 			color: white;
+			
 		}
 	}
 }
@@ -31,7 +32,11 @@ body {
 	
 	&.button-action {
 		background-color: #2BD672;
-		color: #FFF;	
+		color: #FFF;
+		
+		&[disabled] {
+			background-color: #ccc;
+		}	
 	}
 }
 

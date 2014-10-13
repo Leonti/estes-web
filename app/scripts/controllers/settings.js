@@ -1,4 +1,5 @@
 'use strict';
+/*global Big:false */
 
 angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 'Waiter', 'Printer', function($scope, Settings, Waiter, Printer) {
 	
@@ -7,13 +8,18 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	});
 	
 	Settings.read().then(function(settings) {
-		$scope.settings = settings;
+		
+		var settingsCopy = angular.copy(settings);
+		settingsCopy.tax = new Big(settings.tax).times(new Big(100)).toString();
+		
+		$scope.settings = settingsCopy;
 	});
 	
-	$scope.saveSettings = function(settings) {
-		settings.tax = parseFloat(settings.tax);
-		settings.receiptWidth = parseInt(settings.receiptWidth);
-		Settings.save(settings);
+	$scope.saveSettings = function(settings) {		
+		var settingsCopy = angular.copy(settings);
+		settingsCopy.tax = new Big(settings.tax).div(new Big(100)).toString();
+		settingsCopy.receiptWidth = parseInt(settings.receiptWidth);
+		Settings.save(settingsCopy);
 	}; 
 	
 	$scope.printerToLabel = function(printer) {

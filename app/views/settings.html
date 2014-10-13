@@ -1,8 +1,8 @@
 <div class="row">
 	<div class="col-md-offset-2 col-md-4">
-		<form class="settings-form shadow-border">
+		<form class="settings-form shadow-border" name="settingsForm" novalidate>
 			<div class="settings-form-entry">
-				<label>Tax %:</label><input type="text" class="input-border input-numeric" ng-model="settings.tax" />
+				<label>Tax %:</label><input type="text" class="input-border input-numeric" ng-model="settings.tax" pattern="^-?\d*\.?\d*$" required />
 			</div>
 			<div class="settings-form-entry">
 				<label>Printing:</label>
@@ -13,24 +13,23 @@
 					for thermal printer</div>
 			</div>
 			<div class="settings-form-entry">
-				<label>Receipt width:</label><input type="text" class="input-border input-numeric" ng-model="settings.receiptWidth" />
+				<label>Receipt width:</label><input type="text" class="input-border input-numeric" ng-model="settings.receiptWidth" pattern="^-?\d*\.?\d*$" required />
 			</div>
 			<div class="settings-form-actions">
-				<button class="button button-action save-settings" ng-click="saveSettings(settings)">Save Settings</button>
+				<button class="button button-action save-settings" ng-click="saveSettings(settings)" ng-disabled="settingsForm.$invalid">Save Settings</button>
 			</div>
 		</form>
 	</div>
 	<div class="col-md-4">
-		<form class="waiters-form shadow-border">
+		<form class="waiters-form shadow-border" name="waitersForm" novalidate>
 			<ul class="waiters-form-waiter-list">
 				<li ng-repeat="waiter in waiters">
 					<span class="waiter-name">{{waiter.name}}</span>
 					<span class="icon-remove remove-waiter" ng-click="removeWaiter(waiter)"></span>
 				</li>
 			</ul>
-			<input type="text" class="input-border" ng-model="waiter.name" placeholder="Add a waiter ..." />
-			<button class="button button-action add-waiter" ng-click="addWaiter(waiter.name)">Add</button>
+			<input type="text" class="input-border" ng-model="waiter.name" placeholder="Add a waiter ..." required />
+			<button class="button button-action add-waiter" ng-click="addWaiter(waiter.name)" ng-disabled="waitersForm.$invalid">Add</button>
 		</form>
 	</div>
 </div>
-{{settings}}
