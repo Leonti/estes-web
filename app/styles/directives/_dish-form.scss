@@ -103,7 +103,14 @@
 					cursor: pointer;			
 				}
 				.ok {
+					border: none;
+					background: transparent;
+					vertical-align: middle;
 					color: #2BD672;
+					
+					&[disabled] {
+						color: #ccc;
+					}
 				}
 			}		
 		}		

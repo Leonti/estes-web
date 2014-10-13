@@ -1,8 +1,8 @@
 <form class="dish-form" name="dishForm" novalidate>			
 	<div class="dish-name">			
-		<input type="text" ng-model="dish.name" placeholder="Dish name" required>
+		<input type="text" ng-model="dish.name" name="dishName" placeholder="Dish name" required>
 	</div>
-	<div class="dish-price">$ <input type="text" ng-model="dish.price" required pattern="^-?\d*\.?\d*$"></div>
+	<div class="dish-price">$ <input type="text" ng-model="dish.price" name="dishPrice" required pattern="^-?\d*\.?\d*$"></div>
 	<tags class="menu-tags" available-tags="menus" selected-tags="dish.menus" tag-name="menu"></tags>
 	
 	<div ui-sortable ng-model="dish.ingredients">
@@ -18,17 +18,21 @@
 			</div>			
 			<div class="ingredient-add" ng-click="expandRow($index)" ng-class="{visible: $index == expandedRow}">
 				<span class="icon-plus"></span>
-				<div class="add-ingredient-form" name="addIngredientForm" 
+				<div class="add-ingredient-form" 
 					typeahead on-select="onTypeaheadSelectOr(item, $index)" items="filteredIngredients" ng-show="$index == expandedRow">
-					<input class="name" typeahead-control type="text" ng-model="newIngredientNames[$index]" 
-						ng-change="filterIngredients(typeaheadItems, newIngredientNames[$index])"
-						ng-focus="filterIngredients(typeaheadItems, newIngredientNames[$index])" placeholder="Name" required>
-					<span class="money-sign">$</span>
-					<input class="price-change" type="text" ng-model="newIngredientPriceChanges[$index]" pattern="^-?\d+\.?\d*$">
-					<span class="controls">
-						<span class="icon-checkmark ok" ng-click="orIngredientToDish($index)"></span>
-						<span class="icon-cancel-circle" ng-click="orIngredientToDishCancel()"></span>	
-					</span>
+						
+					<ng-form name="addIngredientOr">	
+						<input class="input-border name" typeahead-control type="text" ng-model="newIngredientNames[$index]" 
+							ng-change="filterIngredients(typeaheadItems, newIngredientNames[$index])"
+							ng-focus="filterIngredients(typeaheadItems, newIngredientNames[$index])" placeholder="Name" required>
+						<span class="money-sign">$</span>
+						<input class="input-border input-numeric price-change" type="text" ng-model="newIngredientPriceChanges[$index]" pattern="^-?\d+\.?\d*$">
+						<span class="controls">
+							<button class="icon-checkmark ok" ng-click="orIngredientToDish($index)" ng-disabled="addIngredientOr.$invalid"></button>
+							<span class="icon-cancel-circle" ng-click="orIngredientToDishCancel()"></span>	
+						</span>
+					</ng-form>	
+						
 					<div class="typeahead" ng-show="isVisible()">
 						<ul class="typeahead-items">
 							<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
@@ -43,14 +47,16 @@
 	</div>
 	<div class="ingredient-row add-ingredient-row" style="position: relative;">
 		<div class="add-ingredient-form" typeahead on-select="onTypeaheadSelect(item)" items="filteredIngredients">
-			<input class="name" typeahead-control type="text" ng-model="newIngredient.name" 
-				ng-change="filterIngredients(typeaheadItems, newIngredient.name)"
-				ng-focus="filterIngredients(typeaheadItems, newIngredient.name)" placeholder="Name" required>
-			<span class="money-sign">$</span>
-			<input class="price-change" type="text" ng-model="newIngredient.priceChange" pattern="^-?\d+\.?\d*$">
-			<span class="controls">
-				<span class="icon-checkmark ok" ng-click="addIngredientToDish()"></span>
-			</span>
+			<ng-form name="addIngredient">
+				<input class="input-border name" typeahead-control type="text" ng-model="newIngredient.name" 
+					ng-change="filterIngredients(typeaheadItems, newIngredient.name)"
+					ng-focus="filterIngredients(typeaheadItems, newIngredient.name)" placeholder="Name" required>
+				<span class="money-sign">$</span>
+				<input class="input-border input-numeric price-change" type="text" ng-model="newIngredient.priceChange" pattern="^-?\d+\.?\d*$">
+				<span class="controls">
+					<button class="icon-checkmark ok" ng-click="addIngredientToDish()" ng-disabled="addIngredient.$invalid"></button>
+				</span>
+			</ng-form>
 			<div class="typeahead" ng-show="isVisible()">
 				<ul class="typeahead-items">
 					<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
@@ -61,8 +67,7 @@
 		</div>
 	</div>
 	<div class="form-action-buttons">
-		<input type="submit" value="Submit" />
-		<button class="save-button" ng-click="save(dish)">Save</button>
-		<button class="cancel-button" ng-click="cancel()">Cancel</button>
+		<button class="button button-action"  ng-click="save(dish)" ng-disabled="dishForm.dishName.$invalid || dishForm.dishPrice.$invalid">Save</button>
+		<button class="button" ng-click="cancel()">Cancel</button>
 	</div>		
 </form>

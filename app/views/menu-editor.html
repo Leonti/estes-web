@@ -7,7 +7,7 @@
 		</div>	
 		
 		<span class="add-dish" ng-hide="newDishEditing" ng-click="openNewDishForm()"><span class="icon-plus"></span> Add dish ...</span>
-		<div dish-form class="menu-section new-dish-section" ng-show="newDish" dish="newDish"
+		<div dish-form class="menu-section new-dish-section" ng-if="newDish" dish="newDish"
 			ingredients="ingredients" menus="menus" 
 			on-close="closeNewDishForm()" on-save="saveNewDish(dish)"></div>
 		

@@ -3,20 +3,22 @@
 		<span class="dish-name">{{dish.name}}</span>
 		<span class="dish-price">${{dish.price}}</span>
 	</div>
-	<ul class="dish-ingredients">
-		<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients">
-			<span class="dish-ingredient-or" ng-repeat="ingredient in ingredientOrs">
-				<label><input type="checkbox" ng-model="selectedIngredients[$parent.$index][$index]"/> 
-				{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span></label>
-				<span class="or-junction" ng-hide="$last"> or </span>
-			</span>
-		</li>
-	</ul>
-	<div class="dish-config-discount">
-		Discount: <input type="text" class="input-border input-numeric" ng-model="discount" ng-blur="updateDiscount(discount)" /> %
-	</div>
-	<div class="form-action-buttons">
-		<button class="save-button" ng-click="save(dish)">Save</button>
-		<button class="cancel-button" ng-click="cancel()">Cancel</button>
-	</div>		
+	<ng-form name="dishForm">
+		<ul class="dish-ingredients">
+			<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients">
+				<span class="dish-ingredient-or" ng-repeat="ingredient in ingredientOrs">
+					<label><input type="checkbox" ng-model="selectedIngredients[$parent.$index][$index]"/> 
+					{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span></label>
+					<span class="or-junction" ng-hide="$last"> or </span>
+				</span>
+			</li>
+		</ul>
+		<div class="dish-config-discount">
+			Discount: <input type="text" class="input-border input-numeric" ng-model="discount" ng-blur="updateDiscount(discount)" pattern="^-?\d*\.?\d*$" /> %
+		</div>
+		<div class="form-action-buttons">
+			<button class="button button-action" ng-click="save(dish)" ng-disabled="dishForm.$invalid">Save</button>
+			<button class="button" ng-click="cancel()">Cancel</button>
+		</div>
+	</ng-form>			
 </div>
