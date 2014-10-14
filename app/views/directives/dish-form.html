@@ -16,56 +16,20 @@
 					</span><span class="ingredient-or" ng-hide="$last">or</span>
 				</span>
 			</div>			
-			<div class="ingredient-add" ng-click="expandRow($index)" ng-class="{visible: $index == expandedRow}">
-				<span class="icon-plus"></span>
-				<div class="add-ingredient-form" 
-					typeahead on-select="onTypeaheadSelectOr(item, $index)" items="filteredIngredients" ng-show="$index == expandedRow">
-						
-					<ng-form name="addIngredientOr">	
-						<input class="input-border name" typeahead-control type="text" ng-model="newIngredientNames[$index]" 
-							ng-change="filterIngredients(typeaheadItems, newIngredientNames[$index])"
-							ng-focus="filterIngredients(typeaheadItems, newIngredientNames[$index])" placeholder="Name" required>
-						<span class="money-sign">$</span>
-						<input class="input-border input-numeric price-change" type="text" ng-model="newIngredientPriceChanges[$index]" pattern="^-?\d+\.?\d*$">
-						<span class="controls">
-							<button class="icon-checkmark ok" ng-click="orIngredientToDish($index)" ng-disabled="addIngredientOr.$invalid"></button>
-							<span class="icon-cancel-circle" ng-click="orIngredientToDishCancel()"></span>	
-						</span>
-					</ng-form>	
-						
-					<div class="typeahead" ng-show="isVisible()">
-						<ul class="typeahead-items">
-							<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
-								{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+ ${{ingredient.priceChange}})</span>
-							</li>
-						</ul>
-					</div>
-				</div>
+			<div class="ingredient-add-or">
+				<span class="icon-plus" ng-click="expandRow($index)"></span>
+				<add-ingredient-form ingredients="ingredients" 
+					on-save="orIngredientToDish(ingredient, $index)" on-close="orIngredientToDishCancel()" 
+					ng-if="$index === expandedRow"></add-ingredient-form>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
 	</div>
-	<div class="ingredient-row add-ingredient-row" style="position: relative;">
-		<div class="add-ingredient-form" typeahead on-select="onTypeaheadSelect(item)" items="filteredIngredients">
-			<ng-form name="addIngredient">
-				<input class="input-border name" typeahead-control type="text" ng-model="newIngredient.name" 
-					ng-change="filterIngredients(typeaheadItems, newIngredient.name)"
-					ng-focus="filterIngredients(typeaheadItems, newIngredient.name)" placeholder="Name" required>
-				<span class="money-sign">$</span>
-				<input class="input-border input-numeric price-change" type="text" ng-model="newIngredient.priceChange" pattern="^-?\d+\.?\d*$">
-				<span class="controls">
-					<button class="icon-checkmark ok" ng-click="addIngredientToDish()" ng-disabled="addIngredient.$invalid"></button>
-				</span>
-			</ng-form>
-			<div class="typeahead" ng-show="isVisible()">
-				<ul class="typeahead-items">
-					<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
-						{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+ ${{ingredient.priceChange}})</span>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</div>
+
+	<span class="add-ingredient-action text-action" ng-hide="addingIngredient" ng-click="showAddIngredient()">+ Add ingredient</span>
+	<add-ingredient-form ingredients="ingredients" 
+		on-save="addIngredientToDish(ingredient)" on-close="hideAddIngredient()" ng-if="addingIngredient"></add-ingredient-form>
+
 	<div class="form-action-buttons">
 		<button class="button button-action"  ng-click="save(dish)" ng-disabled="dishForm.dishName.$invalid || dishForm.dishPrice.$invalid">Save</button>
 		<button class="button" ng-click="cancel()">Cancel</button>

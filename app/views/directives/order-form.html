@@ -8,8 +8,8 @@
 			<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
 		</div>
 	
-		<label class="form-label">Dishes</label> <span class="add-new-dish text-action" ng-hide="addingNewDish" ng-click="showAddDish()">+
-			Add dish</span>
+		<label class="form-label">Dishes</label>
+		<span class="add-new-dish text-action" ng-hide="addingNewDish" ng-click="showAddDish()">+Add dish</span>
 		<div ng-show="addingNewDish">
 			<div class="dish-selector shadow-border" ng-hide="orderFormDish">
 				<span class="add-new-dish-close icon-close2" ng-click="hideAddDish()"></span>

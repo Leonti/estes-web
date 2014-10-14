@@ -1,0 +1,20 @@
+<div class="add-ingredient-form" typeahead on-select="onTypeaheadSelect(item)" items="filteredIngredients">
+	<ng-form name="addIngredient">
+		<input class="input-border name" typeahead-control type="text" ng-model="ingredient.name" 
+			ng-change="filterIngredients(typeaheadItems, ingredient.name)"
+			ng-focus="filterIngredients(typeaheadItems, ingredient.name)" placeholder="Name" required>
+		<span class="money-sign">$</span>
+		<input class="input-border input-numeric price-change" type="text" ng-model="ingredient.priceChange" pattern="^-?\d+\.?\d*$">
+		<span class="controls">
+			<button class="icon-checkmark ok" ng-click="save(ingredient)" ng-disabled="addIngredient.$invalid"></button>
+			<span class="icon-cancel-circle" ng-click="cancel()"></span>
+		</span>
+	</ng-form>
+	<div class="typeahead" ng-show="isVisible()">
+		<ul class="typeahead-items">
+			<li typeahead-item="ingredient" class="typeahead-item" ng-repeat="ingredient in filteredIngredients">
+				{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+ ${{ingredient.priceChange}})</span>
+			</li>
+		</ul>
+	</div>
+</div>
