@@ -1,0 +1,41 @@
+<div class="row">
+	<div class="col-md-offset-3 col-md-6">
+		<div class="goods-group" ng-repeat="group in groups">
+			<div class="group-details" ng-if="groupInEditing !== $index">
+				<span class="group-name">{{group.name}}</span>
+				<span class="group-tax">{{formatTax(group.tax)}} %</span>
+				
+				<span class="text-action" ng-click="startGroupEditing($index)">Edit</span>
+			</div>
+			<form class="group-form" name="groupForm" ng-if="groupInEditing === $index" novalidate>
+				<input type="text" class="input-border group-name" ng-model="group.name" required />
+				<input class="input-border input-numeric group-tax" type="text" ng-model="group.tax" pattern="^-?\d+\.?\d*$" required> %
+				
+				<div class="form-action-buttons">
+					<button class="button button-action" ng-click="save(groups)" ng-disabled="groupForm.$invalid">Save</button>
+					<button class="button" ng-click="cancelGroupEditing()">Cancel</button>
+				</div>	
+			</form>
+			<div class="group-articles">
+				<div class="group-article" ng-repeat="article in group.goods">
+					<div class="article-details" ng-if="articleGroupInEditing !== $parent.$index || articleInEditing !== $index">
+						<span class="article-name">{{article.name}}</span>
+						<span class="article-price">{{article.price}}</span>
+						<span class="article-tag" ng-repeat="tag in article.tags">{{tag}}</span>
+						
+						<span class="text-action" ng-click="startArticleEditing($parent.$parent.$index, $index)">Edit</span>
+					</div>
+					<form class="article-form" name="articleForm" ng-if="articleGroupInEditing === $parent.$index && articleInEditing === $index" novalidate>
+						<input type="text" class="input-border article-name" ng-model="article.name" required />
+						<input class="input-border input-numeric article-tax" type="text" ng-model="article.price" pattern="^-?\d+\.?\d*$" required>
+						
+						<div class="form-action-buttons">
+							<button class="button button-action" ng-click="save(groups)" ng-disabled="articleForm.$invalid">Save</button>
+							<button class="button" ng-click="cancelArticleEditing()">Cancel</button>
+						</div>	
+					</form>					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
