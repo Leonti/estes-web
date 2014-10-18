@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dish) {
+angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Article) {
 
 	var DishTemplate = function() {
 		return {
@@ -11,14 +11,14 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 	};
 	
 	var refreshDishes = function() {
-		Dish.readAll().then(function(dishes) {
-			$scope.dishes = dishes;
+		Article.readAll().then(function(articles) {
+			$scope.articles = articles;
 			
-			$scope.menus = Dish.getMenus(dishes);
+			$scope.menus = Article.getMenus(articles);
 			console.log($scope.menus);
 			$scope.selectedMenus = [];
 			
-			$scope.ingredients = Dish.getIngredients(dishes);
+			$scope.ingredients = Article.getIngredients(articles);
 		});
 	};
 	
@@ -32,16 +32,16 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		return $scope.selectedMenus.indexOf(menu) !== -1;
 	};
 	
-	$scope.filterDish = function(dish) {
-    	var isInMenus = _.some(dish.menus, function(menu) {
+	$scope.filterDish = function(article) {
+    	var isInMenus = _.some(article.menus, function(menu) {
     		return $scope.selectedMenus.indexOf(menu) !== -1;
     	}) || $scope.selectedMenus.length === 0;	
     
-    	function isInSearch(dish) {
-    		return $scope.searchTerm.length > 0 ? dish.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
+    	function isInSearch(article) {
+    		return $scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
     	}
     	
-    	return isInMenus && isInSearch(dish);
+    	return isInMenus && isInSearch(article);
 	};
 	
 	$scope.openNewDishForm = function() {
@@ -52,8 +52,8 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		$scope.newDish = null;
 	};
 	
-	$scope.saveNewDish = function(dish) {
-		Dish.save(dish).then(refreshDishes);
+	$scope.saveNewDish = function(article) {
+		Article.save(article).then(refreshDishes);
 		$scope.closeNewDishForm();
 	};
 	
@@ -61,16 +61,16 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Dis
 		$scope.editedDishIndex = index;
 	};
 	
-	$scope.removeDish = function(dish) {
-		Dish.remove(dish.id).then(refreshDishes);		
+	$scope.removeDish = function(article) {
+		Article.remove(article.id).then(refreshDishes);		
 	};
 
 	$scope.closeDishForm = function() {
 		$scope.editedDishIndex = null;
 	};
 	
-	$scope.saveDish = function(dish) {
-		Dish.save(dish).then(refreshDishes);
+	$scope.saveDish = function(article) {
+		Article.save(article).then(refreshDishes);
 		$scope.closeDishForm();
 	};
 	

@@ -5,7 +5,7 @@ angular.module('estesWebApp').directive('dishListItem', function() {
 		templateUrl: '/views/directives/dish-list-item.html',
 		restrict : 'E',
 		scope: {
-			dish: '='
+			article: '='
 		}
 	};
 });

@@ -3,12 +3,12 @@
 
 angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 'Restangular', function($q, storage, Demo, Rest, Restangular) {
 	
-	function getMenus(dishes) {
-		return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.menus; })));
+	function getMenus(articles) {
+		return _.uniq(_.flatten(_.map(articles, function(article) { return article.menus; })));
 	}
 	
-	function getIngredients(dishes) {
-		return _.uniq(_.flatten(_.map(dishes, function(dish) { return dish.ingredients; })), 
+	function getIngredients(articles) {
+		return _.uniq(_.flatten(_.map(articles, function(article) { return article.ingredients; })), 
 			function (ingredient) {
 				return ingredient.name + ingredient.priceChange;
 			});
@@ -32,13 +32,13 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		            		];
 		
 		function generateDishesForMenus(menus, idBase) {
-			var dishes = [];
+			var articles = [];
 			var titleBase = '';
 			for (var i = 0; i < menus.length; i++) {
 				titleBase += '_' + menus[i];
 			}
 			for (i = 0; i < 10; i++) {
-				dishes.push({
+				articles.push({
 					id: {userId: 1, id: idBase + i},
 					name: 'Dish ' + titleBase + '_' + i,
 					price: '10',
@@ -47,7 +47,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 				});
 			}
 			
-			return dishes;
+			return articles;
 		}
 		
 		var generateFakeDishes = function() {
@@ -61,31 +61,31 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			return allDishes;
 		};
 		
-		var saveDish = function(dish) {
-			var dishes = storage.get('mockDishes');
+		var saveDish = function(article) {
+			var articles = storage.get('mockDishes');
 			
-			if (dish.id === undefined || dish.id === null) {
-				dish.id = {userId: 1, id: dishes.length + 1};
-				dishes.push(dish);
+			if (article.id === undefined || article.id === null) {
+				article.id = {userId: 1, id: articles.length + 1};
+				articles.push(article);
 			} else {
-				for (var i = 0; i < dishes.length; i++) {
-					if (dishes[i].id.id === dish.id.id) {
-						dishes[i] = dish;
+				for (var i = 0; i < articles.length; i++) {
+					if (articles[i].id.id === article.id.id) {
+						articles[i] = article;
 					}
 				}
 			}
-			storage.set('mockDishes', dishes);
-			return dish;
+			storage.set('mockDishes', articles);
+			return article;
 		};
 		
 		var removeDish = function(id) {
-			var dishes = storage.get('mockDishes');
-			for (var i = 0; i < dishes.length; i++) {
-				if (dishes[i].id.id === id.id) {
-					dishes.splice(i, 1);
+			var articles = storage.get('mockDishes');
+			for (var i = 0; i < articles.length; i++) {
+				if (articles[i].id.id === id.id) {
+					articles.splice(i, 1);
 				}
 			}
-			storage.set('mockDishes', dishes);
+			storage.set('mockDishes', articles);
 		};
 		
 		if (!storage.get('mockDishes')) {
@@ -98,8 +98,8 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockDishes')));
 			},
-			save: function(dish) {
-				return $q.when(saveDish(dish));
+			save: function(article) {
+				return $q.when(saveDish(article));
 			},
 			remove: function(id) {
 				return $q.when(removeDish(id));
@@ -109,7 +109,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 		};
 	}
 	
-	function Dish(Rest, Restangular) {
+	function Article(Rest, Restangular) {
 		
 		return {
 			
@@ -118,21 +118,21 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					return Restangular.all('dish').getList();	
 				});
 			},
-			save: function(dish) {
-				dish.selectedIngredients = [];
+			save: function(article) {
+				article.selectedIngredients = [];
 				return Rest.configure().then(function() {
-					if (dish.id === undefined || dish.id === null) {
-						return Restangular.one('dish').post('', dish);
+					if (article.id === undefined || article.id === null) {
+						return Restangular.one('dish').post('', article);
 					} else {
-						return Restangular.one('dish', dish.id.id).customPUT(dish);
+						return Restangular.one('dish', article.id.id).customPUT(article);
 					}
 				});
 			},
 			remove: function(id) {
 				return Rest.configure().then(function() {
-					return Restangular.all('dish').getList().then(function(dishes) {
-						for (var i = 0; i < dishes.length; i++) {
-							if (dishes[i].id.id === id.id) {
+					return Restangular.all('dish').getList().then(function(articles) {
+						for (var i = 0; i < articles.length; i++) {
+							if (articles[i].id.id === id.id) {
 								return Restangular.one('dish', id.id).customDELETE();
 							}
 						}
@@ -147,7 +147,7 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 	if (Demo.isEnabled()) {
 		return new DishMock($q, storage);
 	} else {
-		return new Dish(Rest, Restangular);
+		return new Article(Rest, Restangular);
 	}
 	
 }]);

@@ -2,25 +2,25 @@
 /*global _,Big:false */
 
 angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', 
-                                                function($q, storage, Dish, Demo, Rest, Restangular) {
+                                                function($q, storage, Article, Demo, Rest, Restangular) {
 	
-	function calculateDishPriceNoRound(dish) {
-		var price = new Big(dish.price);
-		_.each(dish.selectedIngredients, function(ingredient) {
+	function calculateDishPriceNoRound(article) {
+		var price = new Big(article.price);
+		_.each(article.selectedIngredients, function(ingredient) {
 			price = price.plus(new Big(ingredient.priceChange));
 		});
 		
 		return price;		
 	}
 	
-	function calculateDishDiscountNoRound(dish) {
-		return calculateDishPriceNoRound(dish).times(new Big(dish.discount));
+	function calculateDishDiscountNoRound(article) {
+		return calculateDishPriceNoRound(article).times(new Big(article.discount));
 	}
 	
 	function calculateOrderPriceNoRound(order) {
 		var total = new Big(0);
-		_.each(order.dishes, function(dish) {
-			total = total.plus(calculateDishPriceNoRound(dish).minus(calculateDishDiscountNoRound(dish)));
+		_.each(order.articles, function(article) {
+			total = total.plus(calculateDishPriceNoRound(article).minus(calculateDishDiscountNoRound(article)));
 		});
 		
 		return total;
@@ -32,22 +32,22 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 	
 	function calculateTaxNoRound(order) {
 		var total = new Big(0);
-		_.each(order.dishes, function(dish) {
-			var dishPrice = calculateDishPriceNoRound(dish).minus(calculateDishDiscountNoRound(dish));
+		_.each(order.articles, function(article) {
+			var dishPrice = calculateDishPriceNoRound(article).minus(calculateDishDiscountNoRound(article));
 			var discountedDishPrice = dishPrice.minus(dishPrice.times(new Big(order.discount)));
 			
-			total = total.plus(discountedDishPrice.times(new Big(dish.tax)));
+			total = total.plus(discountedDishPrice.times(new Big(article.tax)));
 		});
 		
 		return total;
 	}	
 	
-	function calculateDishPrice(dish) {
-		return calculateDishPriceNoRound(dish).toFixed(2).toString();
+	function calculateDishPrice(article) {
+		return calculateDishPriceNoRound(article).toFixed(2).toString();
 	}
 	
-	function calculateDishDiscount(dish) {
-		return calculateDishDiscountNoRound(dish).toFixed(2).toString();
+	function calculateDishDiscount(article) {
+		return calculateDishDiscountNoRound(article).toFixed(2).toString();
 	}
 	
 	function calculateOrderPrice(order) {
@@ -82,19 +82,19 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 	
 	function updateStatus(order) {
 		if (order.status === 'PREPARATION') {
-			if (_.every(order.dishes, function(dish) { return dish.status === 'PREPARED'; })) {
+			if (_.every(order.articles, function(article) { return article.status === 'PREPARED'; })) {
 				order.status = 'PREPARED';
 			}
 		}
 	}
 	
-	function toOrderDish(dish, tax) {
+	function toOrderDish(article, tax) {
 		return {
-			name: dish.name,
-			price: dish.price,
+			name: article.name,
+			price: article.price,
 			tax: tax,
 			discount: '0',
-			ingredients: angular.copy(dish.ingredients),
+			ingredients: angular.copy(article.ingredients),
 			selectedIngredients: [],
 			status: 'PREPARATION'
 		};
@@ -128,10 +128,10 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		};
 		
 		var generateOrderDishes = function(i, status) {
-			var dishes = [];
+			var articles = [];
 			var titleBase = 'Burger';
 			for (i = 0; i < getRandomInt(0, 8); i++) {
-				var orderDish = {
+				var orderArticle = {
 						name: 'Dish ' + titleBase,
 						price: '10',
 						tax: '0.07',
@@ -142,13 +142,13 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 					};
 				
 				if (status === 'PREPARED' || status === 'PAID') {
-					orderDish.status = 'PREPARED';
+					orderArticle.status = 'PREPARED';
 				}
 				
-				dishes.push(orderDish);
+				articles.push(orderArticle);
 			}
 			
-			return dishes;		
+			return articles;		
 		};
 		
 		function getRandomInt(min, max) {
@@ -164,7 +164,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 					id: {userId: 1, id: i},
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
-					dishes: generateOrderDishes(i, status),
+					articles: generateOrderDishes(i, status),
 					discount: '0',
 					status: status,
 					note: 'Make it fast!'

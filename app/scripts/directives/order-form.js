@@ -2,14 +2,14 @@
 /*global _:false */
 
 angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order', 'Settings', 'Printer', 
-                                              function(Waiter, Dish, Order, Settings, Printer) {
+                                              function(Waiter, Article, Order, Settings, Printer) {
 
 	var OrderTemplate = function(waiter) {
 		return {
 			status: 'PREPARATION',
 			discount: '0',
 			waiter: waiter,
-			dishes: [],
+			articles: [],
 			note: null
 		};
 	};
@@ -48,25 +48,25 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				scope.order = new OrderTemplate(waiters[0]);
 			});
 
-			Dish.readAll().then(function(dishList) {
+			Article.readAll().then(function(dishList) {
 				scope.dishList = dishList;
 				
-				scope.menus = Dish.getMenus(dishList);
+				scope.menus = Article.getMenus(dishList);
 				scope.selectedMenus = angular.copy(scope.menus);
 			});
 			
 			var settingsPromise = Settings.read();
 			
-			scope.filterDish = function(dish) {
-		    	var menuFilter = _.some(dish.menus, function(menu) {
+			scope.filterDish = function(article) {
+		    	var menuFilter = _.some(article.menus, function(menu) {
 		    		return scope.selectedMenus.indexOf(menu) !== -1;
 		    	});	
 		    
-		    	function isInSearch(dish) {
-		    		return scope.searchTerm.length > 0 ? dish.name.toUpperCase().indexOf(scope.searchTerm.toUpperCase()) !== -1 : true;
+		    	function isInSearch(article) {
+		    		return scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf(scope.searchTerm.toUpperCase()) !== -1 : true;
 		    	}
 		    	
-		    	return menuFilter && isInSearch(dish);
+		    	return menuFilter && isInSearch(article);
 			};	
 			
 			scope.waiterToLabel = function(waiter) {
@@ -85,14 +85,14 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				scope.dishListExpanded = !scope.dishListExpanded;
 			};
 			
-			scope.configDish = function(dish) {	
+			scope.configDish = function(article) {	
 				settingsPromise.then(function(settings) {
-					scope.orderFormDish = Order.toOrderDish(dish, settings.tax);
+					scope.orderFormDish = Order.toOrderDish(article, settings.tax);
 				});
 			};
 			
-			scope.addDishToOrder = function(dish) {
-				scope.order.dishes.push(dish);
+			scope.addDishToOrder = function(article) {
+				scope.order.articles.push(article);
 				scope.orderFormDish = null;
 				scope.addingNewDish = false;
 			};
@@ -105,9 +105,9 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				scope.orderDishEditIndex = index;
 			}
 			
-			scope.saveEditedOrderDish = function(dish, index) {
+			scope.saveEditedOrderDish = function(article, index) {
 				scope.orderDishEditIndex = null;
-				scope.order.dishes[index] = dish;
+				scope.order.articles[index] = article;
 			}
 			
 			scope.cancelEditingOrderDish = function() {

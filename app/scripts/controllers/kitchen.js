@@ -14,15 +14,15 @@ angular.module('estesWebApp').controller('KitchenCtrl', ['$scope', '$interval', 
 	
 	refreshOrders();
 	
-	$scope.dishDone = function(order, dish) {
-		dish.status = 'PREPARED';
+	$scope.dishDone = function(order, article) {
+		article.status = 'PREPARED';
 		Order.save(order).then(function() {
 			refreshOrders();
 		});
 	};
 	
 	$scope.filterOrder = function(order) {
-		var hasDishes = order.dishes.length > 0;
+		var hasDishes = order.articles.length > 0;
 		
 		return hasDishes && order.status === 'PREPARATION';
 	};

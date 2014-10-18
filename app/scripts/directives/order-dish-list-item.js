@@ -5,7 +5,7 @@ angular.module('estesWebApp').directive('orderDishListItem', ['Order', function(
 		templateUrl: '/views/directives/order-dish-list-item.html',
 		restrict : 'E',
 		scope: {
-			dish: '='
+			article: '='
 		},
 		link: function(scope) {
 			

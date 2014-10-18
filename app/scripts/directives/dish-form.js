@@ -17,12 +17,12 @@ angular.module('estesWebApp').directive('dishForm', function() {
 			$scope.expandedRow = null;
 			$scope.addingIngredient = false;
 			
-			$scope.$watch('inputDish', function(dish) {
-				if (!dish) {
+			$scope.$watch('inputDish', function(article) {
+				if (!article) {
 					return;
 				}
 
-				$scope.dish = angular.copy(dish);
+				$scope.article = angular.copy(article);
 			});
 
 			$scope.expandRow = function(row) {
@@ -38,20 +38,20 @@ angular.module('estesWebApp').directive('dishForm', function() {
 			};			
 			
 			$scope.addIngredientToDish = function(ingredient) {
-				$scope.dish.ingredients.push([ ingredient ]);
+				$scope.article.ingredients.push([ ingredient ]);
 				$scope.hideAddIngredient();
 			};
 
 			$scope.orIngredientToDish = function(ingredient, index) {
-				$scope.dish.ingredients[index].push(ingredient);
+				$scope.article.ingredients[index].push(ingredient);
 				$scope.expandedRow = null;
 			}
 
 			$scope.removeIngredient = function(ingredientRow, ingredientCol) {
-				if ($scope.dish.ingredients[ingredientRow].length === 1) {
-					$scope.dish.ingredients.splice(ingredientRow, 1);
+				if ($scope.article.ingredients[ingredientRow].length === 1) {
+					$scope.article.ingredients.splice(ingredientRow, 1);
 				} else {
-					$scope.dish.ingredients[ingredientRow].splice(ingredientCol, 1);
+					$scope.article.ingredients[ingredientRow].splice(ingredientCol, 1);
 				}
 			};
 
@@ -59,9 +59,9 @@ angular.module('estesWebApp').directive('dishForm', function() {
 				$scope.expandedRow = null;
 			}
 
-			$scope.save = function(dish) {
+			$scope.save = function(article) {
 				$scope.onSave({
-					dish : dish
+					article : article
 				});
 			};
 

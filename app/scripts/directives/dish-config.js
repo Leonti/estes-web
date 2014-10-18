@@ -16,20 +16,20 @@ angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) 
 			scope.selectedIngredients = [];
 			scope.discount = 0;
 			
-			scope.$watch('inputDish', function(dish) {
-				if (!dish) { return; }
+			scope.$watch('inputDish', function(article) {
+				if (!article) { return; }
 
-				scope.dish = angular.copy(dish);
-				scope.discount = Order.formatDiscount(dish.discount);
+				scope.article = angular.copy(article);
+				scope.discount = Order.formatDiscount(article.discount);
 				
 				scope.selectedIngredients = [];
-				for (var i = 0; i < dish.ingredients.length; i++) {
-					var ingredientOrs = dish.ingredients[i];
+				for (var i = 0; i < article.ingredients.length; i++) {
+					var ingredientOrs = article.ingredients[i];
 					var ingredientStates = [];
 					for (var j = 0; j < ingredientOrs.length; j++) {
 						
-						if (dish.selectedIngredients[i]) {
-							var state = ingredientOrs[j].name === dish.selectedIngredients[i].name;
+						if (article.selectedIngredients[i]) {
+							var state = ingredientOrs[j].name === article.selectedIngredients[i].name;
 							ingredientStates.push(state);
 						} else {
 							ingredientStates.push(j == 0);							
@@ -73,24 +73,24 @@ angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) 
 			}, true);
 			
 			scope.updateDiscount = function(discount) {
-				scope.dish.discount = Order.parseDiscount(discount);
+				scope.article.discount = Order.parseDiscount(discount);
 			}
 			
-			scope.save = function(dish) {
+			scope.save = function(article) {
 				
-				dish.selectedIngredients = [];
+				article.selectedIngredients = [];
 				
 				for (var i = 0; i < scope.selectedIngredients.length; i++) {
 					for (var j = 0; j < scope.selectedIngredients[i].length; j++) {
 						if (scope.selectedIngredients[i][j]) {
-							dish.selectedIngredients.push(dish.ingredients[i][j]);
+							article.selectedIngredients.push(article.ingredients[i][j]);
 						}
 					}
 				}
 				
 				// use 2-way binding to update the ui
-				angular.extend(scope.inputDish, dish);
-				scope.onSave({dish: dish});
+				angular.extend(scope.inputDish, article);
+				scope.onSave({article: article});
 			};
 			
 			scope.cancel = scope.onCancel;

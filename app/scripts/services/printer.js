@@ -48,9 +48,9 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 			var lines = [];
 			lines.push(formatLine(order.waiter.name, moment(order.submitted).format('L'), lineWidth));
 			lines.push('');
-			_.each(order.dishes, function(dish) {
-				lines.push(formatLine(dish.name, '$' + dish.price, lineWidth));
-				_.each(dish.selectedIngredients, function(ingredient) {
+			_.each(order.articles, function(article) {
+				lines.push(formatLine(article.name, '$' + article.price, lineWidth));
+				_.each(article.selectedIngredients, function(ingredient) {
 					if (ingredient.priceChange > 0) {
 						lines.push(formatLine('    ' + ingredient.name, '$' + ingredient.priceChange, lineWidth));
 					}
