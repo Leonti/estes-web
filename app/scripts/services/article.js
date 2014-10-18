@@ -31,7 +31,7 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 		            		   [{ name: 'Beef', priceChange: '0' }]
 		            		];
 		
-		function generateArticleesForTags(tags, idBase) {
+		function generateArticlesForTags(tags, idBase) {
 			var articles = [];
 			var titleBase = '';
 			for (var i = 0; i < tags.length; i++) {
@@ -50,19 +50,19 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 			return articles;
 		}
 		
-		var generateFakeArticlees = function() {
-			var allArticlees = [];
-			allArticlees = allArticlees.concat(generateArticleesForTags(['Breakfast'], allArticlees.length));
-			allArticlees = allArticlees.concat(generateArticleesForTags(['Lunch'], allArticlees.length));
-			allArticlees = allArticlees.concat(generateArticleesForTags(['Dinner'], allArticlees.length));
-			allArticlees = allArticlees.concat(generateArticleesForTags(['Dinner', 'Breakfast'], allArticlees.length));
-			allArticlees = allArticlees.concat(generateArticleesForTags(['Dinner', 'Lunch'], allArticlees.length));
-			allArticlees = allArticlees.concat(generateArticleesForTags(['Breakfast', 'Lunch', 'Dinner'], allArticlees.length));
-			return allArticlees;
+		var generateFakeArticles = function() {
+			var allArticles = [];
+			allArticles = allArticles.concat(generateArticlesForTags(['Breakfast'], allArticles.length));
+			allArticles = allArticles.concat(generateArticlesForTags(['Lunch'], allArticles.length));
+			allArticles = allArticles.concat(generateArticlesForTags(['Dinner'], allArticles.length));
+			allArticles = allArticles.concat(generateArticlesForTags(['Dinner', 'Breakfast'], allArticles.length));
+			allArticles = allArticles.concat(generateArticlesForTags(['Dinner', 'Lunch'], allArticles.length));
+			allArticles = allArticles.concat(generateArticlesForTags(['Breakfast', 'Lunch', 'Dinner'], allArticles.length));
+			return allArticles;
 		};
 		
 		var saveArticle = function(article) {
-			var articles = storage.get('mockArticlees');
+			var articles = storage.get('mockArticles');
 			
 			if (article.id === undefined || article.id === null) {
 				article.id = {userId: 1, id: articles.length + 1};
@@ -74,29 +74,29 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 					}
 				}
 			}
-			storage.set('mockArticlees', articles);
+			storage.set('mockArticles', articles);
 			return article;
 		};
 		
 		var removeArticle = function(id) {
-			var articles = storage.get('mockArticlees');
+			var articles = storage.get('mockArticles');
 			for (var i = 0; i < articles.length; i++) {
 				if (articles[i].id.id === id.id) {
 					articles.splice(i, 1);
 				}
 			}
-			storage.set('mockArticlees', articles);
+			storage.set('mockArticles', articles);
 		};
 		
-		if (!storage.get('mockArticlees')) {
-			storage.set('mockArticlees', generateFakeArticlees());
+		if (!storage.get('mockArticles')) {
+			storage.set('mockArticles', generateFakeArticles());
 			storage.set('mockTags', mockTags);
 			storage.set('mockOptions', mockOptions);			
 		}
 		
 		return {
 			readAll: function() {
-				return $q.when(angular.copy(storage.get('mockArticlees')));
+				return $q.when(angular.copy(storage.get('mockArticles')));
 			},
 			save: function(article) {
 				return $q.when(saveArticle(article));

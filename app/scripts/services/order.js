@@ -127,7 +127,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			return 'PREPARATION';
 		};
 		
-		var generateOrderArticlees = function(i, status) {
+		var generateOrderArticles = function(i, status) {
 			var articles = [];
 			var titleBase = 'Burger';
 			for (i = 0; i < getRandomInt(0, 8); i++) {
@@ -164,7 +164,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 					id: {userId: 1, id: i},
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
-					articles: generateOrderArticlees(i, status),
+					articles: generateOrderArticles(i, status),
 					discount: '0',
 					status: status,
 					note: 'Make it fast!'

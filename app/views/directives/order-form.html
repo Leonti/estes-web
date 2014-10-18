@@ -3,15 +3,15 @@
 	
 		<div class="waiter-block">
 			<span class="print-payment-action text-action" ng-click="forcePayment()" 
-				ng-show="order.articlees.length > 0">Print & Payment</span>
+				ng-show="order.articles.length > 0">Print & Payment</span>
 			<label class="form-label">Waiter:</label>
 			<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
 		</div>
 	
-		<label class="form-label">Articlees</label>
+		<label class="form-label">Articles</label>
 		<span class="add-new-article text-action" ng-hide="addingNewArticle" ng-click="showAddArticle()">+Add article</span>
 		<div ng-show="addingNewArticle">
-			<div class="article-selector shadow-border" ng-hide="orderFormArticle">
+			<div class="article-selector shadow-border" ng-if="!orderFormArticle">
 				<span class="add-new-article-close icon-close2" ng-click="hideAddArticle()"></span>
 				<div class="article-filter">
 					<article-filter tags="tags" selected-tags="selectedTags" search-term="searchTerm"></article-filter>
@@ -25,13 +25,13 @@
 					</div>
 				</div>
 			</div>
-			<div class="order-article-config shadow-border" ng-show="orderFormArticle">
+			<div class="order-article-config shadow-border" ng-if="orderFormArticle">
 				<article-config article="orderFormArticle" on-save="addArticleToOrder(article)" on-cancel="cancelAddingArticle()"></article-config>
 			</div>
 		</div>
 	
-		<div class="article-list shadow-border" ng-show="order.articlees.length > 0">
-			<div class="order-article" ng-repeat="article in order.articlees">
+		<div class="article-list shadow-border" ng-if="order.articles.length > 0">
+			<div class="order-article" ng-repeat="article in order.articles">
 				<order-article-list-item ng-if="!isArticleOrderBeingEdited($index)" article="article" ng-click="startEditingOrderArticle($index)"></order-article-list-item>
 				<article-config ng-if="isArticleOrderBeingEdited($index)" article="article" on-save="saveEditedOrderArticle(article, $index)" on-cancel="cancelEditingOrderArticle()"></article-config>
 			</div>
@@ -68,7 +68,7 @@
 			<div class="order-submitted" am-time-ago="order.submitted"></div>			
 		</div>
 		<div class="article-list">
-			<div class="order-article" ng-repeat="article in order.articlees track by $index">
+			<div class="order-article" ng-repeat="article in order.articles track by $index">
 				<order-article-list-item article="article" show-selected="true"></order-article-list-item>
 			</div>
 		</div>

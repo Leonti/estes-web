@@ -11,9 +11,9 @@ angular.module(
 			}).when('/orders', {
 				templateUrl : 'views/orders.html',
 				controller : 'OrdersCtrl'
-			}).when('/tag', {
-				templateUrl : 'views/tag-editor.html',
-				controller : 'TagEditorCtrl'
+			}).when('/menu', {
+				templateUrl : 'views/menu-editor.html',
+				controller : 'MenuEditorCtrl'
 			}).when('/kitchen', {
 				templateUrl : 'views/kitchen.html',
 				controller : 'KitchenCtrl'

@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Article) {
+angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Article) {
 
 	var ArticleTemplate = function() {
 		return {
@@ -10,7 +10,7 @@ angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Arti
 		};
 	};
 	
-	var refreshArticlees = function() {
+	var refreshArticles = function() {
 		Article.readAll().then(function(articles) {
 			$scope.articles = articles;
 			
@@ -22,7 +22,7 @@ angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Arti
 		});
 	};
 	
-	refreshArticlees();
+	refreshArticles();
 	
 	$scope.searchTerm = '';
 	$scope.newArticle = null;
@@ -53,7 +53,7 @@ angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Arti
 	};
 	
 	$scope.saveNewArticle = function(article) {
-		Article.save(article).then(refreshArticlees);
+		Article.save(article).then(refreshArticles);
 		$scope.closeNewArticleForm();
 	};
 	
@@ -62,7 +62,7 @@ angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Arti
 	};
 	
 	$scope.removeArticle = function(article) {
-		Article.remove(article.id).then(refreshArticlees);		
+		Article.remove(article.id).then(refreshArticles);		
 	};
 
 	$scope.closeArticleForm = function() {
@@ -70,7 +70,7 @@ angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Arti
 	};
 	
 	$scope.saveArticle = function(article) {
-		Article.save(article).then(refreshArticlees);
+		Article.save(article).then(refreshArticles);
 		$scope.closeArticleForm();
 	};
 	

@@ -22,9 +22,9 @@ angular.module('estesWebApp').controller('KitchenCtrl', ['$scope', '$interval', 
 	};
 	
 	$scope.filterOrder = function(order) {
-		var hasArticlees = order.articles.length > 0;
+		var hasArticles = order.articles.length > 0;
 		
-		return hasArticlees && order.status === 'PREPARATION';
+		return hasArticles && order.status === 'PREPARATION';
 	};
 	
 	var ordersPoll = $interval(refreshOrders, 2000);

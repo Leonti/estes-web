@@ -7,7 +7,7 @@
 				<div class="kitchen-order-note">{{order.note}}</div>
 			</div>
 			<div class="kitchen-order-article-list">
-				<div class="kitchen-order-article" ng-repeat="article in order.articlees track by article.id">
+				<div class="kitchen-order-article" ng-repeat="article in order.articles track by article.id">
 					<kitchen-article-list-item article="article" done="articleDone(order, article)"></kitchen-article-list-item>
 				</div>
 			</div>

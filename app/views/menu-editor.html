@@ -12,7 +12,7 @@
 			on-close="closeNewArticleForm()" on-save="saveNewArticle(article)"></div>
 		
 		<div class="tag-section article-list">	
-			<div ng-repeat="article in articlees">
+			<div ng-repeat="article in articles">
 				<div class="tag-article" ng-show="filterArticle(article) && !isArticleEdited($index)">
 					<div class="title">
 						<div class="article-name">{{article.name}}</div>
