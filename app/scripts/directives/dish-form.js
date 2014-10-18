@@ -1,23 +1,23 @@
 'use strict';
 /* global _:false */
 
-angular.module('estesWebApp').directive('dishForm', function() {
+angular.module('estesWebApp').directive('articleForm', function() {
 	return {
-		templateUrl : 'views/directives/dish-form.html',
+		templateUrl : 'views/directives/article-form.html',
 		restrict : 'EA',
 		scope : {
-			inputDish : '=?dish',
-			menus : '=',
-			ingredients : '=',
+			inputArticle : '=?article',
+			tags : '=',
+			options : '=',
 			onClose : '&',
 			onSave : '&'
 		},
 		link : function postLink($scope) {
 
 			$scope.expandedRow = null;
-			$scope.addingIngredient = false;
+			$scope.addingOption = false;
 			
-			$scope.$watch('inputDish', function(article) {
+			$scope.$watch('inputArticle', function(article) {
 				if (!article) {
 					return;
 				}
@@ -29,33 +29,33 @@ angular.module('estesWebApp').directive('dishForm', function() {
 				$scope.expandedRow = row;
 			};
 			
-			$scope.showAddIngredient = function() {
-				$scope.addingIngredient = true;
+			$scope.showAddOption = function() {
+				$scope.addingOption = true;
 			};
 
-			$scope.hideAddIngredient = function() {
-				$scope.addingIngredient = false;
+			$scope.hideAddOption = function() {
+				$scope.addingOption = false;
 			};			
 			
-			$scope.addIngredientToDish = function(ingredient) {
-				$scope.article.ingredients.push([ ingredient ]);
-				$scope.hideAddIngredient();
+			$scope.addOptionToArticle = function(option) {
+				$scope.article.options.push([ option ]);
+				$scope.hideAddOption();
 			};
 
-			$scope.orIngredientToDish = function(ingredient, index) {
-				$scope.article.ingredients[index].push(ingredient);
+			$scope.orOptionToArticle = function(option, index) {
+				$scope.article.options[index].push(option);
 				$scope.expandedRow = null;
 			}
 
-			$scope.removeIngredient = function(ingredientRow, ingredientCol) {
-				if ($scope.article.ingredients[ingredientRow].length === 1) {
-					$scope.article.ingredients.splice(ingredientRow, 1);
+			$scope.removeOption = function(optionRow, optionCol) {
+				if ($scope.article.options[optionRow].length === 1) {
+					$scope.article.options.splice(optionRow, 1);
 				} else {
-					$scope.article.ingredients[ingredientRow].splice(ingredientCol, 1);
+					$scope.article.options[optionRow].splice(optionCol, 1);
 				}
 			};
 
-			$scope.orIngredientToDishCancel = function() {
+			$scope.orOptionToArticleCancel = function() {
 				$scope.expandedRow = null;
 			}
 

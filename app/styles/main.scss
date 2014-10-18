@@ -60,7 +60,7 @@ body {
 	}
 }
 
-.dish-buttons {
+.article-buttons {
 	margin-top: 1em;
 }
 
@@ -69,24 +69,24 @@ body {
 	margin-bottom: 1em;
 }
 
-/* Menu Editor */
-.menu-section {
+/* Tag Editor */
+.tag-section {
 	background: white;
 	border-width: 1px 1px 2px;
 	border-style: solid;
 	border-color: #D8D8D8;
 	margin-bottom: 1em;
 
-	&.header-section, &.new-dish-section {
+	&.header-section, &.new-article-section {
 		padding: 1em;
 	} 
-	&.new-dish-section {
+	&.new-article-section {
 		background-color: #F5F5F5;
 	}
 }
 
 
-.add-dish {
+.add-article {
 	cursor: pointer;
 	display: block;
 	margin-bottom: 0.5em;
@@ -95,18 +95,18 @@ body {
 	}
 }
 
-.dish-list {
+.article-list {
 	
-	.menu-dish {
+	.tag-article {
 		margin: 0 1em;
 	}
-	.edit-dish {
+	.edit-article {
 		padding: 1em;
 		box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
 	}
 }
 
-.menu-dish {
+.tag-article {
 	border-bottom: 0.2em solid #D8D8D8;
 	padding: 0.3em;
 	
@@ -114,20 +114,20 @@ body {
 		font-size: 1.5em;
 		margin-bottom: 0.3em;
 		
-		.dish-name, .dish-price, .dish-actions {
+		.article-name, .article-price, .article-actions {
 			display: inline-block;
 			padding: 0;
 			margin: 0;
 			float: left;
 		}
-		.dish-name {
+		.article-name {
 			width: 70%;
 		}
-		.dish-price {
+		.article-price {
 			width: 20%;
 			text-align: right;
 		}
-		.dish-actions {
+		.article-actions {
 			width: 10%;
 			
 			.icon-pencil, .icon-remove {
@@ -140,7 +140,7 @@ body {
 		.restricted-to-label {
 			font-style: italic;
 		}
-		.restricted-menu {
+		.restricted-tag {
 			display: inline-block;
 			background: #D8D8D8;
 			padding: 0 0.4em;
@@ -150,7 +150,7 @@ body {
 	}
 }
 
-.edit-dish {
+.edit-article {
 	background-color: #F5F5F5;
 	margin: 1em 0;
 }
@@ -261,13 +261,13 @@ input.ng-invalid.ng-dirty {
 @import 'dashboard';
 @import 'login';
 @import 'directives/dropdown';
-@import 'directives/dish-list-item';
-@import 'directives/order-dish-list-item';
+@import 'directives/article-list-item';
+@import 'directives/order-article-list-item';
 @import 'directives/pills-filter';
-@import 'directives/dish-filter';
-@import 'directives/dish-config';
-@import 'directives/kitchen-dish-list-item';
+@import 'directives/article-filter';
+@import 'directives/article-config';
+@import 'directives/kitchen-article-list-item';
 @import 'directives/order-form';
 @import 'directives/order-form-payment';
-@import 'directives/dish-form';
-@import 'directives/add-ingredient-form';
+@import 'directives/article-form';
+@import 'directives/add-option-form';

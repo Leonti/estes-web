@@ -50,9 +50,9 @@ angular.module('estesWebApp').service('Printer', ['$q', 'Settings', 'Order', fun
 			lines.push('');
 			_.each(order.articles, function(article) {
 				lines.push(formatLine(article.name, '$' + article.price, lineWidth));
-				_.each(article.selectedIngredients, function(ingredient) {
-					if (ingredient.priceChange > 0) {
-						lines.push(formatLine('    ' + ingredient.name, '$' + ingredient.priceChange, lineWidth));
+				_.each(article.selectedOptions, function(option) {
+					if (option.priceChange > 0) {
+						lines.push(formatLine('    ' + option.name, '$' + option.priceChange, lineWidth));
 					}
 				});
 				lines.push('');

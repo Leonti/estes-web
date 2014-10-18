@@ -17,11 +17,11 @@
 		margin-top: 1em;
 	}
 	
-	.add-new-dish {
+	.add-new-article {
 		cursor: pointer;
 	}
 	
-	.add-new-dish-close {
+	.add-new-article-close {
 		cursor: pointer;
 		float: right;
 		&:hover {
@@ -29,11 +29,11 @@
 		}
 	}
 	
-	.dish-selector {
+	.article-selector {
 		background: white;
 		padding: 1em 1em 0 1em;
 		
-		.selector-dish-list {
+		.selector-article-list {
 			position: relative;
 			max-height: 20em;
 			overflow: hidden;
@@ -55,18 +55,18 @@
 				max-height: none;
 			}
 			
-			.selector-dish {
+			.selector-article {
 				cursor: pointer;
 			}
 		}
 	}
 	
-	.order-dish-config {
+	.order-article-config {
 		padding: 1em;
 		background: white;
 	}
 	
-	.dish-list {
+	.article-list {
 		margin-top: 1em;
 		padding: 1em;
 		background: white;

@@ -1,13 +1,13 @@
 'use strict';
 
-angular.module('estesWebApp').directive('dishFilter', function() {
+angular.module('estesWebApp').directive('articleFilter', function() {
 	return {
-		templateUrl: '/views/directives/dish-filter.html',
+		templateUrl: '/views/directives/article-filter.html',
 		replace: true,
 		restrict: 'E',
 		scope: {
-			menus: '=',
-			selectedMenus: '=',
+			tags: '=',
+			selectedTags: '=',
 			searchTerm: '='
 		}
 	};

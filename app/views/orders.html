@@ -6,9 +6,9 @@
 				<div class="order-status">{{order.status}}</div>
 				<div class="order-submitted" am-time-ago="order.submitted"></div>			
 			</div>
-			<div class="dish-list">
-				<div class="order-dish" ng-repeat="dish in order.dishes track by $index">
-					<order-dish-list-item dish="dish" show-selected="true"></order-dish-list-item>
+			<div class="article-list">
+				<div class="order-article" ng-repeat="article in order.articlees track by $index">
+					<order-article-list-item article="article" show-selected="true"></order-article-list-item>
 				</div>
 			</div>
 			<div class="order-total">

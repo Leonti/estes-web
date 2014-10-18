@@ -3,37 +3,37 @@
 	
 		<div class="waiter-block">
 			<span class="print-payment-action text-action" ng-click="forcePayment()" 
-				ng-show="order.dishes.length > 0">Print & Payment</span>
+				ng-show="order.articlees.length > 0">Print & Payment</span>
 			<label class="form-label">Waiter:</label>
 			<dropdown items="waiterList" selected-item="order.waiter" to-label="waiterToLabel(item)"></dropdown>
 		</div>
 	
-		<label class="form-label">Dishes</label>
-		<span class="add-new-dish text-action" ng-hide="addingNewDish" ng-click="showAddDish()">+Add dish</span>
-		<div ng-show="addingNewDish">
-			<div class="dish-selector shadow-border" ng-hide="orderFormDish">
-				<span class="add-new-dish-close icon-close2" ng-click="hideAddDish()"></span>
-				<div class="dish-filter">
-					<dish-filter menus="menus" selected-menus="selectedMenus" search-term="searchTerm"></dish-filter>
+		<label class="form-label">Articlees</label>
+		<span class="add-new-article text-action" ng-hide="addingNewArticle" ng-click="showAddArticle()">+Add article</span>
+		<div ng-show="addingNewArticle">
+			<div class="article-selector shadow-border" ng-hide="orderFormArticle">
+				<span class="add-new-article-close icon-close2" ng-click="hideAddArticle()"></span>
+				<div class="article-filter">
+					<article-filter tags="tags" selected-tags="selectedTags" search-term="searchTerm"></article-filter>
 				</div>
-				<div class="selector-dish-list" ng-class="{expanded: dishListExpanded}">
-					<div class="selector-dish" ng-repeat="dish in dishList" ng-click="configDish(dish)" ng-show="filterDish(dish)">
-						<dish-list-item dish="dish"></dish-list-item>
+				<div class="selector-article-list" ng-class="{expanded: articleListExpanded}">
+					<div class="selector-article" ng-repeat="article in articleList" ng-click="configArticle(article)" ng-show="filterArticle(article)">
+						<article-list-item article="article"></article-list-item>
 					</div>
-					<div class="list-expander" ng-click="toggleDishList()">
-						<span ng-hide="dishListExpanded">Show all</span> <span ng-show="dishListExpanded">Collapse</span>
+					<div class="list-expander" ng-click="toggleArticleList()">
+						<span ng-hide="articleListExpanded">Show all</span> <span ng-show="articleListExpanded">Collapse</span>
 					</div>
 				</div>
 			</div>
-			<div class="order-dish-config shadow-border" ng-show="orderFormDish">
-				<dish-config dish="orderFormDish" on-save="addDishToOrder(dish)" on-cancel="cancelAddingDish()"></dish-config>
+			<div class="order-article-config shadow-border" ng-show="orderFormArticle">
+				<article-config article="orderFormArticle" on-save="addArticleToOrder(article)" on-cancel="cancelAddingArticle()"></article-config>
 			</div>
 		</div>
 	
-		<div class="dish-list shadow-border" ng-show="order.dishes.length > 0">
-			<div class="order-dish" ng-repeat="dish in order.dishes">
-				<order-dish-list-item ng-if="!isDishOrderBeingEdited($index)" dish="dish" ng-click="startEditingOrderDish($index)"></order-dish-list-item>
-				<dish-config ng-if="isDishOrderBeingEdited($index)" dish="dish" on-save="saveEditedOrderDish(dish, $index)" on-cancel="cancelEditingOrderDish()"></dish-config>
+		<div class="article-list shadow-border" ng-show="order.articlees.length > 0">
+			<div class="order-article" ng-repeat="article in order.articlees">
+				<order-article-list-item ng-if="!isArticleOrderBeingEdited($index)" article="article" ng-click="startEditingOrderArticle($index)"></order-article-list-item>
+				<article-config ng-if="isArticleOrderBeingEdited($index)" article="article" on-save="saveEditedOrderArticle(article, $index)" on-cancel="cancelEditingOrderArticle()"></article-config>
 			</div>
 		</div>
 	
@@ -67,9 +67,9 @@
 			</div>
 			<div class="order-submitted" am-time-ago="order.submitted"></div>			
 		</div>
-		<div class="dish-list">
-			<div class="order-dish" ng-repeat="dish in order.dishes track by $index">
-				<order-dish-list-item dish="dish" show-selected="true"></order-dish-list-item>
+		<div class="article-list">
+			<div class="order-article" ng-repeat="article in order.articlees track by $index">
+				<order-article-list-item article="article" show-selected="true"></order-article-list-item>
 			</div>
 		</div>
 		<order-form-payment order="order"></order-form-payment>

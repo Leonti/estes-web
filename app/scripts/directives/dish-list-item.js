@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('estesWebApp').directive('dishListItem', function() {
+angular.module('estesWebApp').directive('articleListItem', function() {
 	return {
-		templateUrl: '/views/directives/dish-list-item.html',
+		templateUrl: '/views/directives/article-list-item.html',
 		restrict : 'E',
 		scope: {
 			article: '='

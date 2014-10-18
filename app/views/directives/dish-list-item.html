@@ -1,10 +1,10 @@
-<div class="dish-list-item">
-	<span class="dish-name">{{dish.name}}</span>
-	<span class="dish-price">${{dish.price}}</span>
-	<ul class="dish-ingredients">
-		<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients track by $index">
-			<span ng-repeat="ingredient in ingredientOrs track by $index">
-				{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span><!-- 
+<div class="article-list-item">
+	<span class="article-name">{{article.name}}</span>
+	<span class="article-price">${{article.price}}</span>
+	<ul class="article-options">
+		<li class="article-option" ng-repeat="optionOrs in article.options track by $index">
+			<span ng-repeat="option in optionOrs track by $index">
+				{{option.name}}<span ng-show="option.priceChange > 0">(+${{option.priceChange}})</span><!-- 
 				 --><span ng-hide="$last"> or </span></span><span ng-hide="$last">, </span>
 		</li>
 	</ul>	

@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order', 'Settings', 'Printer', 
+angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Order', 'Settings', 'Printer', 
                                               function(Waiter, Article, Order, Settings, Printer) {
 
 	var OrderTemplate = function(waiter) {
@@ -26,11 +26,11 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 			
 			scope.waiterList = null;
 			scope.searchTerm = '';
-			scope.dishList = null;
-			scope.dishListExpanded = false;
-			scope.orderFormDish = null;
-			scope.addingNewDish = false;
-			scope.orderDishEditIndex = null;
+			scope.articleList = null;
+			scope.articleListExpanded = false;
+			scope.orderFormArticle = null;
+			scope.addingNewArticle = false;
+			scope.orderArticleEditIndex = null;
 			scope.discount = '0';
 			var viewOverride = null;
 			
@@ -48,74 +48,74 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Dish', 'Order',
 				scope.order = new OrderTemplate(waiters[0]);
 			});
 
-			Article.readAll().then(function(dishList) {
-				scope.dishList = dishList;
+			Article.readAll().then(function(articleList) {
+				scope.articleList = articleList;
 				
-				scope.menus = Article.getMenus(dishList);
-				scope.selectedMenus = angular.copy(scope.menus);
+				scope.tags = Article.getTags(articleList);
+				scope.selectedTags = angular.copy(scope.tags);
 			});
 			
 			var settingsPromise = Settings.read();
 			
-			scope.filterDish = function(article) {
-		    	var menuFilter = _.some(article.menus, function(menu) {
-		    		return scope.selectedMenus.indexOf(menu) !== -1;
+			scope.filterArticle = function(article) {
+		    	var tagFilter = _.some(article.tags, function(tag) {
+		    		return scope.selectedTags.indexOf(tag) !== -1;
 		    	});	
 		    
 		    	function isInSearch(article) {
 		    		return scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf(scope.searchTerm.toUpperCase()) !== -1 : true;
 		    	}
 		    	
-		    	return menuFilter && isInSearch(article);
+		    	return tagFilter && isInSearch(article);
 			};	
 			
 			scope.waiterToLabel = function(waiter) {
 				return waiter.name;
 			};
 			
-			scope.showAddDish = function() {
-				scope.addingNewDish = true;
+			scope.showAddArticle = function() {
+				scope.addingNewArticle = true;
 			};
 			
-			scope.hideAddDish = function() {
-				scope.addingNewDish = false;
+			scope.hideAddArticle = function() {
+				scope.addingNewArticle = false;
 			};
 			
-			scope.toggleDishList = function() {
-				scope.dishListExpanded = !scope.dishListExpanded;
+			scope.toggleArticleList = function() {
+				scope.articleListExpanded = !scope.articleListExpanded;
 			};
 			
-			scope.configDish = function(article) {	
+			scope.configArticle = function(article) {	
 				settingsPromise.then(function(settings) {
-					scope.orderFormDish = Order.toOrderDish(article, settings.tax);
+					scope.orderFormArticle = Order.toOrderArticle(article, settings.tax);
 				});
 			};
 			
-			scope.addDishToOrder = function(article) {
+			scope.addArticleToOrder = function(article) {
 				scope.order.articles.push(article);
-				scope.orderFormDish = null;
-				scope.addingNewDish = false;
+				scope.orderFormArticle = null;
+				scope.addingNewArticle = false;
 			};
 			
-			scope.cancelAddingDish = function() {
-				scope.orderFormDish = null;
+			scope.cancelAddingArticle = function() {
+				scope.orderFormArticle = null;
 			};
 			
-			scope.startEditingOrderDish = function(index) {
-				scope.orderDishEditIndex = index;
+			scope.startEditingOrderArticle = function(index) {
+				scope.orderArticleEditIndex = index;
 			}
 			
-			scope.saveEditedOrderDish = function(article, index) {
-				scope.orderDishEditIndex = null;
+			scope.saveEditedOrderArticle = function(article, index) {
+				scope.orderArticleEditIndex = null;
 				scope.order.articles[index] = article;
 			}
 			
-			scope.cancelEditingOrderDish = function() {
-				scope.orderDishEditIndex = null;
+			scope.cancelEditingOrderArticle = function() {
+				scope.orderArticleEditIndex = null;
 			}
 			
-			scope.isDishOrderBeingEdited = function(index) {
-				return index === scope.orderDishEditIndex;
+			scope.isArticleOrderBeingEdited = function(index) {
+				return index === scope.orderArticleEditIndex;
 			}
 			
 			scope.updateDiscount = function(order, discount) {

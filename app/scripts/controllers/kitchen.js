@@ -14,7 +14,7 @@ angular.module('estesWebApp').controller('KitchenCtrl', ['$scope', '$interval', 
 	
 	refreshOrders();
 	
-	$scope.dishDone = function(order, article) {
+	$scope.articleDone = function(order, article) {
 		article.status = 'PREPARED';
 		Order.save(order).then(function() {
 			refreshOrders();
@@ -22,9 +22,9 @@ angular.module('estesWebApp').controller('KitchenCtrl', ['$scope', '$interval', 
 	};
 	
 	$scope.filterOrder = function(order) {
-		var hasDishes = order.articles.length > 0;
+		var hasArticlees = order.articles.length > 0;
 		
-		return hasDishes && order.status === 'PREPARATION';
+		return hasArticlees && order.status === 'PREPARATION';
 	};
 	
 	var ordersPoll = $interval(refreshOrders, 2000);

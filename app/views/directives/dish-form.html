@@ -1,37 +1,37 @@
-<form class="dish-form" name="dishForm" novalidate>			
-	<div class="dish-name">			
-		<input type="text" ng-model="dish.name" name="dishName" placeholder="Dish name" required>
+<form class="article-form" name="articleForm" novalidate>			
+	<div class="article-name">			
+		<input type="text" ng-model="article.name" name="articleName" placeholder="Article name" required>
 	</div>
-	<div class="dish-price">$ <input type="text" ng-model="dish.price" name="dishPrice" required pattern="^-?\d*\.?\d*$"></div>
-	<tags class="menu-tags" available-tags="menus" selected-tags="dish.menus" tag-name="menu"></tags>
+	<div class="article-price">$ <input type="text" ng-model="article.price" name="articlePrice" required pattern="^-?\d*\.?\d*$"></div>
+	<tags class="tag-tags" available-tags="tags" selected-tags="article.tags" tag-name="tag"></tags>
 	
-	<div ui-sortable ng-model="dish.ingredients">
-		<div class="ingredient-row" ng-repeat="dishIngredients in dish.ingredients">
-			<div class="ingredient-ors">
-				<span ng-repeat="ingredient in dishIngredients">
-					<span class="ingredient-title">
-						{{ingredient.name}} 
-						<span ng-show="ingredient.priceChange > 0">(+ ${{ingredient.priceChange}})</span>
-						<span class="icon-close" ng-click="removeIngredient($parent.$index, $index)"></span>					
-					</span><span class="ingredient-or" ng-hide="$last">or</span>
+	<div ui-sortable ng-model="article.options">
+		<div class="option-row" ng-repeat="articleOptions in article.options">
+			<div class="option-ors">
+				<span ng-repeat="option in articleOptions">
+					<span class="option-title">
+						{{option.name}} 
+						<span ng-show="option.priceChange > 0">(+ ${{option.priceChange}})</span>
+						<span class="icon-close" ng-click="removeOption($parent.$index, $index)"></span>					
+					</span><span class="option-or" ng-hide="$last">or</span>
 				</span>
 			</div>			
-			<div class="ingredient-add-or">
+			<div class="option-add-or">
 				<span class="icon-plus" ng-click="expandRow($index)"></span>
-				<add-ingredient-form ingredients="ingredients" 
-					on-save="orIngredientToDish(ingredient, $index)" on-close="orIngredientToDishCancel()" 
-					ng-if="$index === expandedRow"></add-ingredient-form>
+				<add-option-form options="options" 
+					on-save="orOptionToArticle(option, $index)" on-close="orOptionToArticleCancel()" 
+					ng-if="$index === expandedRow"></add-option-form>
 			</div>
 			<div style="clear: both;"></div>
 		</div>
 	</div>
 
-	<span class="add-ingredient-action text-action" ng-hide="addingIngredient" ng-click="showAddIngredient()">+ Add ingredient</span>
-	<add-ingredient-form ingredients="ingredients" 
-		on-save="addIngredientToDish(ingredient)" on-close="hideAddIngredient()" ng-if="addingIngredient"></add-ingredient-form>
+	<span class="add-option-action text-action" ng-hide="addingOption" ng-click="showAddOption()">+ Add option</span>
+	<add-option-form options="options" 
+		on-save="addOptionToArticle(option)" on-close="hideAddOption()" ng-if="addingOption"></add-option-form>
 
 	<div class="form-action-buttons">
-		<button class="button button-action"  ng-click="save(dish)" ng-disabled="dishForm.dishName.$invalid || dishForm.dishPrice.$invalid">Save</button>
+		<button class="button button-action"  ng-click="save(article)" ng-disabled="articleForm.articleName.$invalid || articleForm.articlePrice.$invalid">Save</button>
 		<button class="button" ng-click="cancel()">Cancel</button>
 	</div>		
 </form>

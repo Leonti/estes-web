@@ -1,35 +1,35 @@
-.order-dish-list-item {
+.order-article-list-item {
 	
-	.dish-name {
+	.article-name {
 		float: left;
 	}
-	.dish-price {
+	.article-price {
 		float: right;
 	}
 	
-	.dish-ingredients {
+	.article-options {
 		clear: both;
 		list-style: none;
 		padding: 0;
 		float: left;
-		.dish-ingredient {
+		.article-option {
 			display: inline;
 			font-size: 0.8em;
 			font-style: italic;
 		}
 	}
 	
-	.dish-discount-label {
+	.article-discount-label {
 		display: inline-block;
 		margin-left: 2em;
 		font-size: 0.9em;
 	}
 	
-	.dish-discount-value {
+	.article-discount-value {
 		float: right;
 	}
 	
-	.dish-status {
+	.article-status {
 		float: right;
 		opacity: 0;		
 

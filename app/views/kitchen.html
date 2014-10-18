@@ -6,9 +6,9 @@
 				<div class="kitchen-order-waiter">{{order.waiter.name}}</div>
 				<div class="kitchen-order-note">{{order.note}}</div>
 			</div>
-			<div class="kitchen-order-dish-list">
-				<div class="kitchen-order-dish" ng-repeat="dish in order.dishes track by dish.id">
-					<kitchen-dish-list-item dish="dish" done="dishDone(order, dish)"></kitchen-dish-list-item>
+			<div class="kitchen-order-article-list">
+				<div class="kitchen-order-article" ng-repeat="article in order.articlees track by article.id">
+					<kitchen-article-list-item article="article" done="articleDone(order, article)"></kitchen-article-list-item>
 				</div>
 			</div>
 		</div>

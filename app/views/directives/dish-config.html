@@ -1,23 +1,23 @@
-<div class="dish-config">
-	<div class="dish-header">
-		<span class="dish-name">{{dish.name}}</span>
-		<span class="dish-price">${{dish.price}}</span>
+<div class="article-config">
+	<div class="article-header">
+		<span class="article-name">{{article.name}}</span>
+		<span class="article-price">${{article.price}}</span>
 	</div>
-	<ng-form name="dishForm">
-		<ul class="dish-ingredients">
-			<li class="dish-ingredient" ng-repeat="ingredientOrs in dish.ingredients">
-				<span class="dish-ingredient-or" ng-repeat="ingredient in ingredientOrs">
-					<label><input type="checkbox" ng-model="selectedIngredients[$parent.$index][$index]"/> 
-					{{ingredient.name}}<span ng-show="ingredient.priceChange > 0">(+${{ingredient.priceChange}})</span></label>
+	<ng-form name="articleForm">
+		<ul class="article-options">
+			<li class="article-option" ng-repeat="optionOrs in article.options">
+				<span class="article-option-or" ng-repeat="option in optionOrs">
+					<label><input type="checkbox" ng-model="selectedOptions[$parent.$index][$index]"/> 
+					{{option.name}}<span ng-show="option.priceChange > 0">(+${{option.priceChange}})</span></label>
 					<span class="or-junction" ng-hide="$last"> or </span>
 				</span>
 			</li>
 		</ul>
-		<div class="dish-config-discount">
+		<div class="article-config-discount">
 			Discount: <input type="text" class="input-border input-numeric" ng-model="discount" ng-blur="updateDiscount(discount)" pattern="^-?\d*\.?\d*$" /> %
 		</div>
 		<div class="form-action-buttons">
-			<button class="button button-action" ng-click="save(dish)" ng-disabled="dishForm.$invalid">Save</button>
+			<button class="button button-action" ng-click="save(article)" ng-disabled="articleForm.$invalid">Save</button>
 			<button class="button" ng-click="cancel()">Cancel</button>
 		</div>
 	</ng-form>			

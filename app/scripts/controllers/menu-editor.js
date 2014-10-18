@@ -1,81 +1,81 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Article) {
+angular.module('estesWebApp').controller('TagEditorCtrl', function ($scope, Article) {
 
-	var DishTemplate = function() {
+	var ArticleTemplate = function() {
 		return {
-			menus: [],
-			ingredients: []
+			tags: [],
+			options: []
 		};
 	};
 	
-	var refreshDishes = function() {
+	var refreshArticlees = function() {
 		Article.readAll().then(function(articles) {
 			$scope.articles = articles;
 			
-			$scope.menus = Article.getMenus(articles);
-			console.log($scope.menus);
-			$scope.selectedMenus = [];
+			$scope.tags = Article.getTags(articles);
+			console.log($scope.tags);
+			$scope.selectedTags = [];
 			
-			$scope.ingredients = Article.getIngredients(articles);
+			$scope.options = Article.getOptions(articles);
 		});
 	};
 	
-	refreshDishes();
+	refreshArticlees();
 	
 	$scope.searchTerm = '';
-	$scope.newDish = null;
-	$scope.editedDishIndex = null;
+	$scope.newArticle = null;
+	$scope.editedArticleIndex = null;
 	
-	$scope.isMenuSelected = function(menu) {
-		return $scope.selectedMenus.indexOf(menu) !== -1;
+	$scope.isTagSelected = function(tag) {
+		return $scope.selectedTags.indexOf(tag) !== -1;
 	};
 	
-	$scope.filterDish = function(article) {
-    	var isInMenus = _.some(article.menus, function(menu) {
-    		return $scope.selectedMenus.indexOf(menu) !== -1;
-    	}) || $scope.selectedMenus.length === 0;	
+	$scope.filterArticle = function(article) {
+    	var isInTags = _.some(article.tags, function(tag) {
+    		return $scope.selectedTags.indexOf(tag) !== -1;
+    	}) || $scope.selectedTags.length === 0;	
     
     	function isInSearch(article) {
     		return $scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
     	}
     	
-    	return isInMenus && isInSearch(article);
+    	return isInTags && isInSearch(article);
 	};
 	
-	$scope.openNewDishForm = function() {
-		$scope.newDish = new DishTemplate();		
+	$scope.openNewArticleForm = function() {
+		$scope.newArticle = new ArticleTemplate();		
 	};
 	
-	$scope.closeNewDishForm = function() {
-		$scope.newDish = null;
+	$scope.closeNewArticleForm = function() {
+		$scope.newArticle = null;
 	};
 	
-	$scope.saveNewDish = function(article) {
-		Article.save(article).then(refreshDishes);
-		$scope.closeNewDishForm();
+	$scope.saveNewArticle = function(article) {
+		Article.save(article).then(refreshArticlees);
+		$scope.closeNewArticleForm();
 	};
 	
-	$scope.startDishEdit = function(index) {
-		$scope.editedDishIndex = index;
+	$scope.startArticleEdit = function(index) {
+		$scope.editedArticleIndex = index;
 	};
 	
-	$scope.removeDish = function(article) {
-		Article.remove(article.id).then(refreshDishes);		
+	$scope.removeArticle = function(article) {
+		Article.remove(article.id).then(refreshArticlees);		
 	};
 
-	$scope.closeDishForm = function() {
-		$scope.editedDishIndex = null;
+	$scope.closeArticleForm = function() {
+		$scope.editedArticleIndex = null;
 	};
 	
-	$scope.saveDish = function(article) {
-		Article.save(article).then(refreshDishes);
-		$scope.closeDishForm();
+	$scope.saveArticle = function(article) {
+		Article.save(article).then(refreshArticlees);
+		$scope.closeArticleForm();
 	};
 	
-	$scope.isDishEdited = function(index) {
-		return $scope.editedDishIndex === index;
+	$scope.isArticleEdited = function(index) {
+		return $scope.editedArticleIndex === index;
 	};
 	
 });

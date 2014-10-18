@@ -1,26 +1,26 @@
 'use strict';
 /*global _,Big:false */
 
-angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo', 'Rest', 'Restangular', 
+angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Demo', 'Rest', 'Restangular', 
                                                 function($q, storage, Article, Demo, Rest, Restangular) {
 	
-	function calculateDishPriceNoRound(article) {
+	function calculateArticlePriceNoRound(article) {
 		var price = new Big(article.price);
-		_.each(article.selectedIngredients, function(ingredient) {
-			price = price.plus(new Big(ingredient.priceChange));
+		_.each(article.selectedOptions, function(option) {
+			price = price.plus(new Big(option.priceChange));
 		});
 		
 		return price;		
 	}
 	
-	function calculateDishDiscountNoRound(article) {
-		return calculateDishPriceNoRound(article).times(new Big(article.discount));
+	function calculateArticleDiscountNoRound(article) {
+		return calculateArticlePriceNoRound(article).times(new Big(article.discount));
 	}
 	
 	function calculateOrderPriceNoRound(order) {
 		var total = new Big(0);
 		_.each(order.articles, function(article) {
-			total = total.plus(calculateDishPriceNoRound(article).minus(calculateDishDiscountNoRound(article)));
+			total = total.plus(calculateArticlePriceNoRound(article).minus(calculateArticleDiscountNoRound(article)));
 		});
 		
 		return total;
@@ -33,21 +33,21 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 	function calculateTaxNoRound(order) {
 		var total = new Big(0);
 		_.each(order.articles, function(article) {
-			var dishPrice = calculateDishPriceNoRound(article).minus(calculateDishDiscountNoRound(article));
-			var discountedDishPrice = dishPrice.minus(dishPrice.times(new Big(order.discount)));
+			var articlePrice = calculateArticlePriceNoRound(article).minus(calculateArticleDiscountNoRound(article));
+			var discountedArticlePrice = articlePrice.minus(articlePrice.times(new Big(order.discount)));
 			
-			total = total.plus(discountedDishPrice.times(new Big(article.tax)));
+			total = total.plus(discountedArticlePrice.times(new Big(article.tax)));
 		});
 		
 		return total;
 	}	
 	
-	function calculateDishPrice(article) {
-		return calculateDishPriceNoRound(article).toFixed(2).toString();
+	function calculateArticlePrice(article) {
+		return calculateArticlePriceNoRound(article).toFixed(2).toString();
 	}
 	
-	function calculateDishDiscount(article) {
-		return calculateDishDiscountNoRound(article).toFixed(2).toString();
+	function calculateArticleDiscount(article) {
+		return calculateArticleDiscountNoRound(article).toFixed(2).toString();
 	}
 	
 	function calculateOrderPrice(order) {
@@ -88,14 +88,14 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 		}
 	}
 	
-	function toOrderDish(article, tax) {
+	function toOrderArticle(article, tax) {
 		return {
 			name: article.name,
 			price: article.price,
 			tax: tax,
 			discount: '0',
-			ingredients: angular.copy(article.ingredients),
-			selectedIngredients: [],
+			options: angular.copy(article.options),
+			selectedOptions: [],
 			status: 'PREPARATION'
 		};
 	}
@@ -106,13 +106,13 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 	
 	function OrderMock($q, storage) {
 		
-		var mockIngredients = [
+		var mockOptions = [
 		            		   [{ name: 'Regular fries', priceChange: '0' }, { name: 'Curly fries', priceChange: '0.5' }],
 		            		   [{ name: 'Onions', priceChange: '0' }], 
 		            		   [{ name: 'Beef', priceChange: '0' }]
 		            		];
 		
-		var selectedIngredients = [{ name: 'Curly fries', priceChange: '0.5' }, { name: 'Onions', priceChange: '0' }, { name: 'Beef', priceChange: '0' }];
+		var selectedOptions = [{ name: 'Curly fries', priceChange: '0.5' }, { name: 'Onions', priceChange: '0' }, { name: 'Beef', priceChange: '0' }];
 		
 		var getStatus = function(i) {
 
@@ -127,18 +127,18 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			return 'PREPARATION';
 		};
 		
-		var generateOrderDishes = function(i, status) {
+		var generateOrderArticlees = function(i, status) {
 			var articles = [];
 			var titleBase = 'Burger';
 			for (i = 0; i < getRandomInt(0, 8); i++) {
 				var orderArticle = {
-						name: 'Dish ' + titleBase,
+						name: 'Article ' + titleBase,
 						price: '10',
 						tax: '0.07',
 						discount: '0',
-						menus: ['Breakfast', 'Lunch'],
-						ingredients: mockIngredients,
-						selectedIngredients: selectedIngredients
+						tags: ['Breakfast', 'Lunch'],
+						options: mockOptions,
+						selectedOptions: selectedOptions
 					};
 				
 				if (status === 'PREPARED' || status === 'PAID') {
@@ -164,7 +164,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 					id: {userId: 1, id: i},
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
-					articles: generateOrderDishes(i, status),
+					articles: generateOrderArticlees(i, status),
 					discount: '0',
 					status: status,
 					note: 'Make it fast!'
@@ -205,9 +205,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			},
 			
 			getStatusPriority: getStatusPriority,
-			toOrderDish: toOrderDish,
-			calculateDishPrice: calculateDishPrice,
-			calculateDishDiscount: calculateDishDiscount,
+			toOrderArticle: toOrderArticle,
+			calculateArticlePrice: calculateArticlePrice,
+			calculateArticleDiscount: calculateArticleDiscount,
 			calculatePrice: calculateOrderPrice,
 			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
@@ -242,9 +242,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Dish', 'Demo',
 			},
 			
 			getStatusPriority: getStatusPriority,
-			toOrderDish: toOrderDish,
-			calculateDishPrice: calculateDishPrice,
-			calculateDishDiscount: calculateDishDiscount,
+			toOrderArticle: toOrderArticle,
+			calculateArticlePrice: calculateArticlePrice,
+			calculateArticleDiscount: calculateArticleDiscount,
 			calculatePrice: calculateOrderPrice,
 			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,

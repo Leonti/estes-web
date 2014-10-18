@@ -1,39 +1,39 @@
 <div class="row">
 	<div class="col-md-offset-3 col-md-6">
-		<div class="menu-section header-section">
-			<div class="menu-header">
-				<dish-filter menus="menus" selected-menus="selectedMenus" search-term="searchTerm"></dish-filter>
+		<div class="tag-section header-section">
+			<div class="tag-header">
+				<article-filter tags="tags" selected-tags="selectedTags" search-term="searchTerm"></article-filter>
 			</div>		
 		</div>	
 		
-		<span class="add-dish" ng-hide="newDishEditing" ng-click="openNewDishForm()"><span class="icon-plus"></span> Add dish ...</span>
-		<div dish-form class="menu-section new-dish-section" ng-if="newDish" dish="newDish"
-			ingredients="ingredients" menus="menus" 
-			on-close="closeNewDishForm()" on-save="saveNewDish(dish)"></div>
+		<span class="add-article" ng-hide="newArticleEditing" ng-click="openNewArticleForm()"><span class="icon-plus"></span> Add article ...</span>
+		<div article-form class="tag-section new-article-section" ng-if="newArticle" article="newArticle"
+			options="options" tags="tags" 
+			on-close="closeNewArticleForm()" on-save="saveNewArticle(article)"></div>
 		
-		<div class="menu-section dish-list">	
-			<div ng-repeat="dish in dishes">
-				<div class="menu-dish" ng-show="filterDish(dish) && !isDishEdited($index)">
+		<div class="tag-section article-list">	
+			<div ng-repeat="article in articlees">
+				<div class="tag-article" ng-show="filterArticle(article) && !isArticleEdited($index)">
 					<div class="title">
-						<div class="dish-name">{{dish.name}}</div>
-						<div class="dish-price">$ {{dish.price}}</div>
-						<div class="dish-actions">
+						<div class="article-name">{{article.name}}</div>
+						<div class="article-price">$ {{article.price}}</div>
+						<div class="article-actions">
 							<div class="pull-right">
-								<span class="icon-pencil" ng-click="startDishEdit($index)"></span>
-								<span class="icon-remove" ng-click="removeDish(dish)"></span>
+								<span class="icon-pencil" ng-click="startArticleEdit($index)"></span>
+								<span class="icon-remove" ng-click="removeArticle(article)"></span>
 							</div>
 						</div>
 						<div style="clear: both;"></div>
 					</div>							
 					<div class="details">
-						<div class="restricted-details" ng-show="dish.menus.length > 0">
-							<span ng-repeat="dishMenu in dish.menus" class="restricted-menu">{{dishMenu}}</span>
+						<div class="restricted-details" ng-show="article.tags.length > 0">
+							<span ng-repeat="articleTag in article.tags" class="restricted-tag">{{articleTag}}</span>
 						</div>
 					</div>					
 				</div>
-				<div ng-if="isDishEdited($index)" class="edit-dish" dish-form dish="dish"
-					ingredients="ingredients" menus="menus" 
-					on-close="closeDishForm()" on-save="saveDish(dish)"></div>
+				<div ng-if="isArticleEdited($index)" class="edit-article" article-form article="article"
+					options="options" tags="tags" 
+					on-close="closeArticleForm()" on-save="saveArticle(article)"></div>
 			</div>
 		</div>
 	</div>

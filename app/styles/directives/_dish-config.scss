@@ -1,18 +1,18 @@
-.dish-config {
-	.dish-header {
+.article-config {
+	.article-header {
 		margin-bottom: 1em;
 		font-size: 1.5em;
 
-		.dish-price {
+		.article-price {
 			float: right;
 		}
 	}
-	.dish-ingredients {
+	.article-options {
 		list-style: none;
 		padding: 0;
 		
-		.dish-ingredient {
-			.dish-ingredient-or {
+		.article-option {
+			.article-option-or {
 				label {
 					font-weight: normal;
 					cursor: pointer;

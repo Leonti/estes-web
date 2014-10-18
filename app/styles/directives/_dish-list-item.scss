@@ -1,17 +1,17 @@
-.dish-list-item {
+.article-list-item {
 	
-	.dish-name {
+	.article-name {
 		float: left;
 	}
-	.dish-price {
+	.article-price {
 		float: right;
 	}
 	
-	.dish-ingredients {
+	.article-options {
 		clear: both;
 		list-style: none;
 		padding: 0;
-		.dish-ingredient {
+		.article-option {
 			display: inline;
 			font-size: 0.8em;
 			font-style: italic;

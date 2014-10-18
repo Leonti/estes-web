@@ -1,17 +1,17 @@
 'use strict';
 
-angular.module('estesWebApp').directive('orderDishListItem', ['Order', function(Order) {
+angular.module('estesWebApp').directive('orderArticleListItem', ['Order', function(Order) {
 	return {
-		templateUrl: '/views/directives/order-dish-list-item.html',
+		templateUrl: '/views/directives/order-article-list-item.html',
 		restrict : 'E',
 		scope: {
 			article: '='
 		},
 		link: function(scope) {
 			
-			scope.calculatePrice = Order.calculateDishPrice;
+			scope.calculatePrice = Order.calculateArticlePrice;
 			scope.formatDiscount = Order.formatDiscount;
-			scope.calculateDiscount = Order.calculateDishDiscount;
+			scope.calculateDiscount = Order.calculateArticleDiscount;
 		}
 	};
 }]);

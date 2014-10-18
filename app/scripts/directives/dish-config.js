@@ -1,47 +1,47 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) {
+angular.module('estesWebApp').directive('articleConfig', ['Order', function(Order) {
 	return {
-		templateUrl: '/views/directives/dish-config.html',
+		templateUrl: '/views/directives/article-config.html',
 		restrict: 'E',
 		replace: true,
 		scope: {
-			inputDish: '=dish',
+			inputArticle: '=article',
 			onSave: '&',
 			onCancel: '&'
 		},
 		link : function postLink(scope) {
 			
-			scope.selectedIngredients = [];
+			scope.selectedOptions = [];
 			scope.discount = 0;
 			
-			scope.$watch('inputDish', function(article) {
+			scope.$watch('inputArticle', function(article) {
 				if (!article) { return; }
 
 				scope.article = angular.copy(article);
 				scope.discount = Order.formatDiscount(article.discount);
 				
-				scope.selectedIngredients = [];
-				for (var i = 0; i < article.ingredients.length; i++) {
-					var ingredientOrs = article.ingredients[i];
-					var ingredientStates = [];
-					for (var j = 0; j < ingredientOrs.length; j++) {
+				scope.selectedOptions = [];
+				for (var i = 0; i < article.options.length; i++) {
+					var optionOrs = article.options[i];
+					var optionStates = [];
+					for (var j = 0; j < optionOrs.length; j++) {
 						
-						if (article.selectedIngredients[i]) {
-							var state = ingredientOrs[j].name === article.selectedIngredients[i].name;
-							ingredientStates.push(state);
+						if (article.selectedOptions[i]) {
+							var state = optionOrs[j].name === article.selectedOptions[i].name;
+							optionStates.push(state);
 						} else {
-							ingredientStates.push(j == 0);							
+							optionStates.push(j == 0);							
 						}
 					}
 					
-					scope.selectedIngredients.push(ingredientStates);
+					scope.selectedOptions.push(optionStates);
 				}
 			});
 			
-			scope.$watch('selectedIngredients', function(selectedIngredients, oldSelectedIngredients) {
-				if (!oldSelectedIngredients.length) { return; }
+			scope.$watch('selectedOptions', function(selectedOptions, oldSelectedOptions) {
+				if (!oldSelectedOptions.length) { return; }
 				
 				function findChangedInRow(row, oldRow) {
 					if (!oldRow) { return -1; }
@@ -54,10 +54,10 @@ angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) 
 					return -1;
 				}
 				
-				for (var i = 0; i < selectedIngredients.length; i++) {
+				for (var i = 0; i < selectedOptions.length; i++) {
 					
-					var selectedOrs = selectedIngredients[i];
-					var oldSelectedOrs = oldSelectedIngredients[i];
+					var selectedOrs = selectedOptions[i];
+					var oldSelectedOrs = oldSelectedOptions[i];
 					var changedPosition = findChangedInRow(selectedOrs, oldSelectedOrs);
 					if (changedPosition === -1) {
 						continue;
@@ -65,7 +65,7 @@ angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) 
 					
 					for (var j = 0; j < selectedOrs.length; j++) {
 						if (j !== changedPosition) {
-							selectedIngredients[i][j] = false;
+							selectedOptions[i][j] = false;
 						}
 					}
 				}
@@ -78,18 +78,18 @@ angular.module('estesWebApp').directive('dishConfig', ['Order', function(Order) 
 			
 			scope.save = function(article) {
 				
-				article.selectedIngredients = [];
+				article.selectedOptions = [];
 				
-				for (var i = 0; i < scope.selectedIngredients.length; i++) {
-					for (var j = 0; j < scope.selectedIngredients[i].length; j++) {
-						if (scope.selectedIngredients[i][j]) {
-							article.selectedIngredients.push(article.ingredients[i][j]);
+				for (var i = 0; i < scope.selectedOptions.length; i++) {
+					for (var j = 0; j < scope.selectedOptions[i].length; j++) {
+						if (scope.selectedOptions[i][j]) {
+							article.selectedOptions.push(article.options[i][j]);
 						}
 					}
 				}
 				
 				// use 2-way binding to update the ui
-				angular.extend(scope.inputDish, article);
+				angular.extend(scope.inputArticle, article);
 				scope.onSave({article: article});
 			};
 			

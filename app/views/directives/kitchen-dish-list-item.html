@@ -1,9 +1,9 @@
-<div class="kitchen-dish-list-item">
-	<span class="dish-name">{{dish.name}}</span>
-	<span class="icon-checkmark ok" ng-class="{'prepared': dish.status == 'PREPARED'}" ng-click="done(dish)"></span>
-	<ul class="dish-ingredients">
-		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients track by $index">
-			{{ingredient.name}}
+<div class="kitchen-article-list-item">
+	<span class="article-name">{{article.name}}</span>
+	<span class="icon-checkmark ok" ng-class="{'prepared': article.status == 'PREPARED'}" ng-click="done(article)"></span>
+	<ul class="article-options">
+		<li class="article-option" ng-repeat="option in article.selectedOptions track by $index">
+			{{option.name}}
 		</li>
 	</ul>	
 </div>

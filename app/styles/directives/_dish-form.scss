@@ -1,6 +1,6 @@
-.dish-form {
+.article-form {
 	
-	.dish-name, .dish-price {
+	.article-name, .article-price {
 		input {
 			border: 1px solid #E4E4E4;
 			color: #404040;
@@ -8,35 +8,35 @@
 		}	
 	}
 
-	.dish-name, .dish-price {
+	.article-name, .article-price {
 		display:inline-block;
 	}
-	.dish-name {
+	.article-name {
 		width: 73%;
 		input {
 			width: 100%;
 		}
 	}
-	.dish-price {
+	.article-price {
 		width: 20%;
 		text-align: right;
 		input {
 			width: 40%;
 		}
 	}
-	.menu-tags {
+	.tag-tags {
 		margin: 0.5em 0;
 		width: 73%;
 	}
 	
-	.ingredient-row {
+	.option-row {
 		border-bottom: 0.2em solid #D8D8D8;
 		
-		.ingredient-ors {
+		.option-ors {
 			float: left;
 			padding: 0.5em 0.3em;
 			
-			.ingredient-title {
+			.option-title {
 				.icon-close {
 					font-size: 0.7em;
 					cursor: pointer;
@@ -45,11 +45,11 @@
 		}
 	}
 		
-	.add-ingredient-form {
+	.add-option-form {
 		width: 50%;
 	}	
 
-	.ingredient-add-or {
+	.option-add-or {
 		position: relative;
 		cursor: pointer;
 		float: right;
@@ -57,7 +57,7 @@
 			display: inline-block;
 			margin: 0.7em;
 		}
-		.add-ingredient-form {
+		.add-option-form {
 			position: absolute;
 			top: 0.15em;
 			right: 0;

@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('estesWebApp').directive('addIngredientForm', [function() {
+angular.module('estesWebApp').directive('addOptionForm', [function() {
 	
-	var IngredientTemplate = function() {
+	var OptionTemplate = function() {
 		return {
 			name: '',
 			priceChange: '0'
@@ -10,47 +10,47 @@ angular.module('estesWebApp').directive('addIngredientForm', [function() {
 	};
 	
 	return {
-		templateUrl: '/views/directives/add-ingredient-form.html',
+		templateUrl: '/views/directives/add-option-form.html',
 		restrict: 'E',
 		scope: {
-			ingredients: '=',
+			options: '=',
 			onClose: '&',
 			onSave: '&'
 		},
 		link: function postLink(scope, element, attrs) {
 			
-			scope.ingredient = new IngredientTemplate();
+			scope.option = new OptionTemplate();
 			
-			scope.$watch('ingredients', function(ingredients) {
-				if (!ingredients) { return; }
+			scope.$watch('options', function(options) {
+				if (!options) { return; }
 				
-				scope.typeaheadItems = ingredients;
-				scope.filteredIngredients = angular.copy(scope.typeaheadItems);
+				scope.typeaheadItems = options;
+				scope.filteredOptions = angular.copy(scope.typeaheadItems);
 			});
 			
-			scope.onTypeaheadSelect = function(ingredient) {
-				scope.ingredient = angular.copy(ingredient);
+			scope.onTypeaheadSelect = function(option) {
+				scope.option = angular.copy(option);
 			};
 			
-			scope.filterIngredients = function(ingredients, term) {
-				scope.filteredIngredients = filter(ingredients, term);
+			scope.filterOptions = function(options, term) {
+				scope.filteredOptions = filter(options, term);
 			};
 			
-			function filter(ingredients, term) {
-				if (!term) { return ingredients; }
-				return _.filter(ingredients, function(ingredient) { 
-					return ingredient.name.toUpperCase().indexOf(term.toUpperCase()) === 0;
+			function filter(options, term) {
+				if (!term) { return options; }
+				return _.filter(options, function(option) { 
+					return option.name.toUpperCase().indexOf(term.toUpperCase()) === 0;
 				});
 			}			
 			
-			scope.save = function(ingredient) {
-				scope.onSave({ingredient: ingredient});
-				scope.ingredient = new IngredientTemplate();
+			scope.save = function(option) {
+				scope.onSave({option: option});
+				scope.option = new OptionTemplate();
 			}
 			
 			scope.cancel = function() {
 				scope.onClose();
-				scope.ingredient = new IngredientTemplate();
+				scope.option = new OptionTemplate();
 			}
 		}
 	};

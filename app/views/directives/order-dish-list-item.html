@@ -1,15 +1,15 @@
-<div class="order-dish-list-item">
-	<span class="dish-name">{{dish.name}}</span>
-	<span class="dish-price">${{calculatePrice(dish)}}</span>
+<div class="order-article-list-item">
+	<span class="article-name">{{article.name}}</span>
+	<span class="article-price">${{calculatePrice(article)}}</span>
 	<div style="clear: both;"></div>
-	<span class="dish-discount-label" ng-show="dish.discount !== '0'">Discount: {{formatDiscount(dish.discount)}} %</span>
-	<span class="dish-discount-value" ng-show="dish.discount !== '0'">- ${{calculateDiscount(dish)}}</span>
-	<ul class="dish-ingredients">
-		<li class="dish-ingredient" ng-repeat="ingredient in dish.selectedIngredients track by $index">
-			{{ingredient.name}}<span ng-show="ingredient.priceChange > 0"> (+${{ingredient.priceChange}})</span><!-- 
+	<span class="article-discount-label" ng-show="article.discount !== '0'">Discount: {{formatDiscount(article.discount)}} %</span>
+	<span class="article-discount-value" ng-show="article.discount !== '0'">- ${{calculateDiscount(article)}}</span>
+	<ul class="article-options">
+		<li class="article-option" ng-repeat="option in article.selectedOptions track by $index">
+			{{option.name}}<span ng-show="option.priceChange > 0"> (+${{option.priceChange}})</span><!-- 
 				 --><span ng-hide="$last">, </span>	 
 		</li>
 	</ul>
-	<span class="icon-checkmark dish-status" ng-class="{'prepared': dish.status == 'PREPARED'}"></span>
+	<span class="icon-checkmark article-status" ng-class="{'prepared': article.status == 'PREPARED'}"></span>
 	<div style="clear: both"></div>
 </div>

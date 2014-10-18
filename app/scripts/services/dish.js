@@ -1,68 +1,68 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 'Restangular', function($q, storage, Demo, Rest, Restangular) {
+angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest', 'Restangular', function($q, storage, Demo, Rest, Restangular) {
 	
-	function getMenus(articles) {
-		return _.uniq(_.flatten(_.map(articles, function(article) { return article.menus; })));
+	function getTags(articles) {
+		return _.uniq(_.flatten(_.map(articles, function(article) { return article.tags; })));
 	}
 	
-	function getIngredients(articles) {
-		return _.uniq(_.flatten(_.map(articles, function(article) { return article.ingredients; })), 
-			function (ingredient) {
-				return ingredient.name + ingredient.priceChange;
+	function getOptions(articles) {
+		return _.uniq(_.flatten(_.map(articles, function(article) { return article.options; })), 
+			function (option) {
+				return option.name + option.priceChange;
 			});
 	}
 	
-	function DishMock($q, storage) {
+	function ArticleMock($q, storage) {
 		
-		var mockMenus = ['Breakfast', 'Lunch', 'Dinner'];
+		var mockTags = ['Breakfast', 'Lunch', 'Dinner'];
 		
-		var mockIngredients = [
+		var mockOptions = [
 		            		   { name: 'Regular fries', priceChange: '0' },
 		            		   { name: 'Curly fries', priceChange: '0.5' }, 
 		            		   { name: 'Onions', priceChange: '0' }, 
 		            		   { name: 'Beef', priceChange: '0' }
 		            		];
 		
-		var dishIngredients =  [
+		var articleOptions =  [
 		            		   [{ name: 'Regular fries', priceChange: '0' }, { name: 'Curly fries', priceChange: '0.5' }],
 		            		   [{ name: 'Onions', priceChange: '0' }], 
 		            		   [{ name: 'Beef', priceChange: '0' }]
 		            		];
 		
-		function generateDishesForMenus(menus, idBase) {
+		function generateArticleesForTags(tags, idBase) {
 			var articles = [];
 			var titleBase = '';
-			for (var i = 0; i < menus.length; i++) {
-				titleBase += '_' + menus[i];
+			for (var i = 0; i < tags.length; i++) {
+				titleBase += '_' + tags[i];
 			}
 			for (i = 0; i < 10; i++) {
 				articles.push({
 					id: {userId: 1, id: idBase + i},
-					name: 'Dish ' + titleBase + '_' + i,
+					name: 'Article ' + titleBase + '_' + i,
 					price: '10',
-					menus: menus,
-					ingredients: dishIngredients
+					tags: tags,
+					options: articleOptions
 				});
 			}
 			
 			return articles;
 		}
 		
-		var generateFakeDishes = function() {
-			var allDishes = [];
-			allDishes = allDishes.concat(generateDishesForMenus(['Breakfast'], allDishes.length));
-			allDishes = allDishes.concat(generateDishesForMenus(['Lunch'], allDishes.length));
-			allDishes = allDishes.concat(generateDishesForMenus(['Dinner'], allDishes.length));
-			allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Breakfast'], allDishes.length));
-			allDishes = allDishes.concat(generateDishesForMenus(['Dinner', 'Lunch'], allDishes.length));
-			allDishes = allDishes.concat(generateDishesForMenus(['Breakfast', 'Lunch', 'Dinner'], allDishes.length));
-			return allDishes;
+		var generateFakeArticlees = function() {
+			var allArticlees = [];
+			allArticlees = allArticlees.concat(generateArticleesForTags(['Breakfast'], allArticlees.length));
+			allArticlees = allArticlees.concat(generateArticleesForTags(['Lunch'], allArticlees.length));
+			allArticlees = allArticlees.concat(generateArticleesForTags(['Dinner'], allArticlees.length));
+			allArticlees = allArticlees.concat(generateArticleesForTags(['Dinner', 'Breakfast'], allArticlees.length));
+			allArticlees = allArticlees.concat(generateArticleesForTags(['Dinner', 'Lunch'], allArticlees.length));
+			allArticlees = allArticlees.concat(generateArticleesForTags(['Breakfast', 'Lunch', 'Dinner'], allArticlees.length));
+			return allArticlees;
 		};
 		
-		var saveDish = function(article) {
-			var articles = storage.get('mockDishes');
+		var saveArticle = function(article) {
+			var articles = storage.get('mockArticlees');
 			
 			if (article.id === undefined || article.id === null) {
 				article.id = {userId: 1, id: articles.length + 1};
@@ -74,38 +74,38 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 					}
 				}
 			}
-			storage.set('mockDishes', articles);
+			storage.set('mockArticlees', articles);
 			return article;
 		};
 		
-		var removeDish = function(id) {
-			var articles = storage.get('mockDishes');
+		var removeArticle = function(id) {
+			var articles = storage.get('mockArticlees');
 			for (var i = 0; i < articles.length; i++) {
 				if (articles[i].id.id === id.id) {
 					articles.splice(i, 1);
 				}
 			}
-			storage.set('mockDishes', articles);
+			storage.set('mockArticlees', articles);
 		};
 		
-		if (!storage.get('mockDishes')) {
-			storage.set('mockDishes', generateFakeDishes());
-			storage.set('mockMenus', mockMenus);
-			storage.set('mockIngredients', mockIngredients);			
+		if (!storage.get('mockArticlees')) {
+			storage.set('mockArticlees', generateFakeArticlees());
+			storage.set('mockTags', mockTags);
+			storage.set('mockOptions', mockOptions);			
 		}
 		
 		return {
 			readAll: function() {
-				return $q.when(angular.copy(storage.get('mockDishes')));
+				return $q.when(angular.copy(storage.get('mockArticlees')));
 			},
 			save: function(article) {
-				return $q.when(saveDish(article));
+				return $q.when(saveArticle(article));
 			},
 			remove: function(id) {
-				return $q.when(removeDish(id));
+				return $q.when(removeArticle(id));
 			},
-			getMenus: getMenus,
-			getIngredients: getIngredients
+			getTags: getTags,
+			getOptions: getOptions
 		};
 	}
 	
@@ -115,37 +115,37 @@ angular.module('estesWebApp').factory('Dish', ['$q', 'storage', 'Demo', 'Rest', 
 			
 			readAll: function() {
 				return Rest.configure().then(function() {
-					return Restangular.all('dish').getList();	
+					return Restangular.all('article').getList();	
 				});
 			},
 			save: function(article) {
-				article.selectedIngredients = [];
+				article.selectedOptions = [];
 				return Rest.configure().then(function() {
 					if (article.id === undefined || article.id === null) {
-						return Restangular.one('dish').post('', article);
+						return Restangular.one('article').post('', article);
 					} else {
-						return Restangular.one('dish', article.id.id).customPUT(article);
+						return Restangular.one('article', article.id.id).customPUT(article);
 					}
 				});
 			},
 			remove: function(id) {
 				return Rest.configure().then(function() {
-					return Restangular.all('dish').getList().then(function(articles) {
+					return Restangular.all('article').getList().then(function(articles) {
 						for (var i = 0; i < articles.length; i++) {
 							if (articles[i].id.id === id.id) {
-								return Restangular.one('dish', id.id).customDELETE();
+								return Restangular.one('article', id.id).customDELETE();
 							}
 						}
 					});					
 				});
 			},
-			getMenus: getMenus,
-			getIngredients: getIngredients
+			getTags: getTags,
+			getOptions: getOptions
 		};		
 	}
 
 	if (Demo.isEnabled()) {
-		return new DishMock($q, storage);
+		return new ArticleMock($q, storage);
 	} else {
 		return new Article(Rest, Restangular);
 	}
