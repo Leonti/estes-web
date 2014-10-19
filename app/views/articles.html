@@ -1,19 +1,18 @@
-<div class="row">
+<div class="row articles">
 	<div class="col-md-offset-3 col-md-6">
-		<div class="tag-section header-section">
-			<div class="tag-header">
-				<article-filter tags="tags" selected-tags="selectedTags" search-term="searchTerm"></article-filter>
-			</div>		
+		<div class="articles-section header-section">
+			<tax-group-selector tax-groups="taxGroups" selected-tax-group="selectedTaxGroup"></tax-group-selector>
+			<article-filter tags="tags" selected-tags="selectedTags" search-term="searchTerm"></article-filter>
 		</div>	
 		
 		<span class="add-article" ng-hide="newArticleEditing" ng-click="openNewArticleForm()"><span class="icon-plus"></span> Add article ...</span>
-		<div article-form class="tag-section new-article-section" ng-if="newArticle" article="newArticle"
+		<div article-form class="articles-section new-article-section" ng-if="newArticle" article="newArticle"
 			options="options" tags="tags" 
 			on-close="closeNewArticleForm()" on-save="saveNewArticle(article)"></div>
 		
-		<div class="tag-section article-list">	
+		<div class="articles-section article-list">	
 			<div ng-repeat="article in articles">
-				<div class="tag-article" ng-show="filterArticle(article) && !isArticleEdited($index)">
+				<div class="article" ng-show="filterArticle(article) && !isArticleEdited($index)">
 					<div class="title">
 						<div class="article-name">{{article.name}}</div>
 						<div class="article-price">$ {{article.price}}</div>

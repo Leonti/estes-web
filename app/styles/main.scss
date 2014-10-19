@@ -69,94 +69,6 @@ body {
 	margin-bottom: 1em;
 }
 
-/* Tag Editor */
-.tag-section {
-	background: white;
-	border-width: 1px 1px 2px;
-	border-style: solid;
-	border-color: #D8D8D8;
-	margin-bottom: 1em;
-
-	&.header-section, &.new-article-section {
-		padding: 1em;
-	} 
-	&.new-article-section {
-		background-color: #F5F5F5;
-	}
-}
-
-
-.add-article {
-	cursor: pointer;
-	display: block;
-	margin-bottom: 0.5em;
-	.icon-plus {
-		font-size: 0.7em;
-	}
-}
-
-.article-list {
-	
-	.tag-article {
-		margin: 0 1em;
-	}
-	.edit-article {
-		padding: 1em;
-		box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2);
-	}
-}
-
-.tag-article {
-	border-bottom: 0.2em solid #D8D8D8;
-	padding: 0.3em;
-	
-	.title {
-		font-size: 1.5em;
-		margin-bottom: 0.3em;
-		
-		.article-name, .article-price, .article-actions {
-			display: inline-block;
-			padding: 0;
-			margin: 0;
-			float: left;
-		}
-		.article-name {
-			width: 70%;
-		}
-		.article-price {
-			width: 20%;
-			text-align: right;
-		}
-		.article-actions {
-			width: 10%;
-			
-			.icon-pencil, .icon-remove {
-				cursor: pointer;
-			}
-		}
-	}
-	
-	.restricted-details {
-		.restricted-to-label {
-			font-style: italic;
-		}
-		.restricted-tag {
-			display: inline-block;
-			background: #D8D8D8;
-			padding: 0 0.4em;
-			border-radius: 0.3em;
-			margin-right: 0.3em;
-		}
-	}
-}
-
-.edit-article {
-	background-color: #F5F5F5;
-	margin: 1em 0;
-}
-
-
-
 /* General */
 .search-field {
 	position: relative;
@@ -259,6 +171,7 @@ input.ng-invalid.ng-dirty {
 @import 'kitchen';
 @import 'settings';
 @import 'dashboard';
+@import 'articles';
 @import 'login';
 @import 'directives/dropdown';
 @import 'directives/article-list-item';
@@ -271,3 +184,5 @@ input.ng-invalid.ng-dirty {
 @import 'directives/order-form-payment';
 @import 'directives/article-form';
 @import 'directives/add-option-form';
+@import 'directives/tax-group-selector';
+@import 'directives/tax-group-form';

@@ -1,0 +1,13 @@
+.tax-group-form {
+	width: 20em;
+
+	.add-button {
+		display: inline-block;
+		margin-left: 1em;
+
+		&.active {
+			cursor: pointer;
+			color: #2BD672;
+		}
+	}	
+}

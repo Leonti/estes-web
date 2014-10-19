@@ -13,6 +13,13 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 				return option.name + option.priceChange;
 			});
 	}
+
+	function getTaxGroups(articles) {
+		return _.uniq(_.map(articles, function(article) { return article.taxGroup; }), 
+			function (taxGroup) {
+				return taxGroup.name;
+			});
+	}	
 	
 	function ArticleMock($q, storage) {
 		
@@ -43,7 +50,11 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 					name: 'Article ' + titleBase + '_' + i,
 					price: '10',
 					tags: tags,
-					options: articleOptions
+					options: articleOptions,
+					taxGroup: {
+						name: 'Food',
+						tax: '7.0'
+					}
 				});
 			}
 			
@@ -78,6 +89,23 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 			return article;
 		};
 		
+		var saveTaxGroup = function(taxGroup) {
+			var taxGroups = storage.get('mockTaxGroups');
+			
+			if (taxGroup.id === undefined || taxGroup.id === null) {
+				taxGroup.id = {userId: 1, id: taxGroup.length + 1};
+				taxGroup.push(taxGroup);
+			} else {
+				for (var i = 0; i < taxGroup.length; i++) {
+					if (taxGroup[i].id.id === taxGroup.id.id) {
+						taxGroup[i] = taxGroup;
+					}
+				}
+			}
+			storage.set('mockTaxGroups', taxGroups);
+			return taxGroup;
+		};		
+		
 		var removeArticle = function(id) {
 			var articles = storage.get('mockArticles');
 			for (var i = 0; i < articles.length; i++) {
@@ -88,10 +116,18 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 			storage.set('mockArticles', articles);
 		};
 		
+		var removeTaxGroup = function(id) {
+			var taxGroups = storage.get('mockTaxGroups');
+			for (var i = 0; i < taxGroups.length; i++) {
+				if (taxGroups[i].id.id === id.id) {
+					taxGroups.splice(i, 1);
+				}
+			}
+			storage.set('mockTaxGroups', taxGroups);
+		};		
+		
 		if (!storage.get('mockArticles')) {
 			storage.set('mockArticles', generateFakeArticles());
-			storage.set('mockTags', mockTags);
-			storage.set('mockOptions', mockOptions);			
 		}
 		
 		return {
@@ -104,6 +140,7 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 			remove: function(id) {
 				return $q.when(removeArticle(id));
 			},
+			getTaxGroups: getTaxGroups,		
 			getTags: getTags,
 			getOptions: getOptions
 		};
@@ -139,6 +176,7 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 					});					
 				});
 			},
+			getTaxGroups: getTaxGroups,			
 			getTags: getTags,
 			getOptions: getOptions
 		};		

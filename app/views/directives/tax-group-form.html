@@ -1,0 +1,7 @@
+<div class="tax-group-form">
+	<form name="taxGroupForm" novalidate>
+		<input type="text" class="input-border" ng-model="taxGroup.name" required />
+		<input type="text" class="input-border input-numeric" ng-model="taxGroup.tax" pattern="^-?\d*\.?\d*$" required /> %
+		<span class="icon-checkmark add-button" ng-click="taxGroupForm.$invalid || save(taxGroup)" ng-class="{active: taxGroupForm.$valid}"></span>
+	</form>	
+</div>

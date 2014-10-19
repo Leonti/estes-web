@@ -1,0 +1,21 @@
+<div class="tax-group-selector">
+
+	<div class="btn-group">
+		<button type="button" class="btn btn-default">{{selectedTaxGroup.name}} ({{selectedTaxGroup.tax}} %)</button>
+		<button type="button" class="btn btn-default dropdown-toggle">
+			<span class="caret"></span> <span class="sr-only"></span>
+		</button>
+		<ul class="dropdown-menu" role="menu" style="display: block;">
+			<li ng-repeat="taxGroup in taxGroups" ng-click="select(tagGroup)" class="dropdown-item">
+				<span ng-if="$index != indexInEditing">{{taxGroup.name}} ({{taxGroup.tax}} %)<span class="icon-pencil edit" ng-click="startEditing($index)"></span>
+				</span>
+				<tax-group-form ng-if="$index == indexInEditing" tax-group="taxGroup" on-save="saveTaxGroup(taxGroup, $index)"></tax-group-form>
+			</li>
+			<li class="dropdown-item">
+				<tax-group-form tax-group="taxGroup" on-save="addTaxGroup(taxGroup)"></tax-group-form>		
+			</li>
+		</ul>
+	</div>
+
+
+</div>

@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Article) {
+angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Article) {
 
 	var ArticleTemplate = function() {
 		return {
@@ -10,23 +10,24 @@ angular.module('estesWebApp').controller('MenuEditorCtrl', function ($scope, Art
 		};
 	};
 	
+	$scope.searchTerm = '';
+	$scope.newArticle = null;
+	$scope.editedArticleIndex = null;
+	
 	var refreshArticles = function() {
 		Article.readAll().then(function(articles) {
 			$scope.articles = articles;
 			
 			$scope.tags = Article.getTags(articles);
-			console.log($scope.tags);
 			$scope.selectedTags = [];
+			
+			$scope.taxGroups = Article.getTaxGroups(articles);
+			$scope.selectedTaxGroup = $scope.taxGroups[0];
 			
 			$scope.options = Article.getOptions(articles);
 		});
 	};
-	
 	refreshArticles();
-	
-	$scope.searchTerm = '';
-	$scope.newArticle = null;
-	$scope.editedArticleIndex = null;
 	
 	$scope.isTagSelected = function(tag) {
 		return $scope.selectedTags.indexOf(tag) !== -1;
