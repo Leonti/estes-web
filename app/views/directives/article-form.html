@@ -1,4 +1,5 @@
-<form class="article-form" name="articleForm" novalidate>			
+<form class="article-form" name="articleForm" novalidate>
+	<tax-group-selector tax-groups="taxGroups" selected-tax-group="article.taxGroup" on-update="onTaxGroupUpdate(taxGroup)"></tax-group-selector>
 	<div class="article-name">			
 		<input type="text" ng-model="article.name" name="articleName" placeholder="Article name" required>
 	</div>

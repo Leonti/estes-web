@@ -10,33 +10,37 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 	function getOptions(articles) {
 		return _.uniq(_.flatten(_.map(articles, function(article) { return article.options; })), 
 			function (option) {
-				return option.name + option.priceChange;
+				return option.id;
 			});
 	}
 
 	function getTaxGroups(articles) {
 		return _.uniq(_.map(articles, function(article) { return article.taxGroup; }), 
 			function (taxGroup) {
-				return taxGroup.name;
+				return taxGroup.id;
 			});
+	}
+	
+	function generateId() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+		    return v.toString(16);
+		});
 	}	
 	
 	function ArticleMock($q, storage) {
 		
-		var mockTags = ['Breakfast', 'Lunch', 'Dinner'];
-		
-		var mockOptions = [
-		            		   { name: 'Regular fries', priceChange: '0' },
-		            		   { name: 'Curly fries', priceChange: '0.5' }, 
-		            		   { name: 'Onions', priceChange: '0' }, 
-		            		   { name: 'Beef', priceChange: '0' }
-		            		];
-		
 		var articleOptions =  [
-		            		   [{ name: 'Regular fries', priceChange: '0' }, { name: 'Curly fries', priceChange: '0.5' }],
-		            		   [{ name: 'Onions', priceChange: '0' }], 
-		            		   [{ name: 'Beef', priceChange: '0' }]
+		            		   [{ name: 'Regular fries', priceChange: '0', id: generateId() }, { name: 'Curly fries', priceChange: '0.5', id: generateId() }],
+		            		   [{ name: 'Onions', priceChange: '0', id: generateId() }], 
+		            		   [{ name: 'Beef', priceChange: '0', id: generateId() }]
 		            		];
+		
+		var taxGroup = {
+				name: 'Food',
+				tax: '7.0',
+				id: generateId()
+			};
 		
 		function generateArticlesForTags(tags, idBase) {
 			var articles = [];
@@ -51,10 +55,7 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 					price: '10',
 					tags: tags,
 					options: articleOptions,
-					taxGroup: {
-						name: 'Food',
-						tax: '7.0'
-					}
+					taxGroup: taxGroup
 				});
 			}
 			
@@ -142,7 +143,8 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 			},
 			getTaxGroups: getTaxGroups,		
 			getTags: getTags,
-			getOptions: getOptions
+			getOptions: getOptions,
+			generateId: generateId
 		};
 	}
 	
@@ -178,7 +180,8 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 			},
 			getTaxGroups: getTaxGroups,			
 			getTags: getTags,
-			getOptions: getOptions
+			getOptions: getOptions,
+			generateId: generateId
 		};		
 	}
 

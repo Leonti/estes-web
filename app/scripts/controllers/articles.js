@@ -3,10 +3,11 @@
 
 angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Article) {
 
-	var ArticleTemplate = function() {
+	var ArticleTemplate = function(taxGroup) {
 		return {
 			tags: [],
-			options: []
+			options: [],
+			taxGroup: taxGroup
 		};
 	};
 	
@@ -17,7 +18,6 @@ angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Artic
 	var refreshArticles = function() {
 		Article.readAll().then(function(articles) {
 			$scope.articles = articles;
-			
 			$scope.tags = Article.getTags(articles);
 			$scope.selectedTags = [];
 			
@@ -45,8 +45,26 @@ angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Artic
     	return isInTags && isInSearch(article);
 	};
 	
+	$scope.updateTaxGroups = function(taxGroup) {
+		
+		if ($scope.selectedTaxGroup.id === taxGroup.id) {
+			$scope.selectedTaxGroup = taxGroup;
+		}
+		
+		_.each($scope.articles, function(article) {
+			if (article.taxGroup.id === taxGroup.id) {
+				article.taxGroup = taxGroup;
+				Article.save(article);
+			}
+		});
+	}
+	
+	$scope.toTaxGroupLabel = function(taxGroup) {
+		return taxGroup.name;
+	}
+	
 	$scope.openNewArticleForm = function() {
-		$scope.newArticle = new ArticleTemplate();		
+		$scope.newArticle = new ArticleTemplate($scope.selectedTaxGroup);		
 	};
 	
 	$scope.closeNewArticleForm = function() {
