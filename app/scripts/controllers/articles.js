@@ -30,20 +30,18 @@ angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Artic
 	};
 	refreshArticles();
 	
-	$scope.isTagSelected = function(tag) {
-		return $scope.selectedTags.indexOf(tag) !== -1;
-	};
-	
 	$scope.filterArticle = function(article) {
     	var isInTags = _.some(article.tags, function(tag) {
     		return $scope.selectedTags.indexOf(tag) !== -1;
     	}) || $scope.selectedTags.length === 0;	
     
-    	function isInSearch(article) {
-    		return $scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
-    	}
+    	var isInTaxGroups = _.some($scope.selectedTaxGroups, function(taxGroup) {
+    		return article.taxGroup.id === taxGroup.id;
+    	}) || $scope.selectedTaxGroups.length === 0;
     	
-    	return isInTags && isInSearch(article);
+    	var isInSearch = $scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf($scope.searchTerm.toUpperCase()) !== -1: true;
+    	
+    	return isInTags && isInTaxGroups && isInSearch;
 	};
 	
 	$scope.updateTaxGroups = function(taxGroup) {
