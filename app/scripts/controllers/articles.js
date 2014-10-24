@@ -14,6 +14,7 @@ angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Artic
 	$scope.searchTerm = '';
 	$scope.newArticle = null;
 	$scope.editedArticleIndex = null;
+	$scope.selectedTaxGroups = [];
 	
 	var refreshArticles = function() {
 		Article.readAll().then(function(articles) {

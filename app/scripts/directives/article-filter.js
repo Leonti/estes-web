@@ -8,7 +8,25 @@ angular.module('estesWebApp').directive('articleFilter', function() {
 		scope: {
 			tags: '=',
 			selectedTags: '=',
-			searchTerm: '='
+			searchTerm: '=',
+			taxGroups: '=',
+			selectedTaxGroups: '='
+		},
+		link: function(scope) {
+			
+			scope.toTagLabel = function(tag) {
+				return tag;
+			}
+			scope.tagId = scope.toTagLabel
+			
+			scope.toTaxGroupLabel = function(taxGroup) {
+				return taxGroup.name + ' (' + taxGroup.tax + ' %)';
+			}
+			scope.taxGroupId = function(taxGroup) {
+				if (!taxGroup) { return; }
+				return taxGroup.id;
+			}
+			
 		}
 	};
 });

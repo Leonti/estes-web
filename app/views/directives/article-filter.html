@@ -1,5 +1,6 @@
 <div class="article-filter">
-	<pills-filter items="tags" selected-items="selectedTags"></pills-filter>
+	<pills-filter items="taxGroups" selected-items="selectedTaxGroups" to-label="toTaxGroupLabel(item)" id="taxGroupId(item)"></pills-filter>
+	<pills-filter items="tags" selected-items="selectedTags" to-label="toTagLabel(item)" id="tagId(item)"></pills-filter>
 	<div class="search-field">
 		<span class="icon-search"></span>
 		<input type="text" ng-model="searchTerm" placeholder="Search ..." />

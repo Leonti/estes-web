@@ -1,8 +1,9 @@
 <div class="row articles">
 	<div class="col-md-offset-3 col-md-6">
 		<div class="articles-section header-section">
-			<dropdown items="taxGroups" selected-item="selectedTaxGroup" to-label="toTaxGroupLabel(item)"></dropdown>
-			<article-filter tags="tags" selected-tags="selectedTags" search-term="searchTerm"></article-filter>
+			<article-filter tags="tags" selected-tags="selectedTags" 
+				tax-groups="taxGroups" selected-tax-groups="selectedTaxGroups"
+				search-term="searchTerm"></article-filter>
 		</div>	
 		
 		<span class="add-article" ng-hide="newArticle" ng-click="openNewArticleForm()"><span class="icon-plus"></span> Add article ...</span>

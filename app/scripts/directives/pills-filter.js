@@ -7,35 +7,56 @@ angular.module('estesWebApp').directive('pillsFilter', function () {
       restrict: 'E',
       scope: {
     	  items: '=',
-    	  selectedItems: '='
+    	  selectedItems: '=',
+    	  id: '&',
+    	  toLabel: '&'
       },
-      link: function postLink($scope) {
-    		$scope.selected = [];
-    		$scope.allSelected = false;
+      link: function postLink(scope) {
+    		scope.selected = [];
+    		scope.allSelected = false;
     		
-    		$scope.isSelected = function(item) {
-    			return $scope.selectedItems.indexOf(item) !== -1;
-    		};
-    		
-    		$scope.toggleAll = function() {
-    			if ($scope.allSelected) {
-    				$scope.allSelected = false;
-    				$scope.selectedItems = [];
-    			} else {
-    				$scope.allSelected = true;
-    				$scope.selectedItems = angular.copy($scope.items);
-    			}
-    		};
-    		
-    		$scope.toggleItem = function(item) {
-    			$scope.allSelected = false;
+    		function findSelectedIndex(item) {
+    			var selectedItemIndex = -1;
+    			_.each(scope.selectedItems, function(itemToMatch, index) {
+    				if (scope.id({item: itemToMatch}) === scope.id({item: item})) {
+    					selectedItemIndex = index;
+    				}
+    			});
     			
-    			if ($scope.selectedItems.indexOf(item) !== -1) {
-    				$scope.selectedItems.splice($scope.selectedItems.indexOf(item), 1);
+    			return selectedItemIndex;
+    		}
+    		
+    		scope.isSelected = function(item) {
+    			return findSelectedIndex(item) !== -1;
+    		};
+    		
+    		scope.toString = function(item) {
+    			return scope.toLabel({item: item});
+    		}
+    		
+    		scope.toggleAll = function() {
+    			if (scope.allSelected) {
+    				scope.allSelected = false;
+    				scope.selectedItems = [];
     			} else {
-    				$scope.selectedItems.push(item);
+    				scope.allSelected = true;
+    				scope.selectedItems = angular.copy(scope.items);
     			}
-    		};    	  
+    		};
+    		
+    		
+    		
+    		scope.toggleItem = function(item) {
+    			scope.allSelected = false;
+    		
+    			var selectedItemIndex = findSelectedIndex(item);
+    			if (selectedItemIndex != -1) {
+    				scope.selectedItems.splice(selectedItemIndex, 1);
+    			} else {
+    				scope.selectedItems.push(item);
+    			}
+    		};
+    		
       }
     };
   });
