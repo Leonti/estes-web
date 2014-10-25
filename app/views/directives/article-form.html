@@ -1,9 +1,13 @@
 <form class="article-form" name="articleForm" novalidate>
-	<tax-group-selector tax-groups="taxGroups" selected-tax-group="article.taxGroup" on-update="onTaxGroupUpdate(taxGroup)"></tax-group-selector>
 	<div class="article-name">			
 		<input type="text" ng-model="article.name" name="articleName" placeholder="Article name" required>
 	</div>
 	<div class="article-price">$ <input type="text" ng-model="article.price" name="articlePrice" required pattern="^-?\d*\.?\d*$"></div>
+	<label class="article-kitchen"><input type="checkbox" ng-model="article.kitchen" /><span>Kitchen</span></label>
+	<div class="article-tax-group">
+		<tax-group-selector tax-groups="taxGroups" selected-tax-group="article.taxGroup" on-update="onTaxGroupUpdate(taxGroup)" left-align="true"></tax-group-selector>
+	</div>
+	<div class="clearfix"></div>
 	<tags class="tag-tags" available-tags="tags" selected-tags="article.tags" tag-name="tag"></tags>
 	
 	<div ui-sortable ng-model="article.options">

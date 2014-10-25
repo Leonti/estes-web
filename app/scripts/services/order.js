@@ -88,7 +88,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			discount: '0',
 			options: angular.copy(article.options),
 			selectedOptions: [],
-			status: 'PREPARATION'
+			status: article.kitchen ? 'PREPARATION' : 'PREPARED',
+			kitchen: article.kitchen
 		};
 	}
 	
@@ -130,7 +131,8 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 						discount: '0',
 						tags: ['Breakfast', 'Lunch'],
 						options: mockOptions,
-						selectedOptions: selectedOptions
+						selectedOptions: selectedOptions,
+						kitchen: true
 					};
 				
 				if (status === 'PREPARED' || status === 'PAID') {

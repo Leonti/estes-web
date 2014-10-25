@@ -12,6 +12,8 @@ angular.module('estesWebApp').directive('dropdown', function () {
       },
       link: function postLink(scope) {
     	  
+    	  scope.dropdownOpened = false;
+    	  
 		  scope.convertToLabel = function(item) {
 			  if (item === undefined) {
 				  return;
@@ -22,7 +24,12 @@ angular.module('estesWebApp').directive('dropdown', function () {
     	  
     	  scope.select = function(item) {
     		  scope.selectedItem = item;
+    		  scope.dropdownOpened = false;
     	  };
+    	  
+    	  scope.toggle = function() {
+    		  scope.dropdownOpened = !scope.dropdownOpened;
+    	  }
       }
     };
 });

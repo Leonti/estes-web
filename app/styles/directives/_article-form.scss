@@ -8,25 +8,50 @@
 		}	
 	}
 
-	.article-name, .article-price {
-		display:inline-block;
+	.article-name, .article-price, .article-tax-group, .article-kitchen {
+		float: left;
+		display: inline-block;
 	}
 	.article-name {
-		width: 73%;
+		width: 40%;
 		input {
 			width: 100%;
 		}
 	}
 	.article-price {
-		width: 20%;
+		width: 15%;
 		text-align: right;
 		input {
-			width: 40%;
+			width: 50%;
 		}
 	}
+	
+	.article-kitchen {
+		width: 20%;
+		padding: 0.3em;
+		text-align: right;
+		cursor: pointer;
+		font-weight: normal;
+		
+		input[type="checkbox"] {
+			display: inline-block;
+			margin: 0 0.5em 0 0;
+			vertical-align: middle;
+		}
+		
+		span {
+			vertical-align: middle;
+		}
+	}
+	
+	.article-tax-group {
+		width: 25%;
+		text-align: right;
+	}
+	
 	.tag-tags {
 		margin: 0.5em 0;
-		width: 73%;
+		width: 75%;
 	}
 	
 	.option-row {

@@ -55,7 +55,8 @@ angular.module('estesWebApp').factory('Article', ['$q', 'storage', 'Demo', 'Rest
 					price: '10',
 					tags: tags,
 					options: articleOptions,
-					taxGroup: taxGroup
+					taxGroup: taxGroup,
+					kitchen: true
 				});
 			}
 			

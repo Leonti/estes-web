@@ -1,22 +1,22 @@
 <div class="tax-group-selector">
 
-	<div class="btn-group">
-		<button type="button" class="btn btn-default">{{selectedTaxGroup.name}} ({{selectedTaxGroup.tax}} %)</button>
-		<button type="button" class="btn btn-default dropdown-toggle" ng-click="toggleDropdown()">
-			<span class="caret"></span> <span class="sr-only"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu" ng-if="dropdownOpened" style="display: block;">
-			<li ng-repeat="taxGroup in taxGroups" ng-click="select(tagGroup)" class="dropdown-item">
-				<span ng-if="$index != indexInEditing">
-					<span ng-click="selectTaxGroup(taxGroup)">{{taxGroup.name}} ({{taxGroup.tax}} %)</span>
-					<span class="icon-pencil edit" ng-click="startEditing($index)"></span>
-				</span>
-				<tax-group-form ng-if="$index == indexInEditing" tax-group="taxGroup" on-save="update(taxGroup, $index)"></tax-group-form>
-			</li>
-			<li class="dropdown-item">
-				<tax-group-form tax-group="taxGroup" on-save="add(taxGroup)"></tax-group-form>		
-			</li>
-		</ul>
+	<div class="dropdown">
+		<button class="dropdown-selection" ng-click="toggleDropdown()">{{selectedTaxGroup.name}} ({{selectedTaxGroup.tax}} %) <span class="caret"></span> <span class="sr-only"></span></button>
+
+		<div class="dropdown-list">
+			<ul class="dropdown-items" ng-class="{'left': leftAlign}" ng-if="dropdownOpened">
+				<li ng-repeat="taxGroup in taxGroups" ng-click="selectTaxGroup(taxGroup)" class="dropdown-item">
+					<span ng-if="$index != indexInEditing">
+						<span >{{taxGroup.name}} ({{taxGroup.tax}} %)</span>
+						<span class="icon-pencil edit" ng-click="startEditing($index); $event.stopPropagation();"></span>
+					</span>
+					<tax-group-form ng-if="$index == indexInEditing" tax-group="taxGroup" on-save="update(taxGroup, $index)"></tax-group-form>
+				</li>
+				<li class="dropdown-item">
+					<tax-group-form tax-group="taxGroup" on-save="add(taxGroup)"></tax-group-form>		
+				</li>
+			</ul>
+		</div>	
 	</div>
 
 

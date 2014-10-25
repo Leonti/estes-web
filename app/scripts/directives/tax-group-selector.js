@@ -7,6 +7,7 @@ angular.module('estesWebApp').directive('taxGroupSelector', ['Article', function
 		scope : {
 			taxGroups: '=',
 			selectedTaxGroup: '=',
+			leftAlign: '=',
 			onUpdate: '&'
 		},
 		link : function postLink(scope, element, attrs) {
