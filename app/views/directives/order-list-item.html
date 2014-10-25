@@ -1,0 +1,21 @@
+<div class="order-list-item">
+	<div class="order-form-holder" ng-if="inEdit">
+		<order-form order="orderCopy" on-save="onOrderSave(order)" on-cancel="onOrderCancel()"></order-form>
+	</div>
+	<div class="order-list-item-content shadow-border" ng-click="onOrderClick(order)">
+		<div class="order-header">
+			<div class="order-waiter">{{order.waiter.name}}</div>
+			<div class="order-status">{{order.status}}</div>
+			<div class="order-submitted" am-time-ago="order.submitted"></div>			
+		</div>
+		<div class="article-list">
+			<div class="order-article" ng-repeat="article in order.articles track by $index">
+				<order-article-list-item article="article" show-selected="true"></order-article-list-item>
+			</div>
+		</div>
+		<div class="order-total">
+			<div class="order-to-pay">${{totalPrice}}</div>
+		</div>
+		<div class="order-note" ng-show="order.note">{{order.note}}</div>
+	</div>
+</div>

@@ -1,43 +1,37 @@
 .order-list {
-	.order {
-		background: white;
-		margin: 0 1em 1em 0;
-		padding: 1em;
+	.order-new {
 		display: inline-block;
 		vertical-align: top;
-		width: 20em;
+
+		.order-form-holder {
+			position: relative;
+			
+			.order-form {
+				position: absolute;
+				top: 0;
+				left: 0;
+				width: 200%;		
+			}
+		}
 		
-		.order-header {
-			border-bottom: 1px solid;
-			margin-bottom: 1em;
+		.order-new-button {
+			background: white;
+			margin: 0 1em 1em 0;
+			padding: 1em;
+			width: 20em;
+			height: 20em;
 			cursor: pointer;
+			text-align: center;
+			display: table;
 			
-			.order-waiter {
-				float: left;
+			.add-icon {
+				display: table-cell;
+				vertical-align: middle;
+				font-size: 10em;
+				color: #999;
 			}
-			
-			.order-status {
-				float: right;
-			}
-			
-			.order-submitted {
-				clear: both;
-				padding-top: 1em;
-			}
-		}
-		
-		.order-total {
-			margin-bottom: 1em;
-			.order-to-pay {
-				text-align: right;
-				font-size: 1.3em;
-			}			
-		}
-		
-		.order-note {
-			font-style: italic;
-			border-top: 1px solid;
-			padding-top: 1em;		
 		}
 	}
+	
+
 }

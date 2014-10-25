@@ -1,23 +1,15 @@
 <div class="row order-list">
-	<div class="col-md-8">
-		<div class="order shadow-border" ng-repeat="order in orders track by order.id.id">
-			<div class="order-header" ng-click="editOrder(order)">
-				<div class="order-waiter">{{order.waiter.name}}</div>
-				<div class="order-status">{{order.status}}</div>
-				<div class="order-submitted" am-time-ago="order.submitted"></div>			
+	<div class="col-md-10">
+		<div class="order-new">
+			<div class="order-form-holder" ng-if="addingOrder">
+				<order-form order="order" on-save="onOrderSave(order)" on-cancel="onNewOrderCancel()"></order-form>
 			</div>
-			<div class="article-list">
-				<div class="order-article" ng-repeat="article in order.articles track by $index">
-					<order-article-list-item article="article" show-selected="true"></order-article-list-item>
-				</div>
+			<div class="order-new-button shadow-border" ng-click="addOrder()">
+				<span class="icon-plus add-icon" title="New Order"></span>
 			</div>
-			<div class="order-total">
-				<div class="order-to-pay">${{calculateTotal(order)}}</div>
-			</div>
-			<div class="order-note" ng-show="order.note">{{order.note}}</div>
 		</div>
+		<order-list-item order="order" on-edit="editOrder(order)" ng-repeat="order in orders track by order.id.id"></order-list-item>
 	</div>
-	<div class="col-md-4">
-		<order-form order="order" on-save="onOrderSave()"></order-form>
+	<div class="col-md-2">
 	</div>
 </div>

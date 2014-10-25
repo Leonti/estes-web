@@ -15,12 +15,6 @@ angular.module('estesWebApp').directive('orderFormPayment', ['Order', function(O
 				return Order.calculatePrice(order);
 			};
 			
-			scope.formatDiscount = function(discount) {
-				if (!discount) {return '0';}
-				
-				return Order.formatDiscount(discount);
-			}
-			
 			scope.calculateDiscount = function(order) {
 				if (!order) { return 0; }
 				

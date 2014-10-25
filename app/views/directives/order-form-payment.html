@@ -3,7 +3,7 @@
 		Subtotal:<span class="payment-amount"> ${{calculateSubtotal(order)}}</span>
 	</span>
 	<span ng-show="order.discount !== '0'" class="discount-label">
-		Discount: {{formatDiscount(order.discount)}}%: <span class="payment-amount"> - ${{calculateDiscount(order)}}</span>
+		Discount: {{order.discount}}%: <span class="payment-amount"> - ${{calculateDiscount(order)}}</span>
 	</span>		
 	<span class="tax-label">
 		Tax:<span class="payment-amount"> ${{calculateTax(order)}}</span>

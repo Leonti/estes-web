@@ -1,5 +1,5 @@
 <div>
-	<form class="order-form shadow-border" name="orderForm" ng-show="isEditView()" novalidate>
+	<form class="order-form shadow-border" name="orderForm" ng-if="isEditView()" novalidate>
 	
 		<div class="waiter-block">
 			<span class="print-payment-action text-action" ng-click="forcePayment()" 
@@ -56,7 +56,7 @@
 		</div>
 	</form>
 	
-	<div class="order-form-payment-view shadow-border" ng-show="isPaymentView()">
+	<div class="order-form-payment-view shadow-border" ng-if="isPaymentView()">
 		<div class="order-header">
 			<div class="order-waiter">{{order.waiter.name}}</div>
 			<div class="order-actions">
@@ -74,5 +74,8 @@
 		</div>
 		<order-form-payment order="order"></order-form-payment>
 		<div class="order-note" ng-show="order.note">{{order.note}}</div>
+		<div class="form-action-buttons">
+			<button class="button" ng-click="cancel()">Close</button>
+		</div>		
 	</div>
 </div>

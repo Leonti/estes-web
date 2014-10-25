@@ -19,8 +19,9 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 		replace: true,
 		restrict : 'E',
 		scope: {
-			order: '=',
-			onSave: '&'
+			inputOrder: '=order',
+			onSave: '&',
+			onCancel: '&'
 		},
 		link : function postLink(scope) {
 			
@@ -33,13 +34,20 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			scope.orderArticleEditIndex = null;
 			var viewOverride = null;
 			
-			scope.$watch('order', function(order) {
-				viewOverride = null;
+			scope.$watch('inputOrder', function(order) {
+				if (!order) {
+					return;
+				}
+
+				scope.order = angular.copy(order);				
 			});
 			
 			Waiter.readAll().then(function(waiters) {
 				scope.waiterList = waiters;
-				scope.order = new OrderTemplate(waiters[0]);
+				
+				if (!scope.order) {
+					scope.order = new OrderTemplate(scope.waiterList[0]);
+				}
 			});
 
 			Article.readAll().then(function(articleList) {
@@ -113,9 +121,14 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			}
 			
 			scope.save = function(order) {
-				resetOrder();
-				Order.save(order).then(function() {
-					scope.onSave();
+				Order.save(order).then(function(order) {
+					
+					if (scope.inputOrder) {
+						angular.extend(scope.inputOrder, order);						
+					}
+					scope.onSave({
+						order : order
+					});
 				});
 			};
 			
@@ -125,7 +138,7 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			};
 			
 			scope.cancel = function() {
-				resetOrder();
+				scope.onCancel();
 			};
 			
 			scope.forcePayment = function() {

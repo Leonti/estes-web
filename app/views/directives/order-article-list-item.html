@@ -1,9 +1,9 @@
 <div class="order-article-list-item">
 	<span class="article-name">{{article.name}}</span>
-	<span class="article-price">${{calculatePrice(article)}}</span>
+	<span class="article-price">${{price}}</span>
 	<div style="clear: both;"></div>
-	<span class="article-discount-label" ng-show="article.discount !== '0'">Discount: {{formatDiscount(article.discount)}} %</span>
-	<span class="article-discount-value" ng-show="article.discount !== '0'">- ${{calculateDiscount(article)}}</span>
+	<span class="article-discount-label" ng-show="article.discount !== '0'">Discount: {{article.discount}} %</span>
+	<span class="article-discount-value" ng-show="article.discount !== '0'">- ${{discountValue}}</span>
 	<ul class="article-options">
 		<li class="article-option" ng-repeat="option in article.selectedOptions track by $index">
 			{{option.name}}<span ng-show="option.priceChange > 0"> (+${{option.priceChange}})</span><!-- 

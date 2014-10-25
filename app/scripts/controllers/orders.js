@@ -9,24 +9,27 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 				return Order.getStatusPriority(order1.status) - Order.getStatusPriority(order2.status);
 			});		
 			$scope.orders = orders;
-		});		
+		});
 	};
 	
 	refreshOrders();
 	
-	$scope.calculateTotal = function(order) {
-		if (!order) { return 0; }
-		
-		return Order.calculatePrice(order);
-	};
+	$scope.order = null;
+	$scope.addingOrder = false;
 	
-	$scope.editOrder = function(order) {
-		$scope.order = angular.copy(order);
-	};
+	$scope.addOrder = function() {
+		$scope.addingOrder = true;
+	}
 	
-	$scope.onOrderSave = function() {
+	$scope.onOrderSave = function(order) {
+		console.log(order);
+		$scope.addingOrder = false;
 		refreshOrders();
-	};
+	}
+	
+	$scope.onNewOrderCancel = function() {
+		$scope.addingOrder = false;
+	}
 	
 	var ordersPoll = $interval(refreshOrders, 2000);
 	$scope.$on('$destroy', function() {

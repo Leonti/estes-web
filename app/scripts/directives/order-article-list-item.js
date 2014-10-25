@@ -9,9 +9,10 @@ angular.module('estesWebApp').directive('orderArticleListItem', ['Order', functi
 		},
 		link: function(scope) {
 			
-			scope.calculatePrice = Order.calculateArticlePrice;
-			scope.formatDiscount = Order.formatDiscount;
-			scope.calculateDiscount = Order.calculateArticleDiscount;
+			scope.$watch('article', function(article) {
+				scope.discountValue = Order.calculateArticleDiscount(article);
+				scope.price = Order.calculateArticlePrice(article);
+			}, true);
 		}
 	};
 }]);
