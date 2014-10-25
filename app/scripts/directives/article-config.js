@@ -1,7 +1,7 @@
 'use strict';
 /*global _:false */
 
-angular.module('estesWebApp').directive('articleConfig', ['Order', function(Order) {
+angular.module('estesWebApp').directive('articleConfig', [function() {
 	return {
 		templateUrl: '/views/directives/article-config.html',
 		restrict: 'E',
@@ -14,13 +14,10 @@ angular.module('estesWebApp').directive('articleConfig', ['Order', function(Orde
 		link : function postLink(scope) {
 			
 			scope.selectedOptions = [];
-			scope.discount = 0;
-			
 			scope.$watch('inputArticle', function(article) {
 				if (!article) { return; }
 
 				scope.article = angular.copy(article);
-				scope.discount = Order.formatDiscount(article.discount);
 				
 				scope.selectedOptions = [];
 				for (var i = 0; i < article.options.length; i++) {
@@ -71,10 +68,6 @@ angular.module('estesWebApp').directive('articleConfig', ['Order', function(Orde
 				}
 				
 			}, true);
-			
-			scope.updateDiscount = function(discount) {
-				scope.article.discount = Order.parseDiscount(discount);
-			}
 			
 			scope.save = function(article) {
 				

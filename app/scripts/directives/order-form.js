@@ -31,16 +31,10 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			scope.orderFormArticle = null;
 			scope.addingNewArticle = false;
 			scope.orderArticleEditIndex = null;
-			scope.discount = '0';
 			var viewOverride = null;
 			
 			scope.$watch('order', function(order) {
 				viewOverride = null;
-				scope.discount = '0';
-				
-				if (order) {
-					scope.discount = Order.formatDiscount(order.discount);
-				}
 			});
 			
 			Waiter.readAll().then(function(waiters) {
@@ -116,10 +110,6 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			
 			scope.isArticleOrderBeingEdited = function(index) {
 				return index === scope.orderArticleEditIndex;
-			}
-			
-			scope.updateDiscount = function(order, discount) {
-				order.discount = Order.parseDiscount(discount);
 			}
 			
 			scope.save = function(order) {

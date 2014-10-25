@@ -10,14 +10,11 @@ angular.module('estesWebApp').controller('SettingsCtrl', ['$scope', 'Settings', 
 	Settings.read().then(function(settings) {
 		
 		var settingsCopy = angular.copy(settings);
-		settingsCopy.tax = new Big(settings.tax).times(new Big(100)).toString();
-		
 		$scope.settings = settingsCopy;
 	});
 	
 	$scope.saveSettings = function(settings) {		
 		var settingsCopy = angular.copy(settings);
-		settingsCopy.tax = new Big(settings.tax).div(new Big(100)).toString();
 		settingsCopy.receiptWidth = parseInt(settings.receiptWidth);
 		Settings.save(settingsCopy);
 	}; 

@@ -14,7 +14,7 @@
 			</li>
 		</ul>
 		<div class="article-config-discount">
-			Discount: <input type="text" class="input-border input-numeric" ng-model="discount" ng-blur="updateDiscount(discount)" pattern="^-?\d*\.?\d*$" /> %
+			Discount: <input type="text" class="input-border input-numeric" ng-model="article.discount" pattern="^-?\d*\.?\d*$" /> %
 		</div>
 		<div class="form-action-buttons">
 			<button class="button button-action" ng-click="save(article)" ng-disabled="articleForm.$invalid">Save</button>

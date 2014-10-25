@@ -44,7 +44,7 @@
 	
 		<label class="form-label">Discount</label>
 		<div class="order-discount">
-			<input type="text" ng-model="discount" name="discount" ng-blur="updateDiscount(order, discount)" class="input-border input-numeric" pattern="^-?\d*\.?\d*$" /> %
+			<input type="text" ng-model="order.discount" name="discount" class="input-border input-numeric" pattern="^-?\d*\.?\d*$" /> %
 		</div>
 	
 		<label class="form-label">Payment</label>

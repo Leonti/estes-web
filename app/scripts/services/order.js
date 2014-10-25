@@ -14,7 +14,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 	}
 	
 	function calculateArticleDiscountNoRound(article) {
-		return calculateArticlePriceNoRound(article).times(new Big(article.discount));
+		return calculateArticlePriceNoRound(article).times(new Big(article.discount).div(new Big(100)));
 	}
 	
 	function calculateOrderPriceNoRound(order) {
@@ -27,16 +27,16 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 	}
 	
 	function calculateOrderDiscountNoRound(order) {
-		return calculateOrderPriceNoRound(order).times(new Big(order.discount));
+		return calculateOrderPriceNoRound(order).times(new Big(order.discount).div(new Big(100)));
 	}
 	
 	function calculateTaxNoRound(order) {
 		var total = new Big(0);
 		_.each(order.articles, function(article) {
 			var articlePrice = calculateArticlePriceNoRound(article).minus(calculateArticleDiscountNoRound(article));
-			var discountedArticlePrice = articlePrice.minus(articlePrice.times(new Big(order.discount)));
+			var discountedArticlePrice = articlePrice.minus(articlePrice.times(new Big(order.discount).div(new Big(100))));
 			
-			total = total.plus(discountedArticlePrice.times(new Big(article.tax)));
+			total = total.plus(discountedArticlePrice.times(new Big(article.tax).div(new Big(100))));
 		});
 		
 		return total;
@@ -64,14 +64,6 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 	
 	function calculateTotal(order) {
 		return calculateOrderPriceNoRound(order).minus(calculateOrderDiscountNoRound(order)).plus(calculateTaxNoRound(order)).toFixed(2).toString();		
-	}
-	
-	function formatDiscount(discount) {
-		return new Big(discount).times(new Big(100)).toString();
-	}
-	
-	function parseDiscount(discount) {
-		return new Big(discount).div(new Big(100)).toString();
 	}
 	
 	var statusPriorities = {
@@ -134,7 +126,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 				var orderArticle = {
 						name: 'Article ' + titleBase,
 						price: '10',
-						tax: '0.07',
+						tax: '7',
 						discount: '0',
 						tags: ['Breakfast', 'Lunch'],
 						options: mockOptions,
@@ -211,9 +203,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			calculatePrice: calculateOrderPrice,
 			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
-			calculateTotal: calculateTotal,
-			formatDiscount: formatDiscount,
-			parseDiscount: parseDiscount
+			calculateTotal: calculateTotal
 		};
 	}
 	
@@ -248,9 +238,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			calculatePrice: calculateOrderPrice,
 			calculateDiscount: calculateOrderDiscount,
 			calculateTax: calculateTax,
-			calculateTotal: calculateTotal,
-			formatDiscount: formatDiscount,
-			parseDiscount: parseDiscount			
+			calculateTotal: calculateTotal
 		};		
 	}
 	

@@ -2,9 +2,6 @@
 	<div class="col-md-offset-2 col-md-4">
 		<form class="settings-form shadow-border" name="settingsForm" novalidate>
 			<div class="settings-form-entry">
-				<label>Tax %:</label><input type="text" class="input-border input-numeric" ng-model="settings.tax" pattern="^-?\d*\.?\d*$" required />
-			</div>
-			<div class="settings-form-entry">
 				<label>Printing:</label>
 				<dropdown items="availablePrinters" selected-item="settings.printer" to-label="printerToLabel(item)"></dropdown>
 				<div class="printer-explanation" ng-show="settings.printer == 'BROWSER'">Hello, here is the explanation, for
