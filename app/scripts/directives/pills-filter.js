@@ -34,6 +34,16 @@ angular.module('estesWebApp').directive('pillsFilter', function () {
     			return scope.toLabel({item: item});
     		}
     		
+    		scope.$watch('selectedItems', function(selectedItems) {
+    			if (!selectedItems || !scope.items) { return; }
+    			
+    			if (selectedItems.length === scope.items.length) {
+    				scope.allSelected = true;
+    			} else {
+    				scope.allSelected = false;
+    			}
+    		}, true);
+    		
     		scope.toggleAll = function() {
     			if (scope.allSelected) {
     				scope.allSelected = false;
@@ -43,8 +53,6 @@ angular.module('estesWebApp').directive('pillsFilter', function () {
     				scope.selectedItems = angular.copy(scope.items);
     			}
     		};
-    		
-    		
     		
     		scope.toggleItem = function(item) {
     			scope.allSelected = false;
