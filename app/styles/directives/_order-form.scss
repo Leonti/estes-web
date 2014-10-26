@@ -1,118 +1,131 @@
 .order-form {
-	background-color: #F5F5F5;
-	padding: 1em;
+	position: absolute;
+	width: 30em;
 	
-	.waiter-block {
-		.print-payment-action {
-			float: right;			
-		}
-	}
-	
-	.status-block {
-		margin-right: 3em;
-	}
-	
-	.form-label {
-		display: block;
-		margin-top: 1em;
-	}
-	
-	.add-new-article {
-		cursor: pointer;
-	}
-	
-	.add-new-article-close {
-		cursor: pointer;
-		float: right;
-		&:hover {
-			color: #E74C3C;
-		}
-	}
-	
-	.article-selector {
-		background: white;
-		padding: 1em 1em 0 1em;
+	.order-form-form {
+		background-color: #F5F5F5;
+		padding: 1em;
 		
-		.selector-article-list {
-			position: relative;
-			max-height: 20em;
-			overflow: hidden;
-			padding-bottom: 1.5em;
+		.waiter-block {
+			.print-payment-action {
+				float: right;			
+			}
+		}
+		
+		.status-block {
+			margin-right: 3em;
+		}
+		
+		.form-label {
+			display: block;
 			margin-top: 1em;
-			
-			.list-expander {
-				position: absolute;
-				bottom: 0;
-				left: 0;
-				right: 0;
-				cursor: pointer;
-				text-align: center;
-				background: white;
-				height: 1.5em;
-			}
-			
-			&.expanded {
-				max-height: none;
-			}
-			
-			.selector-article {
-				cursor: pointer;
-			}
 		}
-	}
-	
-	.order-article-config {
-		padding: 1em;
-		background: white;
-	}
-	
-	.article-list {
-		margin-top: 1em;
-		padding: 1em;
-		background: white;
-	}
-	
-	.order-note {
-		padding: 1em;
-		background: white;
 		
-		.order-note-text {
-			border: 1px solid #E4E4E4;
-			color: #404040;
-			width: 100%;
+		.add-new-article {
+			cursor: pointer;
 		}
-	}	
+		
+		.add-new-article-close {
+			cursor: pointer;
+			float: right;
+			&:hover {
+				color: #E74C3C;
+			}
+		}
+		
+		.article-selector {
+			background: white;
+			padding: 1em 1em 0 1em;
+			
+			.selector-article-list {
+				position: relative;
+				max-height: 20em;
+				overflow: hidden;
+				padding-bottom: 1.5em;
+				margin-top: 1em;
+				
+				.list-expander {
+					position: absolute;
+					bottom: 0;
+					left: 0;
+					right: 0;
+					cursor: pointer;
+					text-align: center;
+					background: white;
+					height: 1.5em;
+				}
+				
+				&.expanded {
+					max-height: none;
+				}
+				
+				.selector-article {
+					cursor: pointer;
+				}
+			}
+		}
+		
+		.order-article-config {
+			padding: 1em;
+			background: white;
+		}
+		
+		.article-list {
+			margin-top: 1em;
+			padding: 1em;
+			background: white;
+		}
+		
+		.order-note {
+			padding: 1em;
+			background: white;
+			
+			.order-note-text {
+				border: 1px solid #E4E4E4;
+				color: #404040;
+				width: 100%;
+			}
+		}	
+	}
+	
+	.order-form-payment-view {
+		background-color: #F5F5F5;
+		padding: 1em;
+		
+		.order-header {
+			border-bottom: 1px solid;
+			margin-bottom: 1em;
+			
+			.order-waiter {
+				float: left;
+			}
+			.order-actions {
+				float: right;
+				
+				.order-actions-edit {
+					cursor: pointer;
+					text-decoration: underline;
+					padding-right: 2em;
+				}
+			}
+			.order-submitted {
+				clear: both;
+				padding-top: 1em;
+			}
+		}
+		
+		.order-note {
+			border-top: 1px solid;
+			font-style: italic;
+			padding-top: 1em;
+		}	
+	}
 }
 
-.order-form-payment-view {
-	background-color: #F5F5F5;
-	padding: 1em;
-	
-	.order-header {
-		border-bottom: 1px solid;
-		margin-bottom: 1em;
-		
-		.order-waiter {
-			float: left;
-		}
-		.order-actions {
-			float: right;
-			
-			.order-actions-edit {
-				cursor: pointer;
-				text-decoration: underline;
-				padding-right: 2em;
-			}
-		}
-		.order-submitted {
-			clear: both;
-			padding-top: 1em;
-		}
-	}
-	
-	.order-note {
-		border-top: 1px solid;
-		font-style: italic;
-		padding-top: 1em;
-	}	
+.order-form {
+  transition:all linear 0.3s;
+}
+
+.order-form.ng-hide {
+  opacity:0;
 }

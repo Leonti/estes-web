@@ -1,7 +1,4 @@
 <div class="order-list-item">
-	<div class="order-form-holder" ng-if="inEdit">
-		<order-form order="orderCopy" on-save="onOrderSave(order)" on-cancel="onOrderCancel()"></order-form>
-	</div>
 	<div class="order-list-item-content shadow-border" ng-click="onOrderClick(order)">
 		<div class="order-header">
 			<div class="order-waiter">{{order.waiter.name}}</div>

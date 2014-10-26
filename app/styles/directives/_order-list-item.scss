@@ -1,18 +1,7 @@
 .order-list-item {
 	display: inline-block;
 	vertical-align: top;
-	
-	.order-form-holder {
-		position: relative;
 		
-		.order-form, .order-form-payment-view {
-			position: absolute;
-			top: 0;
-			left: 0;
-			width: 200%;		
-		}
-	}
-			
 	.order-list-item-content {
 		background: white;
 		margin: 0 1em 1em 0;
@@ -51,5 +40,5 @@
 			border-top: 1px solid;
 			padding-top: 1em;		
 		}
-	}	
+	}		
 }

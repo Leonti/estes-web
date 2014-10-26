@@ -20,10 +20,11 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 		restrict : 'E',
 		scope: {
 			inputOrder: '=order',
+			offset: '=',
 			onSave: '&',
 			onCancel: '&'
 		},
-		link : function postLink(scope) {
+		link : function postLink(scope, element) {
 			
 			scope.waiterList = null;
 			scope.searchTerm = '';
@@ -35,11 +36,18 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			var viewOverride = null;
 			
 			scope.$watch('inputOrder', function(order) {
-				if (!order) {
+				if (!order && scope.waiterList) {
+					scope.order = new OrderTemplate(scope.waiterList[0]);
 					return;
 				}
 
 				scope.order = angular.copy(order);				
+			});
+			
+			scope.$watch('offset', function(offset) {
+				if (offset) {
+					element[0].style = 'top: ' + offset.top + 'px; left: ' + offset.left + 'px;';
+				}
 			});
 			
 			Waiter.readAll().then(function(waiters) {
@@ -89,7 +97,7 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			
 			scope.configArticle = function(article) {	
 				settingsPromise.then(function(settings) {
-					scope.orderFormArticle = Order.toOrderArticle(article, settings.tax);
+					scope.orderFormArticle = Order.toOrderArticle(article);
 				});
 			};
 			

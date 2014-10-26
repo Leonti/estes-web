@@ -80,11 +80,11 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 		}
 	}
 	
-	function toOrderArticle(article, tax) {
+	function toOrderArticle(article) {
 		return {
 			name: article.name,
 			price: article.price,
-			tax: tax,
+			tax: article.taxGroup.tax,
 			discount: '0',
 			options: angular.copy(article.options),
 			selectedOptions: [],
@@ -184,6 +184,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 				
 				updateStatus(order);
 				if (order.id === null || order.id === undefined) {
+					order.submitted = Date.now();
 					order.id = {userId: 1, id: orders.length};
 					orders.push(order);				
 				} else {

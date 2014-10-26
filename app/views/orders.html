@@ -1,15 +1,10 @@
 <div class="row order-list">
 	<div class="col-md-10">
-		<div class="order-new">
-			<div class="order-form-holder" ng-if="addingOrder">
-				<order-form order="order" on-save="onOrderSave(order)" on-cancel="onNewOrderCancel()"></order-form>
-			</div>
-			<div class="order-new-button shadow-border" ng-click="addOrder()">
-				<span class="icon-plus add-icon" title="New Order"></span>
-			</div>
-		</div>
-		<order-list-item order="order" on-edit="editOrder(order)" ng-repeat="order in orders track by order.id.id"></order-list-item>
+		<order-new on-click="addOrder(offset)"></order-new><!-- 
+	 --><order-list-item order="order" on-edit="editOrder(order, offset)" ng-repeat="order in orders track by order.id.id"></order-list-item>
 	</div>
 	<div class="col-md-2">
+		
 	</div>
 </div>
+<order-form order="orderCopy" on-save="onOrderSave(order)" on-cancel="onOrderCancel()" offset="orderFormOffset" ng-show="orderFormShown"></order-form>

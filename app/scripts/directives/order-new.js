@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('estesWebApp').directive('orderListItem', ['Order', function(Order) {
+angular.module('estesWebApp').directive('orderNew', function() {
 
 	function caclulateOffset(elm) {
 		try {
@@ -19,25 +19,21 @@ angular.module('estesWebApp').directive('orderListItem', ['Order', function(Orde
 			left : _x,
 			top : _y
 		};
-	}	
+	}		
 	
 	return {
-		templateUrl : '/views/directives/order-list-item.html',
+		templateUrl : '/views/directives/order-new.html',
 		replace: true,
 		restrict : 'E',
-		scope : {
-			order: '=',
-			onEdit: '&'
+		scope: {
+			onClick: '&'
 		},
 		link : function postLink(scope, element, attrs) {
-		
-			scope.$watch('order', function(order) {
-				scope.totalPrice = Order.calculateTotal(order);
-			}, true);
 			
-			scope.onOrderClick = function(order) {
-				scope.onEdit({order: order, offset: caclulateOffset(element)});
+			scope.addOrder = function() {
+				scope.onClick({offset: caclulateOffset(element)});
 			}
+			
 		}
 	};
-}]);
+});
