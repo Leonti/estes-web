@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order',
-                                                function($scope, $interval, Order) {
+angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order', 'Event',
+                                                function($scope, $interval, Order, Event) {
 
 	var refreshOrders = function() {
 		Order.readAll().then(function(orders) {
@@ -19,6 +19,14 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 	};
 	
 	refreshOrders();
+	
+	var refreshEvents = function() {
+		Event.readAll().then(function(events) {
+			$scope.events = events;
+		});
+	}
+	
+	refreshEvents();
 	
 	$scope.order = null;
 	$scope.orderFormShown = false;
@@ -45,8 +53,8 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 		$scope.orderFormOffset = offset;
 	}
 	
-	var ordersPoll = $interval(refreshOrders, 2000);
+	var eventsPoll = $interval(refreshEvents, 2000);
 	$scope.$on('$destroy', function() {
-		$interval.$cancel(ordersPoll);
+		$interval.$cancel(eventsPoll);
 	});
 }]);

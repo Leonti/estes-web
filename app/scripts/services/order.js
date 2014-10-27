@@ -80,8 +80,16 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 		}
 	}
 	
+	function generateId() {
+		return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+		    var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+		    return v.toString(16);
+		});
+	}	
+	
 	function toOrderArticle(article) {
 		return {
+			id: generateId(),
 			name: article.name,
 			price: article.price,
 			tax: article.taxGroup.tax,
@@ -125,6 +133,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			var titleBase = 'Burger';
 			for (i = 0; i < getRandomInt(0, 8); i++) {
 				var orderArticle = {
+						id: generateId(),
 						name: 'Article ' + titleBase,
 						price: '10',
 						tax: '7',
@@ -144,6 +153,22 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			
 			return articles;		
 		};
+		
+		function generateMockEvent(orderId, articleId) {
+			var events = storage.get('mockEvents');
+			
+			var event = {
+				id: {userId: 1, id: events.length},
+				timestamp: Date.now(),
+				articlePrepared: {
+					orderId: orderId,
+					articleId: articleId
+				}
+			};
+			events.push(event);
+			
+			storage.set('mockEvents', events);			
+		}
 		
 		function getRandomInt(min, max) {
 			  return Math.floor(Math.random() * (max - min)) + min;
@@ -199,6 +224,23 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 				return $q.when(order);
 			},
 			
+			setArticlePrepared: function(orderId, articleId) {
+				var orders = storage.get('mockOrders');
+
+				var order = _.find(orders, function(order) {
+					return order.id.id === orderId.id;
+				});
+				var orderArticle = _.find(order.articles, function(article) {
+					return article.id === articleId;
+				});
+				orderArticle.status = 'PREPARED';
+				updateStatus(orderArticle);
+				
+				generateMockEvent(orderId, articleId);
+				
+				storage.set('mockOrders', orders);
+				return $q.when(order);				
+			},
 			getStatusPriority: getStatusPriority,
 			toOrderArticle: toOrderArticle,
 			calculateArticlePrice: calculateArticlePrice,
@@ -232,6 +274,9 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 						return Restangular.one('order', order.id.id).customPUT(order);
 					}
 				});
+			},
+			setArticlePrepared: function(orderId, articleId) {
+				console.error('IMPLEMENT!');
 			},
 			
 			getStatusPriority: getStatusPriority,
