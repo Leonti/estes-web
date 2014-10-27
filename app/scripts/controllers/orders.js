@@ -3,6 +3,9 @@
 angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order', 'Event',
                                                 function($scope, $interval, Order, Event) {
 
+	$scope.orders = null;
+	$scope.events = null;
+	
 	var refreshOrders = function() {
 		Order.readAll().then(function(orders) {
 			orders.sort(function(order1, order2) {
@@ -22,6 +25,11 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 	
 	var refreshEvents = function() {
 		Event.readAll().then(function(events) {
+			
+			if ($scope.events != null && $scope.events.length != events.length) {
+				refreshOrders();
+			}
+			
 			$scope.events = events;
 		});
 	}

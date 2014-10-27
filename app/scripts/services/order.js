@@ -170,6 +170,21 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			storage.set('mockEvents', events);			
 		}
 		
+		function generateMockOrderReadyEvent(order) {
+			var events = storage.get('mockEvents');
+			
+			var event = {
+				id: {userId: 1, id: events.length},
+				timestamp: Date.now(),
+				orderPrepared: {
+					orderId: order.id
+				}
+			};
+			events.push(event);
+			
+			storage.set('mockEvents', events);				
+		}
+		
 		function getRandomInt(min, max) {
 			  return Math.floor(Math.random() * (max - min)) + min;
 		}
@@ -234,9 +249,12 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 					return article.id === articleId;
 				});
 				orderArticle.status = 'PREPARED';
-				updateStatus(orderArticle);
+				updateStatus(order);
 				
 				generateMockEvent(orderId, articleId);
+				if (order.status === 'PREPARED') {
+					generateMockOrderReadyEvent(order);
+				}
 				
 				storage.set('mockOrders', orders);
 				return $q.when(order);				

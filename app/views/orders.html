@@ -5,7 +5,8 @@
 	</div>
 	<div class="col-md-2">
 		<div ng-repeat="event in events | orderBy:'-timestamp' track by event.id.id">
-			Dish is ready {{event.id.id}} {{event.articlePrepared.orderId}} {{event.articlePrepared.articleId}}
+			<div ng-if="event.orderPrepared">Order is ready {{event.orderPrepared.orderId}}</div>
+			<div ng-if="event.articlePrepared">Dish is ready {{event.id.id}} {{event.articlePrepared.orderId}} {{event.articlePrepared.articleId}}</div>
 		</div>
 	</div>
 </div>
