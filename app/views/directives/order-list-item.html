@@ -2,6 +2,7 @@
 	<div class="order-list-item-content shadow-border" ng-click="onOrderClick(order)">
 		<div class="order-header">
 			<div class="order-waiter">{{order.waiter.name}}</div>
+			<div class="order-day-id">#{{order.dayId}}</div>
 			<div class="order-status">{{order.status}}</div>
 			<div class="order-submitted" am-time-ago="order.submitted"></div>			
 		</div>

@@ -13,8 +13,13 @@
 			border-bottom: 1px solid;
 			margin-bottom: 1em;
 			
-			.order-waiter {
+			.order-waiter, .order-day-id {
 				float: left;
+			}
+			
+			.order-day-id {
+				margin-left: 1em;
+				font-weight: bold;
 			}
 			
 			.order-status {

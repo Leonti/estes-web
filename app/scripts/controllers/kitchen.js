@@ -35,7 +35,7 @@ angular.module('estesWebApp').controller('KitchenCtrl', ['$scope', '$interval', 
 	
 	var ordersPoll = $interval(refreshOrders, 2000);
 	$scope.$on('$destroy', function() {
-		$interval.$cancel(ordersPoll);
+		$interval.cancel(ordersPoll);
 	});
 	
 }]);

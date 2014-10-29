@@ -63,6 +63,6 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 	
 	var eventsPoll = $interval(refreshEvents, 2000);
 	$scope.$on('$destroy', function() {
-		$interval.$cancel(eventsPoll);
+		$interval.cancel(eventsPoll);
 	});
 }]);

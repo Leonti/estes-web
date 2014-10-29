@@ -6,8 +6,8 @@ angular.module(
 		.config([ '$routeProvider', function($routeProvider) {
 
 			$routeProvider.when('/', {
-				templateUrl : 'views/dashboard.html',
-				controller : 'DashboardCtrl'
+				templateUrl : 'views/startpage.html',
+				controller : 'StartPageCtrl'
 			}).when('/orders', {
 				templateUrl : 'views/orders.html',
 				controller : 'OrdersCtrl'
@@ -17,6 +17,9 @@ angular.module(
 			}).when('/kitchen', {
 				templateUrl : 'views/kitchen.html',
 				controller : 'KitchenCtrl'
+			}).when('/dashboard', {
+				templateUrl : 'views/dashboard.html',
+				controller : 'DashboardCtrl'
 			}).when('/settings', {
 				templateUrl : 'views/settings.html',
 				controller : 'SettingsCtrl'

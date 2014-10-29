@@ -1,0 +1,57 @@
+.startpage {
+	position: absolute;
+	top: 40px;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	
+	.startpage-inner {
+		display: table;
+		height: 100%;
+		width: 100%;
+
+		.startpage-items-wrapper {
+		    display: table-cell;
+	    	vertical-align:middle;
+			text-align: center;
+		
+			.startpage-items {
+				display: inline-block;
+		    	height: 20em;
+		    	width: 70em;
+		    	
+		    	.startpage-item {
+		    		display: inline-block;
+		    		width: 20em;
+		    		height: 20em;
+					margin: 1em;
+		    		background: white;
+		    		position: relative;
+		    		
+		    		a {
+		    			text-decoration: none;
+		    			height: 100%;
+		    			width: 100%;
+		    			display: table;
+		    			color: #666;
+		    			
+		    			&:hover {
+		    				color: #333;
+		    			}
+		    			
+		    			.startpage-item-content {
+		    				display: table-cell;
+		    				vertical-align: middle;			
+		    				font-size: 2.5em;
+		    				
+		    				.startpage-icon {
+		    					font-size: 3.5em;
+		    				}
+		    			}
+		    		}
+		    	}
+			}
+		}
+	}
+	
+}

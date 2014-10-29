@@ -21,7 +21,8 @@ angular.module('estesWebApp').factory('Event', ['$q', 'storage', 'Demo', 'Rest',
 				articlePrepared: {
 					orderId: {userId: 1, id: i},
 					articleId: generateId()
-				}
+				},
+				ack: []
 			});
 		}
 		
@@ -32,6 +33,18 @@ angular.module('estesWebApp').factory('Event', ['$q', 'storage', 'Demo', 'Rest',
 		return {
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockEvents')));			
+			},
+			ack: function(id, type) {
+				var events = storage.get('mockEvents');
+				
+				for (var i = 0; i < events.length; i++) {
+					if (events[i].id.id === id.id
+							&& events[i].ack.indexOf(type) === -1) {
+						events[i].ack.push(type);
+						storage.set('mockEvents', events);				
+						return $q.when(events[i]);
+					}					
+				}				
 			}
 		};	
 	}

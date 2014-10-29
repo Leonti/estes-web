@@ -160,6 +160,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			var event = {
 				id: {userId: 1, id: events.length},
 				timestamp: Date.now(),
+				ack: [],
 				articlePrepared: {
 					orderId: orderId,
 					articleId: articleId
@@ -176,6 +177,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 			var event = {
 				id: {userId: 1, id: events.length},
 				timestamp: Date.now(),
+				ack: [],
 				orderPrepared: {
 					orderId: order.id
 				}
@@ -196,6 +198,7 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 				var status = getStatus(i);
 				orders.push({
 					id: {userId: 1, id: i},
+					dayId: i,
 					waiter: {name: 'Krishti', id: 14},
 					submitted: Date.now(),
 					articles: generateOrderArticles(i, status),
@@ -217,6 +220,19 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 		return {
 			readAll: function() {
 				return $q.when(angular.copy(storage.get('mockOrders')));			
+			},
+			
+			readSince: function(since) {
+				return $q.when(angular.copy(storage.get('mockOrders')));
+			},
+			
+			read: function(id) {
+				var orders = storage.get('mockOrders');
+				for (var i = 0; i < orders.length; i++) {
+					if (orders[i].id.id === id.id) {
+						return $q.when(angular.copy(orders[i]));
+					}
+				}				
 			},
 			
 			save: function(order) {
@@ -279,6 +295,11 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 					return Restangular.all('order').getList();	
 				});
 			},
+			
+			readSince: function(since) {
+				throw 'Implement';
+			},
+			
 			save: function(order) {
 				
 				updateStatus(order);
@@ -286,7 +307,6 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 				order.note = order.note || '';
 				return Rest.configure().then(function() {
 					if (order.id === undefined || order.id === null) {
-						order.submitted = Date.now();
 						return Restangular.one('order').post('', order);
 					} else {
 						return Restangular.one('order', order.id.id).customPUT(order);
