@@ -1,0 +1,36 @@
+.events-list {
+	.order-event {
+		background: white;
+		position: relative;
+		
+		.order-message {
+			float: left;
+			padding: 1em;
+			
+			.event-timestamp {
+				position: absolute;
+				top: 0.1em;
+				left: 0.3em;
+				font-size: 0.9em;
+				color: #999;
+			}
+			
+			.order-day-id {
+				font-weight: bold;
+			}
+			.order-waiter-name {
+				font-weight: bold;
+			}
+			
+		}
+		
+		.hide-button {
+			float: right;
+			padding: 1em;
+			cursor: pointer;
+			background-color: #F5F5F5
+		}
+		
+		border-bottom: 0.1em solid #D8D8D8;
+	}
+}

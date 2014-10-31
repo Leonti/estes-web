@@ -3,8 +3,8 @@
 angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', 'Order', 'Event',
                                                 function($scope, $interval, Order, Event) {
 
+	var ordersCache = {};
 	$scope.orders = null;
-	$scope.events = null;
 	
 	var refreshOrders = function() {
 		Order.readAll().then(function(orders) {
@@ -23,14 +23,15 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 	
 	refreshOrders();
 	
+	var previousEvents = null;
 	var refreshEvents = function() {
 		Event.readAll().then(function(events) {
 			
-			if ($scope.events != null && $scope.events.length != events.length) {
+			if (previousEvents != null && previousEvents.length != events.length) {
 				refreshOrders();
 			}
 			
-			$scope.events = events;
+			previousEvents = events;
 		});
 	}
 	
