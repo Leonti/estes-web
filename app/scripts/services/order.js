@@ -1,8 +1,7 @@
 'use strict';
 /*global _,Big:false */
 
-angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Demo', 'Rest', 'Restangular', 
-                                                function($q, storage, Article, Demo, Rest, Restangular) {
+angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular', function(Article, Rest, Restangular) {
 	
 	function calculateArticlePriceNoRound(article) {
 		var price = new Big(article.price);
@@ -103,235 +102,55 @@ angular.module('estesWebApp').factory('Order', ['$q', 'storage', 'Article', 'Dem
 	
 	function getStatusPriority(status) {
 		return statusPriorities[status];
-	}	
+	}
 	
-	function OrderMock($q, storage) {
+	return {
 		
-		var mockOptions = [
-		            		   [{ name: 'Regular fries', priceChange: '0' }, { name: 'Curly fries', priceChange: '0.5' }],
-		            		   [{ name: 'Onions', priceChange: '0' }], 
-		            		   [{ name: 'Beef', priceChange: '0' }]
-		            		];
+		readAll: function() {
+			return Rest.configure().then(function() {
+				return Restangular.all('order').getList();	
+			});
+		},
 		
-		var selectedOptions = [{ name: 'Curly fries', priceChange: '0.5' }, { name: 'Onions', priceChange: '0' }, { name: 'Beef', priceChange: '0' }];
+		read: function(orderId) {
+			return Rest.configure().then(function() {
+				return Restangular.one('order', orderId.id).get();	
+			});			
+		},
 		
-		var getStatus = function(i) {
-
-			if (i % 7 === 0) {
-				return 'PREPARED';
-			}		
-			
-			if (i % 5 === 0) {
-				return 'PAID';
-			}
-			
-			return 'PREPARATION';
-		};
+		readSince: function(since) {
+			throw 'Implement';
+		},
 		
-		var generateOrderArticles = function(i, status) {
-			var articles = [];
-			var titleBase = 'Burger';
-			for (i = 0; i < getRandomInt(0, 8); i++) {
-				var orderArticle = {
-						id: generateId(),
-						name: 'Article ' + titleBase,
-						price: '10',
-						tax: '7',
-						discount: '0',
-						tags: ['Breakfast', 'Lunch'],
-						options: mockOptions,
-						selectedOptions: selectedOptions,
-						kitchen: true
-					};
-				
-				if (status === 'PREPARED' || status === 'PAID') {
-					orderArticle.status = 'PREPARED';
-				}
-				
-				articles.push(orderArticle);
-			}
+		save: function(order) {
 			
-			return articles;		
-		};
-		
-		function generateMockEvent(orderId, articleId) {
-			var events = storage.get('mockEvents');
-			
-			var event = {
-				id: {userId: 1, id: events.length},
-				timestamp: Date.now(),
-				ack: [],
-				articlePrepared: {
-					orderId: orderId,
-					articleId: articleId
-				}
-			};
-			events.push(event);
-			
-			storage.set('mockEvents', events);			
-		}
-		
-		function generateMockOrderReadyEvent(order) {
-			var events = storage.get('mockEvents');
-			
-			var event = {
-				id: {userId: 1, id: events.length},
-				timestamp: Date.now(),
-				ack: [],
-				orderPrepared: {
-					orderId: order.id
-				}
-			};
-			events.push(event);
-			
-			storage.set('mockEvents', events);				
-		}
-		
-		function getRandomInt(min, max) {
-			  return Math.floor(Math.random() * (max - min)) + min;
-		}
-		
-		var generateMockOrders = function() {
-			var orders = [];
-			
-			for (var i = 0; i < 41; i++) {
-				var status = getStatus(i);
-				orders.push({
-					id: {userId: 1, id: i},
-					dayId: i,
-					waiter: {name: 'Krishti', id: 14},
-					submitted: Date.now(),
-					articles: generateOrderArticles(i, status),
-					discount: '0',
-					status: status,
-					note: 'Make it fast!'
-				});
-			}
-			
-			return orders;
-		};
-		
-		var mockOrders = generateMockOrders();
-		
-		if (!storage.get('mockOrders')) {			
-			storage.set('mockOrders', mockOrders);
-		}
-		
-		return {
-			readAll: function() {
-				return $q.when(angular.copy(storage.get('mockOrders')));			
-			},
-			
-			readSince: function(since) {
-				return $q.when(angular.copy(storage.get('mockOrders')));
-			},
-			
-			read: function(id) {
-				var orders = storage.get('mockOrders');
-				for (var i = 0; i < orders.length; i++) {
-					if (orders[i].id.id === id.id) {
-						return $q.when(angular.copy(orders[i]));
-					}
-				}				
-			},
-			
-			save: function(order) {
-				var orders = storage.get('mockOrders');
-				
-				updateStatus(order);
-				if (order.id === null || order.id === undefined) {
-					order.submitted = Date.now();
-					order.id = {userId: 1, id: orders.length};
-					orders.push(order);				
+			updateStatus(order);
+			order.waiter = order.waiter.plain();
+			order.note = order.note || '';
+			return Rest.configure().then(function() {
+				if (order.id === undefined || order.id === null) {
+					return Restangular.one('order').post('', order);
 				} else {
-					for (var i = 0; i < orders.length; i++) {
-						if (orders[i].id.id === order.id.id) {
-							orders[i] = order;
-						}
-					}
+					return Restangular.one('order', order.id.id).customPUT(order);
 				}
-
-				storage.set('mockOrders', orders);
-				return $q.when(order);
-			},
-			
-			setArticlePrepared: function(orderId, articleId) {
-				var orders = storage.get('mockOrders');
-
-				var order = _.find(orders, function(order) {
-					return order.id.id === orderId.id;
-				});
-				var orderArticle = _.find(order.articles, function(article) {
-					return article.id === articleId;
-				});
-				orderArticle.status = 'PREPARED';
-				updateStatus(order);
-				
-				generateMockEvent(orderId, articleId);
-				if (order.status === 'PREPARED') {
-					generateMockOrderReadyEvent(order);
-				}
-				
-				storage.set('mockOrders', orders);
-				return $q.when(order);				
-			},
-			getStatusPriority: getStatusPriority,
-			toOrderArticle: toOrderArticle,
-			calculateArticlePrice: calculateArticlePrice,
-			calculateArticleDiscount: calculateArticleDiscount,
-			calculatePrice: calculateOrderPrice,
-			calculateDiscount: calculateOrderDiscount,
-			calculateTax: calculateTax,
-			calculateTotal: calculateTotal
-		};
-	}
-	
-	function Order(Rest, Restangular) {
+			});
+		},
+		setArticlePrepared: function(orderId, articleId) {
+			return Rest.configure().then(function() {
+				return Restangular.one('order', orderId.id).one('article', articleId).customOperation('patch', '', {}, {},
+					{ 'op': 'replace', 'path': '/status', 'value': 'PREPARED' }		
+				);
+			});
+		},
 		
-		return {
-			
-			readAll: function() {
-				return Rest.configure().then(function() {
-					return Restangular.all('order').getList();	
-				});
-			},
-			
-			readSince: function(since) {
-				throw 'Implement';
-			},
-			
-			save: function(order) {
-				
-				updateStatus(order);
-				order.waiter = order.waiter.plain();
-				order.note = order.note || '';
-				return Rest.configure().then(function() {
-					if (order.id === undefined || order.id === null) {
-						return Restangular.one('order').post('', order);
-					} else {
-						return Restangular.one('order', order.id.id).customPUT(order);
-					}
-				});
-			},
-			setArticlePrepared: function(orderId, articleId) {
-				console.error('IMPLEMENT!');
-			},
-			
-			getStatusPriority: getStatusPriority,
-			toOrderArticle: toOrderArticle,
-			calculateArticlePrice: calculateArticlePrice,
-			calculateArticleDiscount: calculateArticleDiscount,
-			calculatePrice: calculateOrderPrice,
-			calculateDiscount: calculateOrderDiscount,
-			calculateTax: calculateTax,
-			calculateTotal: calculateTotal
-		};		
-	}
-	
-	if (Demo.isEnabled()) {
-		return new OrderMock($q, storage);
-	} else {
-		return new Order(Rest, Restangular);
-	}
+		getStatusPriority: getStatusPriority,
+		toOrderArticle: toOrderArticle,
+		calculateArticlePrice: calculateArticlePrice,
+		calculateArticleDiscount: calculateArticleDiscount,
+		calculatePrice: calculateOrderPrice,
+		calculateDiscount: calculateOrderDiscount,
+		calculateTax: calculateTax,
+		calculateTotal: calculateTotal
+	};		
 	
 }]);
