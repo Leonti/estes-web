@@ -6,7 +6,13 @@ describe('Service: Order', function() {
 
 	beforeEach(function() {
 		module('estesWebApp', function($provide) {
-			$provide.value('storage', {});
+			$provide.value('storage', {
+				set: function(name, value) {
+						
+				},
+				get: function(name) {
+				}
+			});
 			$provide.value('Restangular', {});
 		});
 

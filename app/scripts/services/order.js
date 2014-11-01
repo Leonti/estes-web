@@ -3,7 +3,7 @@
 
 angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular', function(Article, Rest, Restangular) {
 	
-	function calculateArticlePriceNoRound(article) {
+	function calculateArticlePrice(article) {
 		var price = new Big(article.price);
 		_.each(article.selectedOptions, function(option) {
 			price = price.plus(new Big(option.priceChange));
@@ -12,27 +12,27 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 		return price;		
 	}
 	
-	function calculateArticleDiscountNoRound(article) {
-		return calculateArticlePriceNoRound(article).times(new Big(article.discount).div(new Big(100)));
+	function calculateArticleDiscount(article) {
+		return calculateArticlePrice(article).times(new Big(article.discount).div(new Big(100)));
 	}
 	
-	function calculateOrderPriceNoRound(order) {
+	function calculateOrderPrice(order) {
 		var total = new Big(0);
 		_.each(order.articles, function(article) {
-			total = total.plus(calculateArticlePriceNoRound(article).minus(calculateArticleDiscountNoRound(article)));
+			total = total.plus(calculateArticlePrice(article).minus(calculateArticleDiscount(article)));
 		});
 		
 		return total;
 	}
 	
-	function calculateOrderDiscountNoRound(order) {
-		return calculateOrderPriceNoRound(order).times(new Big(order.discount).div(new Big(100)));
+	function calculateOrderDiscount(order) {
+		return calculateOrderPrice(order).times(new Big(order.discount).div(new Big(100)));
 	}
 	
-	function calculateTaxNoRound(order) {
+	function calculateTax(order) {
 		var total = new Big(0);
 		_.each(order.articles, function(article) {
-			var articlePrice = calculateArticlePriceNoRound(article).minus(calculateArticleDiscountNoRound(article));
+			var articlePrice = calculateArticlePrice(article).minus(calculateArticleDiscount(article));
 			var discountedArticlePrice = articlePrice.minus(articlePrice.times(new Big(order.discount).div(new Big(100))));
 			
 			total = total.plus(discountedArticlePrice.times(new Big(article.tax).div(new Big(100))));
@@ -41,28 +41,36 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 		return total;
 	}	
 	
-	function calculateArticlePrice(article) {
-		return calculateArticlePriceNoRound(article).toFixed(2).toString();
-	}
-	
-	function calculateArticleDiscount(article) {
-		return calculateArticleDiscountNoRound(article).toFixed(2).toString();
-	}
-	
-	function calculateOrderPrice(order) {
-		return calculateOrderPriceNoRound(order).toFixed(2).toString();
-	}
-	
-	function calculateOrderDiscount(order) {
-		return calculateOrderDiscountNoRound(order).toFixed(2).toString();
-	}
-	
-	function calculateTax(order) {
-		return calculateTaxNoRound(order).toFixed(2).toString();
-	}
-	
 	function calculateTotal(order) {
-		return calculateOrderPriceNoRound(order).minus(calculateOrderDiscountNoRound(order)).plus(calculateTaxNoRound(order)).toFixed(2).toString();		
+		return calculateOrderPrice(order).minus(calculateOrderDiscount(order)).plus(calculateTax(order));	
+	}
+	
+	function calculateDiscountOrderList(orders) {
+		var total = new Big(0);
+		_.each(orders, function(order) {
+			total = total.plus(calculateOrderDiscount(order));
+		});
+		return total;		
+	}
+	
+	function calculatePriceOrderList(orders) {
+		var total = new Big(0);
+		_.each(orders, function(order) {
+			total = total.plus(calculateOrderPrice(order));
+		});
+		return total;
+	}
+	
+	function calculateTaxOrderList(orders) {
+		var total = new Big(0);
+		_.each(orders, function(order) {
+			total = total.plus(calculateTax(order));
+		});
+		return total;		
+	}
+	
+	function calculateTotalOrderList(orders) {
+		return calculatePriceOrderList(orders).minus(calculateDiscountOrderList(orders)).plus(calculateTaxOrderList(orders));			
 	}
 	
 	var statusPriorities = {
@@ -147,12 +155,36 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 		
 		getStatusPriority: getStatusPriority,
 		toOrderArticle: toOrderArticle,
-		calculateArticlePrice: calculateArticlePrice,
-		calculateArticleDiscount: calculateArticleDiscount,
-		calculatePrice: calculateOrderPrice,
-		calculateDiscount: calculateOrderDiscount,
-		calculateTax: calculateTax,
-		calculateTotal: calculateTotal
+		calculateArticlePrice: function(article) {
+			return calculateArticlePrice(article).toFixed(2).toString();
+		},
+		calculateArticleDiscount: function(article) {
+			return calculateArticleDiscount(article).toFixed(2).toString();
+		},
+		calculateDiscount: function(order) {
+			return calculateOrderDiscount(order).toFixed(2).toString();
+		},
+		calculatePrice: function(order) {
+			return calculateOrderPrice(order).toFixed(2).toString();
+		},
+		calculateTax: function(order) {
+			return calculateTax(order).toFixed(2).toString();
+		},
+		calculateTotal: function(order) {
+			return calculateTotal(order).toFixed(2).toString();
+		},
+		calculateDiscountForList: function(orders) {
+			return calculateDiscountOrderList(orders).toFixed(2).toString();
+		},
+		calculatePriceForList: function(orders) {
+			return calculatePriceOrderList(orders).toFixed(2).toString();
+		},
+		calculateTaxForList: function(orders) {
+			return calculateTaxOrderList(orders).toFixed(2).toString();
+		},
+		calculateTotalForList: function(orders) {
+			return calculateTotalOrderList(orders).toFixed(2).toString();
+		}		
 	};		
 	
 }]);

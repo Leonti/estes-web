@@ -3,7 +3,11 @@
 		<history-picker date-start="dateStart" date-end="dateEnd"></history-picker>
 		
 		<div class="history-orders-summary shadow-border">
-		Count: {{orders.length}}
+		Count: {{orders.length}}<br>
+		Price: {{price}}<br>
+		Discount: -{{discount}}<br>
+		Tax: {{tax}}<br>
+		Total: {{total}}<br>
 		</div>
 		<div class="history-orders shadow-border">
 			<div class="history-order-list-item" ng-repeat="order in orders track by order.id.id">
