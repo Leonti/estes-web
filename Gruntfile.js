@@ -422,9 +422,17 @@ module.exports = function (grunt) {
     'concurrent:test',
     'autoprefixer',
     'connect:test',
-    'karma'
+    'karma:unit'
   ]);
 
+  grunt.registerTask('test-travis', [
+	  'clean:server',
+	  'concurrent:test',
+	  'autoprefixer',
+	  'connect:test',
+	  'karma:travis'
+	]); 
+  
   grunt.registerTask('build', [
     'clean:dist',
     'wiredep',
