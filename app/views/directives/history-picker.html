@@ -1,0 +1,12 @@
+<div class="history-picker shadow-border">
+
+	<span class="date-type-button no-button shadow-border" ng-class="{'selected': selectedType === 'TODAY'}" ng-click="todaySelected()">Today</span>
+	<span class="date-type-button shadow-border"  ng-class="{'selected': selectedType === 'DATE'}" ng-click="dateSelected()">Date: 
+		<button class="date-button" pikaday="pikadayConfig" ng-model="ranges.date.dateEnd">{{ formatDate(ranges.date.dateEnd) }}</button>
+	</span>
+	<span class="date-type-button shadow-border"  ng-class="{'selected': selectedType === 'RANGE'}" ng-click="rangeSelected()">Range:
+		<button class="date-button" pikaday="pikadayConfig" ng-model="ranges.range.dateStart">{{ formatDate(ranges.range.dateStart) }}</button>
+		<button class="date-button" pikaday="pikadayConfig" ng-model="ranges.range.dateEnd">{{ formatDate(ranges.range.dateEnd) }}</button>
+	</span>
+
+</div>

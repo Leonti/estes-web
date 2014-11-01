@@ -1,6 +1,7 @@
 <div ng-controller="HeaderCtrl">
 	<div class="header" ng-if="!isStation">
 		<span class="header-tag pull-right" ng-if="isLoggedIn">
+			<a ng-href="#/history">History</a>
 			<a ng-href="#/articles">Edit Articles</a>
 			<a ng-href="#/settings">Settings</a>
 			<a ng-href="#/logout">Logout</a>

@@ -23,6 +23,9 @@ angular.module(
 			}).when('/settings', {
 				templateUrl : 'views/settings.html',
 				controller : 'SettingsCtrl'
+			}).when('/history', {
+				templateUrl : 'views/history.html',
+				controller : 'HistoryCtrl'
 			}).when('/demo', {
 				templateUrl : 'views/demo.html',
 				controller : 'DemoCtrl'

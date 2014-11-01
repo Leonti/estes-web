@@ -1,0 +1,29 @@
+.history-picker {
+	background: white;
+	padding: 0.5em 1em 0.5em 0.5em;
+	display: table;
+	
+	.date-type-button {
+		display: inline-block;
+		padding: 0.5em 1em 0.5em 1em;
+		margin-left: 0.5em;
+		//border: 1px solid #ccc;
+		cursor: pointer;
+		opacity: 0.7;
+		
+		&.no-button {
+			line-height: 1.56em;
+		}
+		
+		&.selected, &:hover {
+			background: #F5F5F5;
+			opacity: 1;
+			//border-color: #999;
+		}
+		
+		.date-button {
+			backgroung: yellow;
+			border: 1px solid #ccc;
+		}
+	}
+}
