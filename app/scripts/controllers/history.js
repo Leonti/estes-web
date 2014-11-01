@@ -4,9 +4,14 @@ angular.module('estesWebApp').controller('HistoryCtrl', ['$scope', 'Order', func
 	
 	$scope.dateStart = null;
 	$scope.dateEnd = null;
+	$scope.orders = null;
 	
 	function refresh(dateStart, dateEnd) {
 		console.log(dateStart + ' ' + dateEnd);
+		
+		Order.readInRange(dateStart, dateEnd).then(function(orders) {
+			$scope.orders = orders;
+		});
 	}
 
 	$scope.$watch('dateStart', function(dateStart) {
@@ -20,5 +25,6 @@ angular.module('estesWebApp').controller('HistoryCtrl', ['$scope', 'Order', func
 			refresh($scope.dateStart, dateEnd);
 		}		
 	});
+	
 	
 }]);

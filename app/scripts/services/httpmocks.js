@@ -361,58 +361,108 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 	
 	// settings
 	$httpBackend.whenGET(new RegExp('.*/rest/user/[0-9]+/settings.*')).respond(function(method, url, data, headers) {
+		
+		console.log('retrieving settings');
 		return [200, storage.get('mockSettings'), {}]
 	});	
 	$httpBackend.whenPOST(new RegExp('.*/rest/user/[0-9]+/settings.*')).respond(function(method, url, data, headers) {
 		var settings = angular.fromJson(data);
 		storage.set('mockSettings', settings);
+		
+		console.log('saving settings');
+		console.log(settings);
 		return [200, settings, {}]
 	});
 	
 	// waiters
 	$httpBackend.whenPOST(new RegExp('.*/rest/user/[0-9]+/waiter.*')).respond(function(method, url, data, headers) {
 		var waiter = angular.fromJson(data);
+		
+		console.log('creating a waiter');
+		console.log(waiter);
 		return [200, saveWaiter(waiter), {}]
 	});		
 	$httpBackend.whenGET(new RegExp('.*/rest/user/[0-9]+/waiter.*')).respond(function(method, url, data, headers) {
-		 return [200, storage.get('mockWaiters'), {}]
+		
+		console.log('retrieving list of waiters');
+		return [200, storage.get('mockWaiters'), {}]
 	});	
 	var waiterRegexp = new RegExp('.*/rest/user/[0-9]+/waiter/([0-9]+).*');
 	$httpBackend.whenDELETE(waiterRegexp).respond(function(method, url, data, headers) {
 		var id = parseInt(waiterRegexp.exec(url)[1]);
+		
+		console.log('deleting waiter with id ' + id);
 		return [200, removeWaiter({userId: 1, id: id}), {}]
 	});
 	
 	// articles
 	$httpBackend.whenPOST(new RegExp('.*/rest/user/[0-9]+/article.*')).respond(function(method, url, data, headers) {
 		var article = angular.fromJson(data);
+		
+		console.log('creating new article');
+		console.log(article);
 		return [200, saveArticle(article), {}]
 	});	
+
+	$httpBackend.whenPUT(new RegExp('.*/rest/user/[0-9]+/article.*')).respond(function(method, url, data, headers) {
+		var article = angular.fromJson(data);
+		
+		console.log('saving an article');
+		console.log(article);
+		return [200, saveArticle(article), {}]
+	});		
 	
 	$httpBackend.whenGET(new RegExp('.*/rest/user/[0-9]+/article.*')).respond(function(method, url, data, headers) {
-		 return [200, storage.get('mockArticles'), {}]
-	 });
+		
+		console.log('retrieving list of articles');
+		return [200, storage.get('mockArticles'), {}]
+	});
 	
 	var articleRegexp = new RegExp('.*/rest/user/[0-9]+/article/([0-9]+).*');
 	$httpBackend.whenDELETE(articleRegexp).respond(function(method, url, data, headers) {
 		var id = parseInt(articleRegexp.exec(url)[1]);
+		
+		console.log('deleting an article with id' + id);
 		return [200, removeArticle({userId: 1, id: id}), {}]
 	});	
 
 	// orders
+	var fromToOrderRegexp = /.*\/rest\/user\/[0-9]+\/order\/from\/([0-9]+)\/to\/([0-9]+)\?.*/;
+	$httpBackend.whenGET(fromToOrderRegexp).respond(function(method, url, data, headers) {
+		var from = fromToOrderRegexp.exec(url)[1];
+		var to = fromToOrderRegexp.exec(url)[2];
+
+		console.log('retrieving list of orders from ' + from + ' to ' + to);
+		return [200, storage.get('mockOrders'), {}]
+	});	
+	
 	$httpBackend.whenPOST(new RegExp('.*/rest/user/[0-9]+/order.*')).respond(function(method, url, data, headers) {
 		var order = angular.fromJson(data);
+		
+		console.log('creating new order');
+		console.log(order);
+		return [200, saveOrder(order), {}]
+	});	
+
+	$httpBackend.whenPUT(new RegExp('.*/rest/user/[0-9]+/order.*')).respond(function(method, url, data, headers) {
+		var order = angular.fromJson(data);
+		
+		console.log('saving an order');
+		console.log(order);
 		return [200, saveOrder(order), {}]
 	});	
 	
 	var orderRegexp = new RegExp('.*/rest/user/[0-9]+/order/([0-9]+).*');
 	$httpBackend.whenGET(orderRegexp).respond(function(method, url, data, headers) {
 		var id = parseInt(orderRegexp.exec(url)[1]);
+		
+		console.log('retrieving an article for id ' + id);
 		return [200, getOrder({userId: 1, id: id}), {}]
 	});	
 	
 	$httpBackend.whenGET(new RegExp('.*/rest/user/[0-9]+/order.*')).respond(function(method, url, data, headers) {
-		 return [200, storage.get('mockOrders'), {}]
+		console.log('retrieving list of orders');
+		return [200, storage.get('mockOrders'), {}]
 	});
 	
 	var orderRegexp = new RegExp('.*/rest/user/[0-9]+/order/([0-9]+).*');
@@ -424,11 +474,15 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 	$httpBackend.when('PATCH', orderArticleRegexp).respond(function(method, url, data, headers) {
 		var id = parseInt(orderArticleRegexp.exec(url)[1]);
 		var articleId = orderArticleRegexp.exec(url)[2];
+		
+		console.log('patching article status to be PREPARED ' + id + ' ' + articleId);
 		return [200, updateArticleStatus({userId: 1, id: id}, articleId), {}]
 	});	
 	
 	// Events
 	$httpBackend.whenGET(new RegExp('.*/rest/user/[0-9]+/event.*')).respond(function(method, url, data, headers) {
+		
+		console.log('retrieving list of events');
 		return [200, storage.get('mockEvents'), {}]
 	});	
 	var eventRegexp = new RegExp('.*/rest/user/[0-9]+/event/([0-9]+).*');
@@ -436,6 +490,7 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 		var id = parseInt(eventRegexp.exec(url)[1]);
 		var patch = angular.fromJson(data);
 		
+		console.log('patching ack for ' + id + ' ' + patch.value);
 		return [200, ack({userId: 1, id: id}, patch.value), {}]
 	});
 	

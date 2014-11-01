@@ -118,8 +118,10 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 			});			
 		},
 		
-		readSince: function(since) {
-			throw 'Implement';
+		readInRange: function(from, to) {
+			return Rest.configure().then(function() {
+				return Restangular.all('order/from/' + from + '/to/' + to).getList();	
+			});
 		},
 		
 		save: function(order) {

@@ -1,6 +1,14 @@
 <div class="row history">
 	<div class="col-md-offset-3 col-md-6">
 		<history-picker date-start="dateStart" date-end="dateEnd"></history-picker>
-		History
+		
+		<div class="history-orders-summary shadow-border">
+		Count: {{orders.length}}
+		</div>
+		<div class="history-orders shadow-border">
+			<div class="history-order-list-item" ng-repeat="order in orders track by order.id.id">
+				#{{order.id.id}}/{{order.dayId}} {{order.waiter.name}}
+			</div>
+		</div>
 	</div>
 </div>
