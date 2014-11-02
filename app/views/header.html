@@ -1,12 +1,13 @@
 <div ng-controller="HeaderCtrl">
 	<div class="header" ng-if="!isStation">
 		<span class="header-tag pull-right" ng-if="isLoggedIn">
-			<a ng-href="#/history">History</a>
-			<a ng-href="#/articles">Edit Articles</a>
-			<a ng-href="#/settings">Settings</a>
-			<a ng-href="#/logout">Logout</a>
+			<a ng-href="#/history" class="navigation-link" is-navigated><span class="title">History</span><span class="indicator"></span></a>
+			<a ng-href="#/articles" class="navigation-link" is-navigated><span class="title">Edit Articles</span><span class="indicator"></span></a>
+			<a ng-href="#/settings" class="navigation-link" is-navigated><span class="title">Settings</span><span class="indicator"></span></a>
+			<a ng-href="#/logout" class="logout"><span class="icon-exit"></span></a>
 		</span>
-		<h3 class="text-muted"><a href="#" class="header-home">Estes - Restaurant POS</a></h3>
+		<a href="#/" class="header-home"><span class="icon-home"></span></a>
+		<div style="clear: both;"></div>
 	</div>
 	<div class="header-station">
 	</div>
