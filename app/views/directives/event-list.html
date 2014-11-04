@@ -1,0 +1,13 @@
+<div class="event-list">
+	<div class="event" ng-repeat="articleEvent in articleEvents track by articleEvent.article.id">
+		<div class="event-message">
+			<div class="event-timestamp" am-time-ago="articleEvent.event.timestamp"></div>
+			Order <span class="order-day-id">#{{articleEvent.order.dayId}}/{{articleEvent.order.waiter.name}}</span>: 
+			<span class="article-name">articleEvent.article.name</span> is ready
+		</div>
+		<div class="hide-button" ng-click="hideEvent(articleEvent.event)">
+			Hide
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+</div>

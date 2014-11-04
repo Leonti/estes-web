@@ -24,11 +24,18 @@
 				padding: 0.5em;
 			}
 			
+			.indicator {
+				display: block;
+				height: 0.3em;
+				background-color: #449FDB;
+				opacity: 0;		
+			}
+			
 			&.active, &:hover, &:focus {
 				.indicator {
-					display: block;
-					height: 0.3em;
-					background-color: #449FDB;
+					opacity: 1;
+					transition-duration: 0.15s;
+					transition-timing-function: ease-in;
 				}			
 			}
 			

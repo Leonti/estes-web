@@ -10,8 +10,8 @@
 	<div class="clearfix"></div>
 	<tags class="tag-tags" available-tags="tags" selected-tags="article.tags" tag-name="tag"></tags>
 	
-	<div ui-sortable ng-model="article.options">
-		<div class="option-row" ng-repeat="articleOptions in article.options">
+	<div ui-sortable ng-model="article.articleOptions">
+		<div class="option-row" ng-repeat="articleOptions in article.articleOptions">
 			<div class="option-ors">
 				<span ng-repeat="option in articleOptions">
 					<span class="option-title">
@@ -23,7 +23,7 @@
 			</div>			
 			<div class="option-add-or">
 				<span class="icon-plus" ng-click="expandRow($index)"></span>
-				<add-option-form options="options" 
+				<add-option-form options="articleOptions" 
 					on-save="orOptionToArticle(option, $index)" on-close="orOptionToArticleCancel()" 
 					ng-if="$index === expandedRow"></add-option-form>
 			</div>
@@ -32,7 +32,7 @@
 	</div>
 
 	<span class="add-option-action text-action" ng-hide="addingOption" ng-click="showAddOption()">+ Add option</span>
-	<add-option-form options="options" 
+	<add-option-form options="articleOptions" 
 		on-save="addOptionToArticle(option)" on-close="hideAddOption()" ng-if="addingOption"></add-option-form>
 
 	<div class="form-action-buttons">

@@ -11,8 +11,6 @@ angular.module('estesWebApp').controller('HistoryCtrl', ['$scope', 'Order', func
 	$scope.total = null;
 	
 	function refresh(dateStart, dateEnd) {
-		console.log(dateStart + ' ' + dateEnd);
-		
 		Order.readInRange(dateStart, dateEnd).then(function(orders) {
 			$scope.orders = orders;
 			

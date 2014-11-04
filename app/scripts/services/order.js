@@ -101,7 +101,7 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 			price: article.price,
 			tax: article.taxGroup.tax,
 			discount: '0',
-			options: angular.copy(article.options),
+			articleOptions: angular.copy(article.articleOptions),
 			selectedOptions: [],
 			status: article.kitchen ? 'PREPARATION' : 'PREPARED',
 			kitchen: article.kitchen
@@ -135,10 +135,12 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 		save: function(order) {
 			
 			updateStatus(order);
-			order.waiter = order.waiter.plain();
 			order.note = order.note || '';
 			return Rest.configure().then(function() {
 				if (order.id === undefined || order.id === null) {
+
+					// removing restangular fields
+					order.waiter = order.waiter.plain();
 					return Restangular.one('order').post('', order);
 				} else {
 					return Restangular.one('order', order.id.id).customPUT(order);
@@ -147,8 +149,8 @@ angular.module('estesWebApp').factory('Order', ['Article', 'Rest', 'Restangular'
 		},
 		setArticlePrepared: function(orderId, articleId) {
 			return Rest.configure().then(function() {
-				return Restangular.one('order', orderId.id).one('article', articleId).customOperation('patch', '', {}, {},
-					{ 'op': 'replace', 'path': '/status', 'value': 'PREPARED' }		
+				return Restangular.one('order', orderId.id).customOperation('patch', '', {}, {},
+					{ 'op': 'replace', 'path': '/article/' + articleId + '/status', 'value': 'PREPARED' }		
 				);
 			});
 		},

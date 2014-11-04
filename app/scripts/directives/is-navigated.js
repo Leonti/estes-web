@@ -5,8 +5,6 @@ angular.module('estesWebApp').directive('isNavigated', ['$rootScope', '$location
 		restrict : 'A',
 		link : function postLink(scope, element, attrs) {
 			
-			console.log('loaded');
-			
 			var url = null;
 
 			function checkStatus() {

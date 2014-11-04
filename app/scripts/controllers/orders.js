@@ -62,8 +62,8 @@ angular.module('estesWebApp').controller('OrdersCtrl', ['$scope', '$interval', '
 		$scope.orderFormOffset = offset;
 	}
 	
-	var eventsPoll = $interval(refreshEvents, 2000);
-	$scope.$on('$destroy', function() {
-		$interval.cancel(eventsPoll);
-	});
+//	var eventsPoll = $interval(refreshEvents, 2000);
+//	$scope.$on('$destroy', function() {
+//		$interval.cancel(eventsPoll);
+//	});
 }]);

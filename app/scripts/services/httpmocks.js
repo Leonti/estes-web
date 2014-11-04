@@ -4,6 +4,7 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 	
 	// settings		
 	var mockSettings = {
+			userId: 1,
 			printer: 'BROWSER',
 			receiptWidth: 40
 	};
@@ -193,7 +194,6 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 					price: '10',
 					tax: '7',
 					discount: '0',
-					tags: ['Breakfast', 'Lunch'],
 					options: mockOptions,
 					selectedOptions: selectedOptions,
 					kitchen: true
@@ -456,7 +456,7 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 	$httpBackend.whenGET(orderRegexp).respond(function(method, url, data, headers) {
 		var id = parseInt(orderRegexp.exec(url)[1]);
 		
-		console.log('retrieving an article for id ' + id);
+		console.log('retrieving an order for id ' + id);
 		return [200, getOrder({userId: 1, id: id}), {}]
 	});	
 	
@@ -470,10 +470,12 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 		throw 'not implemented yet';
 	});
 	
-	var orderArticleRegexp = /.*\/rest\/user\/[0-9]+\/order\/([0-9]+)\/article\/(.*)\?.*/;
-	$httpBackend.when('PATCH', orderArticleRegexp).respond(function(method, url, data, headers) {
-		var id = parseInt(orderArticleRegexp.exec(url)[1]);
-		var articleId = orderArticleRegexp.exec(url)[2];
+	var orderRegexp = new RegExp('.*/rest/user/[0-9]+/order/([0-9]+).*');
+	$httpBackend.when('PATCH', orderRegexp).respond(function(method, url, data, headers) {
+		var id = parseInt(orderRegexp.exec(url)[1]);
+		
+		var patch = angular.fromJson(data);
+		var articleId = /\/article\/(.*)\/status/.exec(patch.path)[1];
 		
 		console.log('patching article status to be PREPARED ' + id + ' ' + articleId);
 		return [200, updateArticleStatus({userId: 1, id: id}, articleId), {}]
@@ -516,5 +518,4 @@ angular.module('HttpMocks', ['ngMockE2E']).run(['$httpBackend', 'storage', funct
 	 $httpBackend.whenPOST(/.*/).passThrough();	 
 }]);
 
-
-angular.module('estesWebApp').requires.push('HttpMocks');
+//angular.module('estesWebApp').requires.push('HttpMocks');

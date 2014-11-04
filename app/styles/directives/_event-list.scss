@@ -1,9 +1,9 @@
-.events-list {
-	.order-event {
+.event-list {
+	.event {
 		background: white;
 		position: relative;
 		
-		.order-message {
+		.event-message {
 			float: left;
 			padding: 1em;
 			
@@ -16,9 +16,6 @@
 			}
 			
 			.order-day-id {
-				font-weight: bold;
-			}
-			.order-waiter-name {
 				font-weight: bold;
 			}
 			

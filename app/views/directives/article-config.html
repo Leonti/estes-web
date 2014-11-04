@@ -5,7 +5,7 @@
 	</div>
 	<ng-form name="articleForm">
 		<ul class="article-options">
-			<li class="article-option" ng-repeat="optionOrs in article.options">
+			<li class="article-option" ng-repeat="optionOrs in article.articleOptions">
 				<span class="article-option-or" ng-repeat="option in optionOrs">
 					<label><input type="checkbox" ng-model="selectedOptions[$parent.$index][$index]"/> 
 					{{option.name}}<span ng-show="option.priceChange > 0">(+${{option.priceChange}})</span></label>

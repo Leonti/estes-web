@@ -4,7 +4,7 @@
 	 --><order-list-item order="order" on-edit="editOrder(order, offset)" ng-repeat="order in orders track by order.id.id"></order-list-item>
 	</div>
 	<div class="col-md-2">
-		<events-list type="POS"></events-list>
+		<event-list type="POS"></event-list>
 	</div>
 </div>
 <order-form order="orderCopy" on-save="onOrderSave(order)" on-cancel="onOrderCancel()" offset="orderFormOffset" ng-show="orderFormShown"></order-form>

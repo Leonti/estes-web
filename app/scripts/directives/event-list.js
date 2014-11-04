@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('estesWebApp').directive('eventsList', ['$interval', '$q', 'Event', 'Order', function($interval, $q, Event, Order) {
+angular.module('estesWebApp').directive('eventList', ['$interval', '$q', 'Event', 'Order', function($interval, $q, Event, Order) {
 	return {
-		templateUrl : '/views/directives/events-list.html',
+		templateUrl : '/views/directives/event-list.html',
 		restrict : 'E',
 		scope : {
 			type: '@'
@@ -11,7 +11,13 @@ angular.module('estesWebApp').directive('eventsList', ['$interval', '$q', 'Event
 
 			var ordersCache = {};
 			
-			scope.orderEvents = null;
+			scope.articleEvents = null;
+			
+			function findEvent(order, articleId) {
+				return _.find(order.articles, function(article) {
+					return article.id === articleId;
+				});
+			}
 			
 			var refreshEvents = function() {
 				Event.readAll().then(function(events) {
@@ -22,8 +28,8 @@ angular.module('estesWebApp').directive('eventsList', ['$interval', '$q', 'Event
 									
 					var orderPromises = [];
 					_.each(events, function(event) {
-						if (event.orderPrepared && !ordersCache[event.orderPrepared.orderId.id]) {
-							orderPromises.push(Order.read(event.orderPrepared.orderId));
+						if (event.articlePrepared && !ordersCache[event.articlePrepared.orderId.id]) {
+							orderPromises.push(Order.read(event.articlePrepared.orderId));
 						}	
 					});
 					
@@ -32,25 +38,26 @@ angular.module('estesWebApp').directive('eventsList', ['$interval', '$q', 'Event
 							ordersCache[order.id.id] = order; 
 						});
 						
-						var orderEvents = [];
+						var articleEvents = [];
 						_.each(events, function(event) {
-							if (event.orderPrepared 
+							if (event.articlePrepared 
 									&& event.ack.indexOf(scope.type) === -1) {
 								
-								orderEvents.push({
+								var order = ordersCache[event.articlePrepared.orderId.id];
+								articleEvents.push({
 									event: event,
-									order: ordersCache[event.orderPrepared.orderId.id]
+									order: order,
+									article: findEvent(order, event.articlePrepared.articleId)
 								});
 							}	
 						});
 						
-						scope.orderEvents = orderEvents;
+						scope.articleEvents = articleEvents;
 					});
 				});
 			}
 			
 			refreshEvents();
-
 			
 			scope.hideEvent = function(event) {
 				Event.ack(event.id, scope.type).then(refreshEvents);

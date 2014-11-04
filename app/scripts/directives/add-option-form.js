@@ -1,9 +1,10 @@
 'use strict';
 
-angular.module('estesWebApp').directive('addOptionForm', [function() {
+angular.module('estesWebApp').directive('addOptionForm', ['Article', function(Article) {
 	
 	var OptionTemplate = function() {
 		return {
+			id: Article.generateId(),
 			name: '',
 			priceChange: '0'
 		}

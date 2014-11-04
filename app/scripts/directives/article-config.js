@@ -20,8 +20,8 @@ angular.module('estesWebApp').directive('articleConfig', [function() {
 				scope.article = angular.copy(article);
 				
 				scope.selectedOptions = [];
-				for (var i = 0; i < article.options.length; i++) {
-					var optionOrs = article.options[i];
+				for (var i = 0; i < article.articleOptions.length; i++) {
+					var optionOrs = article.articleOptions[i];
 					var optionStates = [];
 					for (var j = 0; j < optionOrs.length; j++) {
 						
@@ -76,7 +76,7 @@ angular.module('estesWebApp').directive('articleConfig', [function() {
 				for (var i = 0; i < scope.selectedOptions.length; i++) {
 					for (var j = 0; j < scope.selectedOptions[i].length; j++) {
 						if (scope.selectedOptions[i][j]) {
-							article.selectedOptions.push(article.options[i][j]);
+							article.selectedOptions.push(article.articleOptions[i][j]);
 						}
 					}
 				}

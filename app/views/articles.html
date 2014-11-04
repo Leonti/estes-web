@@ -9,7 +9,7 @@
 		<span class="add-article" ng-hide="newArticle" ng-click="openNewArticleForm()">+ Add article ...</span>
 		<div class="articles-section new-article-section" ng-if="newArticle">
 			<article-form article="newArticle"
-				options="options" tags="tags" tax-groups="taxGroups" on-tax-group-update="updateTaxGroups(taxGroup)"
+				article-options="articleOptions" tags="tags" tax-groups="taxGroups" on-tax-group-update="updateTaxGroups(taxGroup)"
 				on-close="closeNewArticleForm()" on-save="saveNewArticle(article)"></article-form>
 		</div>
 		
@@ -35,7 +35,7 @@
 				</div>
 				<div class="edit-article" ng-if="isArticleEdited($index)">
 					<article-form article="article"
-						options="options" tags="tags" tax-groups="taxGroups" on-tax-group-update="updateTaxGroups(taxGroup)"
+						article-options="articleOptions" tags="tags" tax-groups="taxGroups" on-tax-group-update="updateTaxGroups(taxGroup)"
 						on-close="closeArticleForm()" on-save="saveArticle(article)"></article-form>
 				</div>
 			</div>

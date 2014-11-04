@@ -60,7 +60,6 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 
 			Article.readAll().then(function(articleList) {
 				scope.articleList = articleList;
-				
 				scope.tags = Article.getTags(articleList);
 				scope.selectedTags = angular.copy(scope.tags);
 			});
@@ -68,15 +67,13 @@ angular.module('estesWebApp').directive('orderForm', ['Waiter', 'Article', 'Orde
 			var settingsPromise = Settings.read();
 			
 			scope.filterArticle = function(article) {
-		    	var tagFilter = _.some(article.tags, function(tag) {
+		    	var tagFilter = scope.selectedTags > 0 ? _.some(article.tags, function(tag) {
 		    		return scope.selectedTags.indexOf(tag) !== -1;
-		    	});	
+		    	}) : true;	
 		    
-		    	function isInSearch(article) {
-		    		return scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf(scope.searchTerm.toUpperCase()) !== -1 : true;
-		    	}
+		    	var inSearch = scope.searchTerm.length > 0 ? article.name.toUpperCase().indexOf(scope.searchTerm.toUpperCase()) !== -1 : true;
 		    	
-		    	return tagFilter && isInSearch(article);
+		    	return tagFilter && inSearch;
 			};	
 			
 			scope.waiterToLabel = function(waiter) {

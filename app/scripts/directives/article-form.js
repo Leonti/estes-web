@@ -8,7 +8,7 @@ angular.module('estesWebApp').directive('articleForm', function() {
 		scope : {
 			inputArticle : '=?article',
 			tags : '=',
-			options : '=',
+			articleOptions : '=',
 			taxGroups : '=',
 			onTaxGroupUpdateInput : '&onTaxGroupUpdate',
 			onClose : '&',
@@ -40,20 +40,20 @@ angular.module('estesWebApp').directive('articleForm', function() {
 			};			
 			
 			scope.addOptionToArticle = function(option) {
-				scope.article.options.push([ option ]);
+				scope.article.articleOptions.push([ option ]);
 				scope.hideAddOption();
 			};
 
 			scope.orOptionToArticle = function(option, index) {
-				scope.article.options[index].push(option);
+				scope.article.articleOptions[index].push(option);
 				scope.expandedRow = null;
 			}
 
 			scope.removeOption = function(optionRow, optionCol) {
-				if (scope.article.options[optionRow].length === 1) {
-					scope.article.options.splice(optionRow, 1);
+				if (scope.article.articleOptions[optionRow].length === 1) {
+					scope.article.articleOptions.splice(optionRow, 1);
 				} else {
-					scope.article.options[optionRow].splice(optionCol, 1);
+					scope.article.articleOptions[optionRow].splice(optionCol, 1);
 				}
 			};
 

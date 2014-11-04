@@ -8,9 +8,9 @@ angular.module('estesWebApp').service('Article', ['Rest', 'Restangular', functio
 	}
 	
 	function getOptions(articles) {
-		return _.uniq(_.flatten(_.map(articles, function(article) { return article.options; })), 
-			function (option) {
-				return option.id;
+		return _.uniq(_.flatten(_.map(articles, function(article) { return article.articleOptions; })), 
+			function (articleOption) {
+				return articleOption.id;
 			});
 	}
 
@@ -36,7 +36,6 @@ angular.module('estesWebApp').service('Article', ['Rest', 'Restangular', functio
 			});
 		},
 		save: function(article) {
-			article.selectedOptions = [];
 			return Rest.configure().then(function() {
 				if (article.id === undefined || article.id === null) {
 					return Restangular.one('article').post('', article);

@@ -6,7 +6,7 @@ angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Artic
 	var ArticleTemplate = function(taxGroup) {
 		return {
 			tags: [],
-			options: [],
+			articleOptions: [],
 			taxGroup: taxGroup
 		};
 	};
@@ -25,7 +25,7 @@ angular.module('estesWebApp').controller('ArticlesCtrl', function ($scope, Artic
 			$scope.taxGroups = Article.getTaxGroups(articles);
 			$scope.selectedTaxGroup = $scope.taxGroups[0];
 			
-			$scope.options = Article.getOptions(articles);
+			$scope.articleOptions = Article.getOptions(articles);
 		});
 	};
 	refreshArticles();
